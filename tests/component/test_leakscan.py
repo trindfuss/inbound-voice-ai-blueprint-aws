@@ -141,3 +141,14 @@ def test_a_real_leak_in_or_next_to_a_minted_token_is_still_found(minted: str, sh
 def test_only_the_exact_minted_value_is_left_out(minted: str) -> None:
     other = minted[:-1] + ("a" if minted[-1] != "a" else "b")  # one character off: not minted
     assert leaks(compile_values([VALUE]), other)
+
+
+def test_explain_names_the_match_and_its_surroundings_and_is_empty_without_one() -> None:
+    from tests.leakscan import explain
+
+    patterns = compile_values(["1111"])
+    assert leaks(patterns, "the ssn was 1111 ok")
+    why = explain(patterns, "the ssn was 1111 ok")
+    assert "'1111'" in why and "ssn was" in why
+    assert not leaks(patterns, "order 04131111 shipped")
+    assert explain(patterns, "order 04131111 shipped") == ""

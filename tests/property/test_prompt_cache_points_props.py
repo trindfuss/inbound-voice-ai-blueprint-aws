@@ -108,6 +108,16 @@ def without_points(blocks: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [b for b in blocks if "cachePoint" not in b]
 
 
+def has_cache_point_key(value: Any) -> bool:
+    """A ``cachePoint`` key anywhere in the request. A structural check: the generated texts can contain the
+    word "cachePoint" (Hypothesis draws string literals from the source), which is not a cache point."""
+    if isinstance(value, dict):
+        return "cachePoint" in value or any(has_cache_point_key(v) for v in value.values())
+    if isinstance(value, list):
+        return any(has_cache_point_key(v) for v in value)
+    return False
+
+
 @settings(max_examples=150, deadline=None)
 @given(ttl=st.sampled_from(PROMPT_CACHE_TTLS), history=histories(), static=words, suffix=suffixes)
 def test_three_cache_points_with_non_increasing_ttls(ttl: str, history: list[dict[str, Any]],
@@ -135,7 +145,8 @@ def test_caching_off_has_no_cache_point_and_the_same_text(ttl: str, history: lis
                                                              static: str, suffix: str | None) -> None:
     off = request(False, ttl, history, static, suffix)
     on = request(True, ttl, history, static, suffix)
-    assert "cachePoint" not in json.dumps(off)
+    assert not has_cache_point_key(off)
+    assert has_cache_point_key(on)  # the check can fail: caching on does add cache points
     assert off["system"] == without_points(on["system"])
     assert off["toolConfig"]["tools"] == without_points(on["toolConfig"]["tools"])
     assert [{**m, "content": without_points(m["content"])} for m in on["messages"]] == off["messages"]

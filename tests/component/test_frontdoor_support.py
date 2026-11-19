@@ -39,7 +39,7 @@ from owlbank.segments import ID_KEYS, clear_sensitive
 from owlbank.slots import FakeResolver
 from owlbank.store import MemoryStore
 from owlbank.token_seal import FakeSealer
-from tests.leakscan import compile_values, leaks
+from tests.leakscan import compile_values, explain, leaks
 
 DATA = Path(__file__).resolve().parents[2] / "data"
 AUTH_TOKEN = "test-auth-token-0123456789abcdef"
@@ -341,10 +341,11 @@ def assert_no_leak(h: Harness, records: list[logging.LogRecord], values: set[str
                     if k not in _STD_LOG_ATTRS and k not in _NS_SKIP_KEYS
                     and not (sanctioned and k in ("value", "speech")))
         if sanctioned and isinstance(getattr(r, "speech", None), str):
-            assert not leaks(speech_patterns, r.speech), "sensitive value leaked into speech"
+            assert not leaks(speech_patterns, r.speech), (
+                f"sensitive value leaked into speech: {explain(speech_patterns, r.speech)}")
     for where, texts in (("response", h.bodies), ("log", logs), ("store", h.stored_strings())):
         for t in texts:
-            assert not leaks(patterns, t), f"factor value leaked into {where}"
+            assert not leaks(patterns, t), f"factor value leaked into {where}: {explain(patterns, t)}"
 
 
 def build(*, resolver: FakeResolver | None = None, config_kw: dict[str, Any] | None = None,

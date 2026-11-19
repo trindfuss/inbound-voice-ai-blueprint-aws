@@ -158,12 +158,12 @@ class Capture(logging.Handler):
     def text(self) -> str:
         # Message, args and ``extra`` fields only: the standard attributes (timestamps, thread and
         # process ids) are digits that a hex value's 4-grams can match by chance.
-        # Keys beginning with an underscore are added by the logging setup (``_owlbank_redacted`` on
-        # every record once any earlier test installs the redacting record factory), not by the code
-        # under test, and "redacted" holds the hex 4-gram "edac".
+        # ``_owlbank_redacted`` is added by the logging setup on every record once any earlier test
+        # installs the redacting record factory, not by the code under test, and "redacted" holds the
+        # hex 4-gram "edac". Every other field, underscore-prefixed or not, is still checked.
         return "\n".join(
             f"{r.getMessage()} {r.args!r} "
-            f"{ {k: v for k, v in r.__dict__.items() if k not in STANDARD_RECORD_ATTRS and not k.startswith('_')}!r}"
+            f"{ {k: v for k, v in r.__dict__.items() if k not in STANDARD_RECORD_ATTRS and k != '_owlbank_redacted'}!r}"
             for r in self.records
         )
 

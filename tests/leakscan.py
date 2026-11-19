@@ -102,3 +102,16 @@ def leaks(patterns: Iterable[re.Pattern[str]], text: str) -> bool:
     """Whether any of the compiled values appears in ``text`` as a whole value (timestamps and minted tokens left out)."""
     folded = _TIMESTAMP.sub("<ts>", scrub_minted(text).casefold())
     return any(p.search(folded) for p in patterns)
+
+
+def explain(patterns: Iterable[re.Pattern[str]], text: str, context: int = 50) -> str:
+    """For a failure message: the matched value and the text around it (as ``leaks`` sees it), or ``""``.
+
+    Without this a leak failure names only where it was found, and a rare chance match inside generated
+    text (an id, a token) cannot be told from a real leak after the run is over."""
+    folded = _TIMESTAMP.sub("<ts>", scrub_minted(text).casefold())
+    for p in patterns:
+        m = p.search(folded)
+        if m:
+            return f"matched {m.group(0)!r} in ...{folded[max(0, m.start() - context):m.end() + context]!r}..."
+    return ""

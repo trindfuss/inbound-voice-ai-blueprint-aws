@@ -1833,9 +1833,13 @@ class Bridge:
         """Wait for background resumes (tests). Raises instead of spinning if they never settle."""
         end = time.monotonic() + timeout
         while self._tasks:
-            if time.monotonic() > end:
+            remaining = end - time.monotonic()
+            if remaining <= 0:
                 raise TimeoutError(f"background tasks never settled: {sorted(map(repr, self._tasks))}")
-            await asyncio.gather(*list(self._tasks), return_exceptions=True)
+            # asyncio.wait with a deadline, so a task that never finishes cannot hang the caller (it does
+            # not cancel the tasks); finished tasks' exceptions are marked as retrieved, as gather did.
+            done, _ = await asyncio.wait(list(self._tasks), timeout=remaining)
+            await asyncio.gather(*done, return_exceptions=True)
 
     # ------------------------------------------------------------------ resume on setup
 
