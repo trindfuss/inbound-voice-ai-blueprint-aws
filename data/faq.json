@@ -1,0 +1,54 @@
+{
+  "_notes": [
+    "FAKE DEMO CONTENT for the level-0 tools get_branch_hours and faq_lookup. OwlBank, its branches and addresses are fictional.",
+    "Text is read by the AI agent (not a deterministic flow), so it is source material, not catalog prompts."
+  ],
+  "branches": [
+    {
+      "id": "downtown",
+      "name": {"en-US": "OwlBank Downtown", "es-US": "OwlBank Centro"},
+      "address": "100 Example Avenue, Springfield",
+      "timezone": "America/New_York",
+      "hours": {
+        "en-US": "Monday to Friday, 9 a.m. to 5 p.m. Saturday, 9 a.m. to 1 p.m. Closed on Sunday.",
+        "es-US": "De lunes a viernes, de 9 de la mañana a 5 de la tarde. Sábado, de 9 de la mañana a 1 de la tarde. Cerrado el domingo."
+      }
+    },
+    {
+      "id": "riverside",
+      "name": {"en-US": "OwlBank Riverside", "es-US": "OwlBank Riverside"},
+      "address": "250 Sample Street, Springfield",
+      "timezone": "America/New_York",
+      "hours": {
+        "en-US": "Monday to Friday, 10 a.m. to 6 p.m. Closed on weekends.",
+        "es-US": "De lunes a viernes, de 10 de la mañana a 6 de la tarde. Cerrado los fines de semana."
+      }
+    }
+  ],
+  "phoneSupportHours": {
+    "en-US": "Our phone specialists are available Monday through Saturday, 8 a.m. to 8 p.m. Eastern time.",
+    "es-US": "Nuestros especialistas telefónicos están disponibles de lunes a sábado, de 8 de la mañana a 8 de la noche, hora del Este."
+  },
+  "faqs": [
+    {
+      "id": "lost_card",
+      "question": {"en-US": "What should I do if I lose my debit or credit card?", "es-US": "¿Qué hago si pierdo mi tarjeta de débito o de crédito?"},
+      "answer": {"en-US": "Tell us right away and we'll connect you with our fraud team to lock the card and send a replacement.", "es-US": "Avísenos de inmediato y le comunicaremos con nuestro equipo de fraude para bloquear la tarjeta y enviarle una nueva."}
+    },
+    {
+      "id": "mobile_deposit",
+      "question": {"en-US": "How do I deposit a check with my phone?", "es-US": "¿Cómo deposito un cheque con mi teléfono?"},
+      "answer": {"en-US": "In the OwlBank app, choose Deposit, take a photo of the front and back of the endorsed check, and confirm the amount. Deposits before 8 p.m. Eastern time usually post the next business day.", "es-US": "En la aplicación de OwlBank, elija Depositar, tome una foto del frente y del reverso del cheque endosado y confirme el monto. Los depósitos hechos antes de las 8 de la noche, hora del Este, suelen acreditarse el siguiente día hábil."}
+    },
+    {
+      "id": "open_account",
+      "question": {"en-US": "How can I open a new account?", "es-US": "¿Cómo puedo abrir una cuenta nueva?"},
+      "answer": {"en-US": "You can open a checking or savings account in the OwlBank app, online, or at any branch. Bring a government-issued photo ID if you visit a branch.", "es-US": "Puede abrir una cuenta de cheques o de ahorros en la aplicación de OwlBank, en línea o en cualquier sucursal. Si visita una sucursal, traiga una identificación oficial con foto."}
+    },
+    {
+      "id": "wire_cutoff",
+      "question": {"en-US": "What is the cutoff time for wire transfers?", "es-US": "¿Cuál es la hora límite para las transferencias bancarias?"},
+      "answer": {"en-US": "Domestic wires requested before 3 p.m. Eastern time on a business day are sent the same day.", "es-US": "Las transferencias nacionales solicitadas antes de las 3 de la tarde, hora del Este, en un día hábil se envían el mismo día."}
+    }
+  ]
+}

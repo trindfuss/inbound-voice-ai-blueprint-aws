@@ -1,0 +1,855 @@
+{
+ "Outputs": {
+  "ExportsOutputRefVpc8378EB38272D6E3A": {
+   "Export": {
+    "Name": "OwlBankNetwork:ExportsOutputRefVpc8378EB38272D6E3A"
+   },
+   "Value": {
+    "Ref": "Vpc8378EB38"
+   }
+  },
+  "ExportsOutputRefVpcprivateSubnet1SubnetCEAD37168693D373": {
+   "Export": {
+    "Name": "OwlBankNetwork:ExportsOutputRefVpcprivateSubnet1SubnetCEAD37168693D373"
+   },
+   "Value": {
+    "Ref": "VpcprivateSubnet1SubnetCEAD3716"
+   }
+  },
+  "ExportsOutputRefVpcprivateSubnet2Subnet2DE7549CDF5ACE3D": {
+   "Export": {
+    "Name": "OwlBankNetwork:ExportsOutputRefVpcprivateSubnet2Subnet2DE7549CDF5ACE3D"
+   },
+   "Value": {
+    "Ref": "VpcprivateSubnet2Subnet2DE7549C"
+   }
+  },
+  "ExportsOutputRefVpcpublicSubnet1Subnet2BB74ED74EB42ADC": {
+   "Export": {
+    "Name": "OwlBankNetwork:ExportsOutputRefVpcpublicSubnet1Subnet2BB74ED74EB42ADC"
+   },
+   "Value": {
+    "Ref": "VpcpublicSubnet1Subnet2BB74ED7"
+   }
+  },
+  "ExportsOutputRefVpcpublicSubnet2SubnetE34B022AC8BB6627": {
+   "Export": {
+    "Name": "OwlBankNetwork:ExportsOutputRefVpcpublicSubnet2SubnetE34B022AC8BB6627"
+   },
+   "Value": {
+    "Ref": "VpcpublicSubnet2SubnetE34B022A"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+   "Type": "AWS::SSM::Parameter::Value<String>"
+  }
+ },
+ "Resources": {
+  "FlowLogs16C1943A": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/vpc/flow-logs",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "Vpc8378EB38": {
+   "Properties": {
+    "CidrBlock": "10.40.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::EC2::VPC"
+  },
+  "VpcDynamoDbEndpoint564903D1": {
+   "Properties": {
+    "RouteTableIds": [
+     {
+      "Ref": "VpcprivateSubnet1RouteTable1979EACB"
+     },
+     {
+      "Ref": "VpcprivateSubnet2RouteTable4D0FFC8C"
+     }
+    ],
+    "ServiceName": {
+     "Fn::Join": [
+      "",
+      [
+       "com.amazonaws.",
+       {
+        "Ref": "AWS::Region"
+       },
+       ".dynamodb"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcEndpointType": "Gateway",
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::VPCEndpoint"
+  },
+  "VpcFlowLog8FF33A73": {
+   "Properties": {
+    "DeliverLogsPermissionArn": {
+     "Fn::GetAtt": [
+      "VpcFlowLogIAMRole6A475D41",
+      "Arn"
+     ]
+    },
+    "LogDestinationType": "cloud-watch-logs",
+    "LogGroupName": {
+     "Ref": "FlowLogs16C1943A"
+    },
+    "ResourceId": {
+     "Ref": "Vpc8378EB38"
+    },
+    "ResourceType": "VPC",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/FlowLog"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TrafficType": "REJECT"
+   },
+   "Type": "AWS::EC2::FlowLog"
+  },
+  "VpcFlowLogIAMRole6A475D41": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "vpc-flow-logs.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/FlowLog"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "VpcFlowLogIAMRoleDefaultPolicy406FB995": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "FlowLogs16C1943A",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "VpcFlowLogIAMRoleDefaultPolicy406FB995",
+    "Roles": [
+     {
+      "Ref": "VpcFlowLogIAMRole6A475D41"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "VpcIGWD7BA715C": {
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::EC2::InternetGateway"
+  },
+  "VpcVPCGWBF912B6E": {
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "VpcIGWD7BA715C"
+    },
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::VPCGatewayAttachment"
+  },
+  "VpcprivateSubnet1DefaultRouteB506891A": {
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "VpcpublicSubnet1NATGatewayA036E8A6"
+    },
+    "RouteTableId": {
+     "Ref": "VpcprivateSubnet1RouteTable1979EACB"
+    }
+   },
+   "Type": "AWS::EC2::Route"
+  },
+  "VpcprivateSubnet1RouteTable1979EACB": {
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/privateSubnet1"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::RouteTable"
+  },
+  "VpcprivateSubnet1RouteTableAssociationEEBD93CE": {
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "VpcprivateSubnet1RouteTable1979EACB"
+    },
+    "SubnetId": {
+     "Ref": "VpcprivateSubnet1SubnetCEAD3716"
+    }
+   },
+   "Type": "AWS::EC2::SubnetRouteTableAssociation"
+  },
+  "VpcprivateSubnet1SubnetCEAD3716": {
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.40.4.0/22",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/privateSubnet1"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::Subnet"
+  },
+  "VpcprivateSubnet2DefaultRouteBAC3C1C3": {
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "VpcpublicSubnet1NATGatewayA036E8A6"
+    },
+    "RouteTableId": {
+     "Ref": "VpcprivateSubnet2RouteTable4D0FFC8C"
+    }
+   },
+   "Type": "AWS::EC2::Route"
+  },
+  "VpcprivateSubnet2RouteTable4D0FFC8C": {
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/privateSubnet2"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::RouteTable"
+  },
+  "VpcprivateSubnet2RouteTableAssociationB691E645": {
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "VpcprivateSubnet2RouteTable4D0FFC8C"
+    },
+    "SubnetId": {
+     "Ref": "VpcprivateSubnet2Subnet2DE7549C"
+    }
+   },
+   "Type": "AWS::EC2::SubnetRouteTableAssociation"
+  },
+  "VpcprivateSubnet2Subnet2DE7549C": {
+   "Properties": {
+    "AvailabilityZone": "us-east-1b",
+    "CidrBlock": "10.40.8.0/22",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/privateSubnet2"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::Subnet"
+  },
+  "VpcpublicSubnet1DefaultRouteB88F9E93": {
+   "DependsOn": [
+    "VpcVPCGWBF912B6E"
+   ],
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "VpcIGWD7BA715C"
+    },
+    "RouteTableId": {
+     "Ref": "VpcpublicSubnet1RouteTable15C15F8E"
+    }
+   },
+   "Type": "AWS::EC2::Route"
+  },
+  "VpcpublicSubnet1EIP411541E6": {
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/publicSubnet1"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::EC2::EIP"
+  },
+  "VpcpublicSubnet1NATGatewayA036E8A6": {
+   "DependsOn": [
+    "VpcpublicSubnet1DefaultRouteB88F9E93",
+    "VpcpublicSubnet1RouteTableAssociation4E83B6E4"
+   ],
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "VpcpublicSubnet1EIP411541E6",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "VpcpublicSubnet1Subnet2BB74ED7"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/publicSubnet1"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::EC2::NatGateway"
+  },
+  "VpcpublicSubnet1RouteTable15C15F8E": {
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/publicSubnet1"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::RouteTable"
+  },
+  "VpcpublicSubnet1RouteTableAssociation4E83B6E4": {
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "VpcpublicSubnet1RouteTable15C15F8E"
+    },
+    "SubnetId": {
+     "Ref": "VpcpublicSubnet1Subnet2BB74ED7"
+    }
+   },
+   "Type": "AWS::EC2::SubnetRouteTableAssociation"
+  },
+  "VpcpublicSubnet1Subnet2BB74ED7": {
+   "Properties": {
+    "AvailabilityZone": "us-east-1a",
+    "CidrBlock": "10.40.0.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/publicSubnet1"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::Subnet"
+  },
+  "VpcpublicSubnet2DefaultRoute732F0BEB": {
+   "DependsOn": [
+    "VpcVPCGWBF912B6E"
+   ],
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "VpcIGWD7BA715C"
+    },
+    "RouteTableId": {
+     "Ref": "VpcpublicSubnet2RouteTableC5A6DF77"
+    }
+   },
+   "Type": "AWS::EC2::Route"
+  },
+  "VpcpublicSubnet2RouteTableAssociationCCE257FF": {
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "VpcpublicSubnet2RouteTableC5A6DF77"
+    },
+    "SubnetId": {
+     "Ref": "VpcpublicSubnet2SubnetE34B022A"
+    }
+   },
+   "Type": "AWS::EC2::SubnetRouteTableAssociation"
+  },
+  "VpcpublicSubnet2RouteTableC5A6DF77": {
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/publicSubnet2"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::RouteTable"
+  },
+  "VpcpublicSubnet2SubnetE34B022A": {
+   "Properties": {
+    "AvailabilityZone": "us-east-1b",
+    "CidrBlock": "10.40.1.0/24",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "Name",
+      "Value": "OwlBankNetwork/Vpc/publicSubnet2"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Ref": "Vpc8378EB38"
+    }
+   },
+   "Type": "AWS::EC2::Subnet"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

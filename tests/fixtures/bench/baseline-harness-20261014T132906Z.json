@@ -1,0 +1,1820 @@
+{
+ "label": "baseline-harness",
+ "agent": "harness",
+ "cold": false,
+ "runs": 8,
+ "at": "2026-10-14T13:29:06+00:00",
+ "summary": {
+  "greeting#1": {
+   "n": 8,
+   "response_p50": 2.863,
+   "response_p90": 3.108,
+   "hop_end_p50": 3.135,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 2.863
+  },
+  "faq_gateway#1": {
+   "n": 8,
+   "response_p50": 4.28,
+   "response_p90": 5.329,
+   "hop_end_p50": 4.687,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 4.28
+  },
+  "transactions_inline#1": {
+   "n": 8,
+   "response_p50": 6.054,
+   "response_p90": 6.586,
+   "hop_end_p50": 3.16,
+   "hops_mean": 2,
+   "hop1_first_event_p50": 2.972
+  },
+  "balance_then_bargein#1": {
+   "n": 8,
+   "response_p50": 2.933,
+   "response_p90": 3.135,
+   "hop_end_p50": 2.933,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 2.933
+  },
+  "balance_then_bargein#2": {
+   "n": 8,
+   "response_p50": 6.444,
+   "response_p90": 7.09,
+   "hop_end_p50": 3.363,
+   "hops_mean": 2,
+   "hop1_first_event_p50": 3.482
+  },
+  "payment_stepup#1": {
+   "n": 8,
+   "response_p50": 5.798,
+   "response_p90": 8.115,
+   "hop_end_p50": 2.916,
+   "hops_mean": 2,
+   "hop1_first_event_p50": 3.028
+  },
+  "payment_stepup#2": {
+   "n": 8,
+   "response_p50": 3.314,
+   "response_p90": 3.937,
+   "hop_end_p50": 3.314,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 3.314
+  },
+  "payment_stepup#3": {
+   "n": 8,
+   "response_p50": 3.633,
+   "response_p90": 4.418,
+   "hop_end_p50": 3.633,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 3.633
+  }
+ },
+ "raw": [
+  {
+   "scenario": "greeting",
+   "session": "CAbench8165ede9b66426334e119611f890",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.927,
+       "first_text_s": 2.927,
+       "tool_call_s": null,
+       "end_s": 3.16,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking or savings balance, recent transactions, paying your OwlBank Rewards Card, moving money between checking and savings, updating your mailing address, or general banking questions. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 2.927,
+     "first_text_s": 2.927
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbenchba7b8bc453228a8e24be10fdc212",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 5.192,
+       "first_text_s": 5.192,
+       "tool_call_s": null,
+       "end_s": 5.477,
+       "tools": [],
+       "text": "Our Downtown branch is open Saturday from 9 a.m. to 1 p.m. The Riverside branch is closed on weekends. Phone support is also available Saturday from 8 a.m. to 8 p.m. Eastern time.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 5.192,
+     "first_text_s": 5.192
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbench77c0efd45bc52ca237f229f841ed",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 3.407,
+       "first_text_s": null,
+       "tool_call_s": 3.407,
+       "end_s": 3.407,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.099,
+       "first_text_s": 3.099,
+       "tool_call_s": null,
+       "end_s": 3.34,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 coffee charge and a $71.00 grocery charge, both pending from October 9. Before those, you had a $2,100.00 payroll deposit on October 8 and an $88.20 utility payment on October 7, both posted.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.506,
+     "first_text_s": 3.099
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbench5e16bdad9ea0335ea259c486fc9c",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 3.253,
+       "first_text_s": null,
+       "tool_call_s": 3.253,
+       "end_s": 3.253,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 3.253,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.828,
+       "first_text_s": null,
+       "tool_call_s": 3.828,
+       "end_s": 3.828,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.931,
+       "first_text_s": 2.931,
+       "tool_call_s": null,
+       "end_s": 3.239,
+       "tools": [],
+       "text": "Your checking account has two pending charges: Coffee Example Co for $4.50 and Grocery Sample Mart for $71.00, both on October 9. Before those, a $2,100.00 payroll deposit posted on October 8, and an $88.20 utility payment posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.759,
+     "first_text_s": 2.931
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbench887d6cb9d698f42aaee399e3f14c",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 2.795,
+       "first_text_s": null,
+       "tool_call_s": 2.795,
+       "end_s": 2.795,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.703,
+       "first_text_s": null,
+       "tool_call_s": 2.703,
+       "end_s": 2.703,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 5.498,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.969,
+       "first_text_s": null,
+       "tool_call_s": 2.969,
+       "end_s": 2.969,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 2.969,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.632,
+       "first_text_s": null,
+       "tool_call_s": 3.632,
+       "end_s": 3.632,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 3.632,
+     "first_text_s": null
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "CAbench8d0e8f634e7ed812f0b07d2da7f4",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.507,
+       "first_text_s": 2.507,
+       "tool_call_s": null,
+       "end_s": 2.744,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your account balances, recent transactions, paying your credit card, moving money between checking and savings, or changing your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 2.507,
+     "first_text_s": 2.507
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbench6f58142043ab231c52b6094539e0",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 5.65,
+       "first_text_s": 5.65,
+       "tool_call_s": null,
+       "end_s": 5.878,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 5.65,
+     "first_text_s": 5.65
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbenchd03925f0e75575d72fc6291615aa",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 3.462,
+       "first_text_s": null,
+       "tool_call_s": 3.462,
+       "end_s": 3.462,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.075,
+       "first_text_s": 3.075,
+       "tool_call_s": null,
+       "end_s": 3.273,
+       "tools": [],
+       "text": "Your latest checking transactions are a $4.50 pending charge from Coffee Example Co and a $71.00 pending charge from Grocery Sample Mart, both on October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 utility payment to Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.537,
+     "first_text_s": 3.075
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbenchedfecb467f6cdee27681b37da455",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 2.813,
+       "first_text_s": null,
+       "tool_call_s": 2.813,
+       "end_s": 2.813,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 2.813,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.649,
+       "first_text_s": null,
+       "tool_call_s": 3.649,
+       "end_s": 3.649,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.727,
+       "first_text_s": 2.727,
+       "tool_call_s": null,
+       "end_s": 2.941,
+       "tools": [],
+       "text": "Your checking account has four recent transactions. Two are pending: a $4.50 charge from Coffee Example Co and a $71.00 charge from Grocery Sample Mart, both on October 9. Posted, you received a $2,100.00 payroll deposit from Payroll Example Corp on October 8, and paid $88.20 to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.376,
+     "first_text_s": 2.727
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbench9baab8d5ba709af5ed4d4db2af0d",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 3.14,
+       "first_text_s": null,
+       "tool_call_s": 3.14,
+       "end_s": 3.14,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.541,
+       "first_text_s": null,
+       "tool_call_s": 2.541,
+       "end_s": 2.541,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 5.681,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.367,
+       "first_text_s": null,
+       "tool_call_s": 3.367,
+       "end_s": 3.367,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 3.367,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.974,
+       "first_text_s": null,
+       "tool_call_s": 3.974,
+       "end_s": 3.974,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 3.974,
+     "first_text_s": null
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "CAbench5cc131d2ac6eef2bbd11070ec58e",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.877,
+       "first_text_s": 2.877,
+       "tool_call_s": null,
+       "end_s": 3.109,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking or savings balance, recent transactions, paying your OwlBank Rewards Card, moving money between checking and savings, updating your mailing address, or general banking questions. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 2.877,
+     "first_text_s": 2.877
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbench52f5577d0e43400073269bafffa4",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 3.793,
+       "first_text_s": 3.793,
+       "tool_call_s": null,
+       "end_s": 4.021,
+       "tools": [],
+       "text": "We have two branches, downtown and riverside. Which one would you like Saturday hours for?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 3.793,
+     "first_text_s": 3.793
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbenchc2e54c6bcdecb9b6747cd5041e24",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 2.748,
+       "first_text_s": null,
+       "tool_call_s": 2.748,
+       "end_s": 2.748,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.918,
+       "first_text_s": 2.918,
+       "tool_call_s": null,
+       "end_s": 3.144,
+       "tools": [],
+       "text": "Your latest checking transactions are a $4.50 charge at Coffee Example Co and a $71.00 charge at Grocery Sample Mart, both pending from October 9. Before those, there's a $2,100.00 deposit from Payroll Example Corp on October 8 and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 5.666,
+     "first_text_s": 2.918
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbench744bf034726ca5314ef59ea5b08b",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 2.936,
+       "first_text_s": null,
+       "tool_call_s": 2.936,
+       "end_s": 2.936,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 2.936,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.345,
+       "first_text_s": null,
+       "tool_call_s": 3.345,
+       "end_s": 3.345,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.972,
+       "first_text_s": 2.972,
+       "tool_call_s": null,
+       "end_s": 3.186,
+       "tools": [],
+       "text": "Your recent checking transactions are: a $4.50 pending charge from Coffee Example Co and a $71.00 pending charge from Grocery Sample Mart, both on October 9. Before those, a $2,100.00 payroll deposit from Payroll Example Corp posted October 8, and an $88.20 payment to Utility Sample Power posted October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.317,
+     "first_text_s": 2.972
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbench4c0eb49df4c5ab154f9dc8150dd2",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 3.141,
+       "first_text_s": null,
+       "tool_call_s": 3.141,
+       "end_s": 3.141,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.774,
+       "first_text_s": null,
+       "tool_call_s": 2.774,
+       "end_s": 2.774,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 5.915,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.262,
+       "first_text_s": null,
+       "tool_call_s": 3.262,
+       "end_s": 3.262,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 3.262,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.634,
+       "first_text_s": null,
+       "tool_call_s": 3.634,
+       "end_s": 3.634,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 3.634,
+     "first_text_s": null
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "CAbenchd631b7f10112c0fd0d42d458dc35",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 3.006,
+       "first_text_s": 3.006,
+       "tool_call_s": null,
+       "end_s": 3.218,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking or savings balance, recent transactions, paying your OwlBank Rewards Card, moving money between checking and savings, changing your mailing address, or general banking questions. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 3.006,
+     "first_text_s": 3.006
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbench93e21550e3df7e9f9024d3fe5bd5",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 4.519,
+       "first_text_s": 4.519,
+       "tool_call_s": null,
+       "end_s": 4.726,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Would you like the Downtown address?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 4.519,
+     "first_text_s": 4.519
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbenchf446391bb4617d949b8ff148c298",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 3.05,
+       "first_text_s": null,
+       "tool_call_s": 3.05,
+       "end_s": 3.05,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.649,
+       "first_text_s": 3.649,
+       "tool_call_s": null,
+       "end_s": 3.875,
+       "tools": [],
+       "text": "Your checking account has four recent transactions. The newest are two pending charges on October 9: $4.50 at Coffee Example Co and $71.00 at Grocery Sample Mart. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Utility Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.699,
+     "first_text_s": 3.649
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbenchc7d2586ae2218c88b2cda2dfe735",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 3.085,
+       "first_text_s": null,
+       "tool_call_s": 3.085,
+       "end_s": 3.085,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 3.085,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.452,
+       "first_text_s": null,
+       "tool_call_s": 3.452,
+       "end_s": 3.452,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.393,
+       "first_text_s": 3.393,
+       "tool_call_s": null,
+       "end_s": 3.649,
+       "tools": [],
+       "text": "Your checking account has four recent transactions. The newest are a pending coffee charge of $4.50 and a pending grocery charge of $71.00, both on October 9. Before those, a $2,100.00 payroll deposit posted on October 8, and an $88.20 utility payment posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.845,
+     "first_text_s": 3.393
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbench26adb28cf6dbc0d5ed5f0784d214",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 8.488,
+       "first_text_s": null,
+       "tool_call_s": 8.488,
+       "end_s": 8.488,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 4.182,
+       "first_text_s": null,
+       "tool_call_s": 4.182,
+       "end_s": 4.182,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 12.67,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.759,
+       "first_text_s": null,
+       "tool_call_s": 3.759,
+       "end_s": 3.759,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 3.759,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 4.782,
+       "first_text_s": null,
+       "tool_call_s": 4.782,
+       "end_s": 4.782,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 4.782,
+     "first_text_s": null
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "CAbenchce7fda8f4381c937e775029c26ea",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 3.347,
+       "first_text_s": 3.347,
+       "tool_call_s": null,
+       "end_s": 3.483,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking or savings balance, recent transactions, paying your OwlBank Rewards Card, moving money between checking and savings, updating your mailing address, or general banking questions. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 3.347,
+     "first_text_s": 3.347
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbench5c0205ecd25efbbe7916cda6fa5d",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 4.341,
+       "first_text_s": 4.341,
+       "tool_call_s": null,
+       "end_s": 4.678,
+       "tools": [],
+       "text": "Our Downtown branch is open Saturday from 9 a.m. to 1 p.m. The Riverside branch is closed on weekends. Would you like the Downtown address?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 4.341,
+     "first_text_s": 4.341
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbenchf45bb85de42eed872cd9670aa64b",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 3.047,
+       "first_text_s": null,
+       "tool_call_s": 3.047,
+       "end_s": 3.047,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.257,
+       "first_text_s": 3.257,
+       "tool_call_s": null,
+       "end_s": 3.498,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 charge at Coffee Example Co and a $71.00 charge at Grocery Sample Mart, both pending from October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Utility Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.304,
+     "first_text_s": 3.257
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbench7f157151335c678a9fc19a6cf701",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 2.815,
+       "first_text_s": null,
+       "tool_call_s": 2.815,
+       "end_s": 2.815,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 2.815,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 4.84,
+       "first_text_s": null,
+       "tool_call_s": 4.84,
+       "end_s": 4.84,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.821,
+       "first_text_s": 2.821,
+       "tool_call_s": null,
+       "end_s": 3.17,
+       "tools": [],
+       "text": "Here are your latest checking transactions. Pending: a $4.50 charge at Coffee Example Co and a $71.00 charge at Grocery Sample Mart, both on October 9. Posted: a $2,100.00 payroll deposit from Payroll Example Corp on October 8, and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 7.661,
+     "first_text_s": 2.821
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbenchee9abe552fd8af8cd8ee8ca6a4ac",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 3.247,
+       "first_text_s": null,
+       "tool_call_s": 3.247,
+       "end_s": 3.247,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.916,
+       "first_text_s": null,
+       "tool_call_s": 2.916,
+       "end_s": 2.916,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 6.163,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 4.353,
+       "first_text_s": null,
+       "tool_call_s": 4.353,
+       "end_s": 4.353,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 4.353,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 4.262,
+       "first_text_s": null,
+       "tool_call_s": 4.262,
+       "end_s": 4.262,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 4.262,
+     "first_text_s": null
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "CAbencha86bfc177a9c7cde271afd5d8c39",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.598,
+       "first_text_s": 2.598,
+       "tool_call_s": null,
+       "end_s": 2.818,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking or savings balance, recent transactions, paying your OwlBank Rewards Card, moving money between checking and savings, updating your mailing address, or general banking questions. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 2.598,
+     "first_text_s": 2.598
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbench6d2e403de2da44394937903ce58f",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 4.219,
+       "first_text_s": 4.219,
+       "tool_call_s": null,
+       "end_s": 4.529,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Would you like the Downtown address?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 4.219,
+     "first_text_s": 4.219
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbenchf8d38658733ef5b4e502d7ac885a",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 2.788,
+       "first_text_s": null,
+       "tool_call_s": 2.788,
+       "end_s": 2.788,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.955,
+       "first_text_s": 2.955,
+       "tool_call_s": null,
+       "end_s": 3.177,
+       "tools": [],
+       "text": "Your most recent checking transactions are:\n\n- October 9: Coffee Example Co, $4.50 out (pending)\n- October 9: Grocery Sample Mart, $71.00 out (pending)\n- October 8: Payroll Example Corp, $2,100.00 in (posted)\n- October 7: Utility Sample Power, $88.20 out (posted)",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 5.743,
+     "first_text_s": 2.955
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbenchd8b4787e06e967ac0fee4360e368",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 2.807,
+       "first_text_s": null,
+       "tool_call_s": 2.807,
+       "end_s": 2.807,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 2.807,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.511,
+       "first_text_s": null,
+       "tool_call_s": 3.511,
+       "end_s": 3.511,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.001,
+       "first_text_s": 3.001,
+       "tool_call_s": null,
+       "end_s": 3.276,
+       "tools": [],
+       "text": "Here are your latest checking transactions. Pending: a $4.50 charge from Coffee Example Co and a $71.00 charge from Grocery Sample Mart, both dated October 9. Posted: a $2,100.00 deposit from Payroll Example Corp on October 8, and an $88.20 charge from Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.512,
+     "first_text_s": 3.001
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbenchc012e917541da3968d8225e46e1c",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 2.916,
+       "first_text_s": null,
+       "tool_call_s": 2.916,
+       "end_s": 2.916,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.001,
+       "first_text_s": null,
+       "tool_call_s": 3.001,
+       "end_s": 3.001,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 5.917,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.753,
+       "first_text_s": null,
+       "tool_call_s": 2.753,
+       "end_s": 2.753,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 2.753,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.541,
+       "first_text_s": null,
+       "tool_call_s": 3.541,
+       "end_s": 3.541,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 3.541,
+     "first_text_s": null
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "CAbench4e4da780fa45b06a4038de537c26",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.849,
+       "first_text_s": 2.849,
+       "tool_call_s": null,
+       "end_s": 3.269,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking or savings balance, recent transactions, paying your OwlBank Rewards Card, moving money between checking and savings, updating your mailing address, or general banking questions. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 2.849,
+     "first_text_s": 2.849
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbench995f22d4f34f870546eb94aad1ae",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 4.101,
+       "first_text_s": 4.101,
+       "tool_call_s": null,
+       "end_s": 4.696,
+       "tools": [],
+       "text": "Our Downtown branch is open Saturday from 9 a.m. to 1 p.m. The Riverside branch is closed on weekends. Downtown is at 100 Example Avenue in Springfield.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 4.101,
+     "first_text_s": 4.101
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbenchce51ee5270101b49adbef8f1e8bf",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 2.833,
+       "first_text_s": null,
+       "tool_call_s": 2.833,
+       "end_s": 2.833,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.85,
+       "first_text_s": 2.85,
+       "tool_call_s": null,
+       "end_s": 3.08,
+       "tools": [],
+       "text": "Your checking account has four recent transactions. Two are pending: a $4.50 charge from Coffee Example Co and a $71.00 charge from Grocery Sample Mart, both on October 9. Posted transactions include a $2,100.00 payroll deposit from Example Corp on October 8, and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 5.683,
+     "first_text_s": 2.85
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbench9abf54b8f5ab36c9646e8096fb01",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 2.93,
+       "first_text_s": null,
+       "tool_call_s": 2.93,
+       "end_s": 2.93,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 2.93,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.2,
+       "first_text_s": null,
+       "tool_call_s": 3.2,
+       "end_s": 3.2,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.171,
+       "first_text_s": 3.171,
+       "tool_call_s": null,
+       "end_s": 3.381,
+       "tools": [],
+       "text": "Your checking account has four recent transactions. The newest are a $4.50 coffee charge and a $71.00 grocery charge, both pending from October 9. Before those, a $2,100.00 payroll deposit posted October 8, and an $88.20 utility payment posted October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.371,
+     "first_text_s": 3.171
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbenchf3fef8197ab7d32e21a279d7ae66",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 2.775,
+       "first_text_s": null,
+       "tool_call_s": 2.775,
+       "end_s": 2.775,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.768,
+       "first_text_s": null,
+       "tool_call_s": 2.768,
+       "end_s": 2.768,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 5.543,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.489,
+       "first_text_s": null,
+       "tool_call_s": 3.489,
+       "end_s": 3.489,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 3.489,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.059,
+       "first_text_s": null,
+       "tool_call_s": 3.059,
+       "end_s": 3.059,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 3.059,
+     "first_text_s": null
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "CAbench0970543f597972983f0d2b495386",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.517,
+       "first_text_s": 2.517,
+       "tool_call_s": null,
+       "end_s": 2.823,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking or savings balance, recent transactions, a payment toward your credit card, moving money between checking and savings, or updating your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 2.517,
+     "first_text_s": 2.517
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "CAbench428643c39eebc691d5762be0a3b5",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 3.565,
+       "first_text_s": 3.565,
+       "tool_call_s": null,
+       "end_s": 3.74,
+       "tools": [],
+       "text": "We have two branches, Downtown and Riverside. Which one would you like the Saturday hours for?",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 3.565,
+     "first_text_s": 3.565
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "CAbencha0d600d0f1274316c91dcf8b338f",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 2.897,
+       "first_text_s": null,
+       "tool_call_s": 2.897,
+       "end_s": 2.897,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.907,
+       "first_text_s": 2.907,
+       "tool_call_s": null,
+       "end_s": 3.213,
+       "tools": [],
+       "text": "Your most recent checking transactions are: a $4.50 pending charge at Coffee Example Co and a $71.00 pending charge at Grocery Sample Mart, both on October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Utility Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 5.804,
+     "first_text_s": 2.907
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "CAbench4dd760a41e599f67e4eaf0de9e01",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 3.015,
+       "first_text_s": null,
+       "tool_call_s": 3.015,
+       "end_s": 3.015,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "get_balance",
+     "response_s": 3.015,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.094,
+       "first_text_s": null,
+       "tool_call_s": 3.094,
+       "end_s": 3.094,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 3.278,
+       "first_text_s": 3.278,
+       "tool_call_s": null,
+       "end_s": 3.529,
+       "tools": [],
+       "text": "Your checking account has two pending charges: Coffee Example Co for $4.50 and Grocery Sample Mart for $71.00, both on October 9. Posted, you have a $2,100.00 payroll deposit from October 8 and an $88.20 utility payment from October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn"
+      }
+     ],
+     "handoff": null,
+     "response_s": 6.372,
+     "first_text_s": 3.278
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "CAbenchd0f5c79390d9b03ca435881c034e",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 2.691,
+       "first_text_s": null,
+       "tool_call_s": 2.691,
+       "end_s": 2.691,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      },
+      {
+       "first_event_s": 2.981,
+       "first_text_s": null,
+       "tool_call_s": 2.981,
+       "end_s": 2.981,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "authenticate",
+     "response_s": 5.672,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.766,
+       "first_text_s": null,
+       "tool_call_s": 2.766,
+       "end_s": 2.766,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "make_payment",
+     "response_s": 2.766,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.49,
+       "first_text_s": null,
+       "tool_call_s": 3.49,
+       "end_s": 3.49,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use"
+      }
+     ],
+     "handoff": "escalate",
+     "response_s": 3.49,
+     "first_text_s": null
+    }
+   ]
+  }
+ ],
+ "errors": 0
+}

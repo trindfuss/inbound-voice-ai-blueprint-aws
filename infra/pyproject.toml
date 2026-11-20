@@ -1,0 +1,28 @@
+[project]
+name = "owlbank-infra"
+version = "0.1.0"
+description = "OwlBank inbound voice blueprint: AWS CDK app (Python). Synth only; nothing is deployed from here by tests."
+requires-python = ">=3.12"
+dependencies = [
+    "aws-cdk-lib==2.273.0",
+    "constructs>=10.0.0,<11.0.0",
+    "cdk-nag>=2.30",
+    # jsii (the engine behind aws-cdk-lib in Python) needs a Node.js binary. This wheel
+    # puts `node` in the project venv, so synth needs no system Node and no npm CDK CLI.
+    "nodejs-wheel-binaries>=22,<25",
+]
+
+[dependency-groups]
+dev = [
+    "boto3==1.43.112",
+    "hypothesis==6.169.0",
+    "pytest>=8.3",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"

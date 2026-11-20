@@ -1,0 +1,347 @@
+{
+  "_notes": [
+    "FAKE DATA. Every name, address, account and phone number here is fictional. Phone numbers are in the 555-0100..0199 range reserved for fictional use.",
+    "Factor values are stored as salted SHA-256 hashes (scripts/hash_tool.py), even in the mock. Plaintext test values are in data/fixtures.test-factors.json.",
+    "Amounts are decimal strings, never floats. Addresses omit the ZIP code because ZIP is a verification factor. A customer record has one scalar 'phone' (the customers table's phone-index key); the Doe household is two records sharing one phone.",
+    "Each customer has a unique 'memory_email': the Twilio Memory identifier (type 'email') that keys the verified customer's profile. It is never the caller ID, because the Doe household shares one phone. The domain is the reserved owlbank-demo.example (RFC 2606 .example); no real address belongs here.",
+    "OTP (level 3) is sent and checked by Twilio Verify, so no OTP value is stored.",
+    "Each credit card carries a 'product', one of the card slot's options in data/policy.json (red, purple, rewards); make_payment's 'to' names it. Thomas Doe (C-1001, the developer test customer) has OwlBank Red Card and OwlBank Purple Card; Sam Doe (C-1002) has OwlBank Rewards Card only; the others have no card."
+  ],
+  "customers": [
+    {
+      "customer_id": "C-1001",
+      "phone": "+12025550101",
+      "first_name": "Thomas",
+      "last_name": "Doe",
+      "language": "en-US",
+      "address": {
+        "line1": "12 Example Lane",
+        "city": "Springfield",
+        "state": "CA"
+      },
+      "memory_email": "thomas.doe@owlbank-demo.example",
+      "accounts": [
+        {
+          "type": "checking",
+          "last4": "4821",
+          "nickname": "Everyday Checking",
+          "available": "1234.56",
+          "current": "1310.06",
+          "pending": "75.50",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z",
+          "transactions": [
+            {
+              "date": "2026-10-09",
+              "description": "Coffee Example Co",
+              "amount": "-4.50",
+              "status": "pending"
+            },
+            {
+              "date": "2026-10-09",
+              "description": "Grocery Sample Mart",
+              "amount": "-71.00",
+              "status": "pending"
+            },
+            {
+              "date": "2026-10-08",
+              "description": "Payroll Example Corp",
+              "amount": "2100.00",
+              "status": "posted"
+            },
+            {
+              "date": "2026-10-07",
+              "description": "Utility Sample Power",
+              "amount": "-88.20",
+              "status": "posted"
+            }
+          ]
+        },
+        {
+          "type": "savings",
+          "last4": "7730",
+          "nickname": "Rainy Day Savings",
+          "available": "8420.00",
+          "current": "8420.00",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z",
+          "transactions": [
+            {
+              "date": "2026-10-01",
+              "description": "Interest",
+              "amount": "6.92",
+              "status": "posted"
+            },
+            {
+              "date": "2026-09-15",
+              "description": "Transfer from checking",
+              "amount": "500.00",
+              "status": "posted"
+            }
+          ]
+        },
+        {
+          "type": "credit_card",
+          "product": "red",
+          "last4": "3309",
+          "nickname": "OwlBank Red Card",
+          "available": "4387.60",
+          "current": "612.40",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z",
+          "credit_limit": "5000.00",
+          "minimum_due": "35.00",
+          "due_date": "2026-10-25",
+          "transactions": [
+            {
+              "date": "2026-10-05",
+              "description": "Example Airlines",
+              "amount": "-412.40",
+              "status": "posted"
+            },
+            {
+              "date": "2026-10-02",
+              "description": "Bookshop Sample",
+              "amount": "-200.00",
+              "status": "posted"
+            }
+          ]
+        },
+        {
+          "type": "credit_card",
+          "product": "purple",
+          "last4": "5146",
+          "nickname": "OwlBank Purple Card",
+          "available": "2759.15",
+          "current": "240.85",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z",
+          "credit_limit": "3000.00",
+          "minimum_due": "25.00",
+          "due_date": "2026-10-28",
+          "transactions": [
+            {
+              "date": "2026-10-06",
+              "description": "Hardware Sample Store",
+              "amount": "-140.85",
+              "status": "posted"
+            },
+            {
+              "date": "2026-10-03",
+              "description": "Example Fuel Stop",
+              "amount": "-100.00",
+              "status": "posted"
+            }
+          ]
+        }
+      ],
+      "factors": {
+        "zip": "67d29351541415ca7fb33f1747ee83d7$fc65b177c01ef109585c4c3badf83f2991312f42a9a5f8e5c2c6477a924d4f46",
+        "ssn4": "2c7574bad8adfb46e3992fff05785383$801a39dcfe8e93f83a00cf51c84acf6ba6faeec64762bba7db7eb27a76c8b739"
+      }
+    },
+    {
+      "customer_id": "C-1002",
+      "phone": "+12025550102",
+      "first_name": "Sam",
+      "last_name": "Doe",
+      "language": "en-US",
+      "address": {
+        "line1": "40 Sample Road",
+        "city": "Springfield",
+        "state": "WA"
+      },
+      "memory_email": "sam.doe@owlbank-demo.example",
+      "accounts": [
+        {
+          "type": "checking",
+          "last4": "1957",
+          "nickname": "Checking",
+          "available": "-42.10",
+          "current": "-42.10",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z",
+          "transactions": [
+            {
+              "date": "2026-10-08",
+              "description": "Streaming Example",
+              "amount": "-15.99",
+              "status": "posted"
+            },
+            {
+              "date": "2026-10-07",
+              "description": "Overdraft fee",
+              "amount": "-26.11",
+              "status": "posted"
+            }
+          ]
+        },
+        {
+          "type": "savings",
+          "last4": "6402",
+          "nickname": "Savings",
+          "available": "15.00",
+          "current": "15.00",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z"
+        },
+        {
+          "type": "credit_card",
+          "product": "rewards",
+          "last4": "6058",
+          "nickname": "OwlBank Rewards Card",
+          "available": "1180.00",
+          "current": "320.00",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z",
+          "credit_limit": "1500.00",
+          "minimum_due": "25.00",
+          "due_date": "2026-10-27",
+          "transactions": [
+            {
+              "date": "2026-10-04",
+              "description": "Grocery Sample Mart",
+              "amount": "-320.00",
+              "status": "posted"
+            }
+          ]
+        }
+      ],
+      "factors": {
+        "zip": "4dd711fa69131786705896a33e8dfbf6$aafc26115266b615fa11a8fa5f34fcf37df5f96abe826860bc0db25058dffb1c",
+        "ssn4": "af5fe976307721665ec52fa9f63a54e1$abeec6b421091704c54f434e5934f68ec174e97110a5c2f919a2df4f9804da3c"
+      }
+    },
+    {
+      "customer_id": "C-1003",
+      "phone": "+12025550102",
+      "first_name": "Jordan",
+      "last_name": "Doe",
+      "language": "en-US",
+      "address": {
+        "line1": "40 Sample Road, Unit B",
+        "city": "Springfield",
+        "state": "WA"
+      },
+      "memory_email": "jordan.doe@owlbank-demo.example",
+      "accounts": [
+        {
+          "type": "checking",
+          "last4": "8813",
+          "nickname": "Checking",
+          "available": "2950.75",
+          "current": "2950.75",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z"
+        },
+        {
+          "type": "savings",
+          "last4": "2290",
+          "nickname": "Savings",
+          "available": "12000.00",
+          "current": "12000.00",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z"
+        }
+      ],
+      "factors": {
+        "zip": "b45dda958190f05dc75df5736a0fe277$9a5aea0e3aa2de9268330665549f3cbc50838dc0701420e302268094ea8ab177",
+        "ssn4": "5ce46e49754ff895d3e30aeec71cf7ec$5e814a8cfd58e03f4357bbf40f9af1afa5cc68db8d70a39cc50699b1b98a426f"
+      }
+    },
+    {
+      "customer_id": "C-1004",
+      "phone": "+12025550103",
+      "first_name": "María",
+      "last_name": "Doe",
+      "language": "es-US",
+      "address": {
+        "line1": "7 Calle Ejemplo",
+        "city": "Springfield",
+        "state": "FL"
+      },
+      "memory_email": "maria.doe@owlbank-demo.example",
+      "accounts": [
+        {
+          "type": "checking",
+          "last4": "5512",
+          "nickname": "Cuenta de cheques",
+          "available": "310.00",
+          "current": "310.00",
+          "pending": "0.00",
+          "currency": "USD",
+          "asOf": "2026-10-10T14:58:00Z",
+          "transactions": [
+            {
+              "date": "2026-10-09",
+              "description": "Farmacia Ejemplo",
+              "amount": "-23.40",
+              "status": "posted"
+            },
+            {
+              "date": "2026-10-06",
+              "description": "Depósito de nómina",
+              "amount": "950.00",
+              "status": "posted"
+            }
+          ]
+        }
+      ],
+      "factors": {
+        "zip": "1b4c3b3a73902df82cde261a7f8bfcad$ee78033d0ab4bae9517794726e6d324ef43458e9968a433dc99e7f04a810955a",
+        "ssn4": "5c9bf807886c01dc99a29bbdb7fcf497$f78e1f5a9962c8d8e9d3273aa38690b54287e7041fbaaa63a92b24ef234d5144"
+      }
+    }
+  ],
+  "unseededNumbers": [
+    {
+      "phone": "+12025550199",
+      "covers": "No match (no customer for this ANI)"
+    },
+    {
+      "phone": "anonymous",
+      "covers": "Caller ID withheld (component tests only)"
+    }
+  ],
+  "realNumberPlaceholders": {
+    "_notes": "No real phone number is stored in this repository. At seed time (dev and test stacks only), scripts/seed.py reads these CDK parameters and assigns each real, owned number to a fixture as an extra ANI.",
+    "developerPhone": {
+      "cdkParameter": "developerPhone",
+      "fixture": "C-1001",
+      "purpose": "Manual test calls"
+    },
+    "testNumbers": {
+      "A": {
+        "cdkParameter": "testNumbers.A",
+        "fixture": "C-1001",
+        "covers": "Verified path, step-up, balance, payment; wrong-ZIP persona"
+      },
+      "B": {
+        "cdkParameter": "testNumbers.B",
+        "fixture": [
+          "C-1002",
+          "C-1003"
+        ],
+        "covers": "Several records on one ANI"
+      },
+      "C": {
+        "cdkParameter": "testNumbers.C",
+        "fixture": "C-1004",
+        "covers": "es-US path"
+      },
+      "D": {
+        "cdkParameter": "testNumbers.D",
+        "fixture": null,
+        "covers": "No match (not seeded)"
+      }
+    }
+  }
+}

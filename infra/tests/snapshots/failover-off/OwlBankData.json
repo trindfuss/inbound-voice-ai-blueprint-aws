@@ -1,0 +1,1611 @@
+{
+ "Outputs": {
+  "ExportsOutputFnGetAttCallsTableD3962D26ArnC9CD00A6": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttCallsTableD3962D26ArnC9CD00A6"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "CallsTableD3962D26",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "CatalogTableF8EA09BD",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "CustomersTableB554B793",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "DataKey17AFBB84",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "PolicyTableE50BDB2B",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttRiskTableF5BEC2F2ArnA4892EDA": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttRiskTableF5BEC2F2ArnA4892EDA"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "RiskTableF5BEC2F2",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttSegmentsTable28FC09E7Arn2AA3A7D2": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttSegmentsTable28FC09E7Arn2AA3A7D2"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "SegmentsTable28FC09E7",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "TokenKeyD1D1A236",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "TokensTable6C9B5BC6",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputRefAlarmTopicD01E77F99DF7FB73": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+   },
+   "Value": {
+    "Ref": "AlarmTopicD01E77F9"
+   }
+  },
+  "ExportsOutputRefBasicAuthSecretD2D5230999814F08": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefBasicAuthSecretD2D5230999814F08"
+   },
+   "Value": {
+    "Ref": "BasicAuthSecretD2D52309"
+   }
+  },
+  "ExportsOutputRefCallsTableD3962D26AE389FF8": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+   },
+   "Value": {
+    "Ref": "CallsTableD3962D26"
+   }
+  },
+  "ExportsOutputRefCatalogTableF8EA09BD1FB54FDE": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+   },
+   "Value": {
+    "Ref": "CatalogTableF8EA09BD"
+   }
+  },
+  "ExportsOutputRefContextApiKeySecret59ABCA7794D62F79": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefContextApiKeySecret59ABCA7794D62F79"
+   },
+   "Value": {
+    "Ref": "ContextApiKeySecret59ABCA77"
+   }
+  },
+  "ExportsOutputRefCustomersTableB554B793C1CB863D": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+   },
+   "Value": {
+    "Ref": "CustomersTableB554B793"
+   }
+  },
+  "ExportsOutputRefPolicyTableE50BDB2B25D69561": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+   },
+   "Value": {
+    "Ref": "PolicyTableE50BDB2B"
+   }
+  },
+  "ExportsOutputRefRiskTableF5BEC2F203DEECCC": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+   },
+   "Value": {
+    "Ref": "RiskTableF5BEC2F2"
+   }
+  },
+  "ExportsOutputRefSegmentsTable28FC09E74E6899DF": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+   },
+   "Value": {
+    "Ref": "SegmentsTable28FC09E7"
+   }
+  },
+  "ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+   },
+   "Value": {
+    "Ref": "TokensTable6C9B5BC6"
+   }
+  },
+  "ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+   },
+   "Value": {
+    "Ref": "TwilioApiKeySecretAE35AB9F"
+   }
+  },
+  "ExportsOutputRefTwilioAuthTokenSecret2DB21499E8F987DB": {
+   "Export": {
+    "Name": "OwlBankData:ExportsOutputRefTwilioAuthTokenSecret2DB21499E8F987DB"
+   },
+   "Value": {
+    "Ref": "TwilioAuthTokenSecret2DB21499"
+   }
+  },
+  "SecretBasicAuth": {
+   "Value": {
+    "Ref": "BasicAuthSecretD2D52309"
+   }
+  },
+  "SecretContextApiKey": {
+   "Value": {
+    "Ref": "ContextApiKeySecret59ABCA77"
+   }
+  },
+  "SecretTwilioApiKey": {
+   "Value": {
+    "Ref": "TwilioApiKeySecretAE35AB9F"
+   }
+  },
+  "SecretTwilioAuthToken": {
+   "Value": {
+    "Ref": "TwilioAuthTokenSecret2DB21499"
+   }
+  },
+  "TableCalls": {
+   "Value": {
+    "Ref": "CallsTableD3962D26"
+   }
+  },
+  "TableCatalog": {
+   "Value": {
+    "Ref": "CatalogTableF8EA09BD"
+   }
+  },
+  "TableCustomers": {
+   "Value": {
+    "Ref": "CustomersTableB554B793"
+   }
+  },
+  "TablePolicy": {
+   "Value": {
+    "Ref": "PolicyTableE50BDB2B"
+   }
+  },
+  "TableRisk": {
+   "Value": {
+    "Ref": "RiskTableF5BEC2F2"
+   }
+  },
+  "TableSegments": {
+   "Value": {
+    "Ref": "SegmentsTable28FC09E7"
+   }
+  },
+  "TableTokens": {
+   "Value": {
+    "Ref": "TokensTable6C9B5BC6"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+   "Type": "AWS::SSM::Parameter::Value<String>"
+  }
+ },
+ "Resources": {
+  "AccessAnalyzer": {
+   "Properties": {
+    "AnalyzerName": "owlbank-dev-account",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Type": "ACCOUNT"
+   },
+   "Type": "AWS::AccessAnalyzer::Analyzer"
+  },
+  "AlarmTopicD01E77F9": {
+   "Properties": {
+    "KmsMasterKeyId": {
+     "Fn::GetAtt": [
+      "DataKey17AFBB84",
+      "Arn"
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TopicName": "owlbank-dev-alarms"
+   },
+   "Type": "AWS::SNS::Topic"
+  },
+  "AlarmTopicPolicy309DB5F8": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sns:Publish",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": "*",
+       "Resource": {
+        "Ref": "AlarmTopicD01E77F9"
+       },
+       "Sid": "AllowPublishThroughSSLOnly"
+      },
+      {
+       "Action": "sns:Publish",
+       "Condition": {
+        "ArnEquals": {
+         "aws:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":events:us-east-1:111111111111:rule/owlbank-dev-bedrock-logging-change"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "events.amazonaws.com"
+       },
+       "Resource": {
+        "Ref": "AlarmTopicD01E77F9"
+       },
+       "Sid": "AllowBedrockLoggingRulePublish"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Topics": [
+     {
+      "Ref": "AlarmTopicD01E77F9"
+     }
+    ]
+   },
+   "Type": "AWS::SNS::TopicPolicy"
+  },
+  "BasicAuthSecretD2D52309": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "Description": "HTTP Basic credentials in the Twilio webhook URLs: JSON {user, password}. Generated by Secrets Manager at deploy; no one sets it.",
+    "GenerateSecretString": {
+     "ExcludeCharacters": "ghijklmnopqrstuvwxyz",
+     "ExcludePunctuation": true,
+     "ExcludeUppercase": true,
+     "GenerateStringKey": "password",
+     "IncludeSpace": false,
+     "PasswordLength": 48,
+     "SecretStringTemplate": "{\"user\": \"owlbank\"}"
+    },
+    "KmsKeyId": {
+     "Fn::GetAtt": [
+      "DataKey17AFBB84",
+      "Arn"
+     ]
+    },
+    "Name": "owlbank/twilio/basic-auth",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::SecretsManager::Secret",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "BedrockLoggingChangeRule": {
+   "Properties": {
+    "Description": "Bedrock model-invocation logging configuration changed: the resolver's prompts may now be logged",
+    "EventBusName": "default",
+    "EventPattern": {
+     "detail": {
+      "eventName": [
+       "PutModelInvocationLoggingConfiguration"
+      ],
+      "eventSource": [
+       "bedrock.amazonaws.com"
+      ]
+     },
+     "detail-type": [
+      "AWS API Call via CloudTrail"
+     ],
+     "source": [
+      "aws.bedrock"
+     ]
+    },
+    "Name": "owlbank-dev-bedrock-logging-change",
+    "State": "ENABLED",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Targets": [
+     {
+      "Arn": {
+       "Ref": "AlarmTopicD01E77F9"
+      },
+      "Id": "AlarmTopic"
+     }
+    ]
+   },
+   "Type": "AWS::Events::Rule"
+  },
+  "CallsTableD3962D26": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "call_sid",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "sweep_open",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "sweep_due_at",
+      "AttributeType": "N"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "DeletionProtectionEnabled": false,
+    "GlobalSecondaryIndexes": [
+     {
+      "IndexName": "sweep-due",
+      "KeySchema": [
+       {
+        "AttributeName": "sweep_open",
+        "KeyType": "HASH"
+       },
+       {
+        "AttributeName": "sweep_due_at",
+        "KeyType": "RANGE"
+       }
+      ],
+      "Projection": {
+       "ProjectionType": "KEYS_ONLY"
+      }
+     }
+    ],
+    "KeySchema": [
+     {
+      "AttributeName": "call_sid",
+      "KeyType": "HASH"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "SSESpecification": {
+     "KMSMasterKeyId": {
+      "Fn::GetAtt": [
+       "DataKey17AFBB84",
+       "Arn"
+      ]
+     },
+     "SSEEnabled": true,
+     "SSEType": "KMS"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TimeToLiveSpecification": {
+     "AttributeName": "expires_at",
+     "Enabled": true
+    }
+   },
+   "Type": "AWS::DynamoDB::Table",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "CatalogTableF8EA09BD": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "key",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "lang",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "DeletionProtectionEnabled": false,
+    "KeySchema": [
+     {
+      "AttributeName": "key",
+      "KeyType": "HASH"
+     },
+     {
+      "AttributeName": "lang",
+      "KeyType": "RANGE"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "SSESpecification": {
+     "KMSMasterKeyId": {
+      "Fn::GetAtt": [
+       "DataKey17AFBB84",
+       "Arn"
+      ]
+     },
+     "SSEEnabled": true,
+     "SSEType": "KMS"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::DynamoDB::Table",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "ContextApiKeySecret59ABCA77": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "Description": "Twilio Restricted API key for the Context API's TaskRouter reads: JSON {account_sid, api_key, api_secret}. Created in Twilio and written by scripts/twilio_setup.py --phase pre; placeholder until then.",
+    "GenerateSecretString": {
+     "ExcludePunctuation": true,
+     "GenerateStringKey": "unset",
+     "SecretStringTemplate": "{\"placeholder\": true}"
+    },
+    "KmsKeyId": {
+     "Fn::GetAtt": [
+      "DataKey17AFBB84",
+      "Arn"
+     ]
+    },
+    "Name": "owlbank/twilio/context-api-key",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::SecretsManager::Secret",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "CustomersTableB554B793": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "customer_id",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "phone",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "DeletionProtectionEnabled": false,
+    "GlobalSecondaryIndexes": [
+     {
+      "IndexName": "phone-index",
+      "KeySchema": [
+       {
+        "AttributeName": "phone",
+        "KeyType": "HASH"
+       }
+      ],
+      "Projection": {
+       "ProjectionType": "ALL"
+      }
+     }
+    ],
+    "KeySchema": [
+     {
+      "AttributeName": "customer_id",
+      "KeyType": "HASH"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "SSESpecification": {
+     "KMSMasterKeyId": {
+      "Fn::GetAtt": [
+       "DataKey17AFBB84",
+       "Arn"
+      ]
+     },
+     "SSEEnabled": true,
+     "SSEType": "KMS"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::DynamoDB::Table",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "DataKey17AFBB84": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "Description": "OwlBank blueprint CMK: DynamoDB, Secrets Manager, CloudWatch Logs, AgentCore",
+    "EnableKeyRotation": true,
+    "KeyPolicy": {
+     "Statement": [
+      {
+       "Action": "kms:*",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::111111111111:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:Encrypt*",
+        "kms:Decrypt*",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Describe*"
+       ],
+       "Condition": {
+        "ArnLike": {
+         "kms:EncryptionContext:aws:logs:arn": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":logs:us-east-1:111111111111:log-group:/owlbank/*"
+            ]
+           ]
+          },
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":logs:us-east-1:111111111111:log-group:aws-waf-logs-owlbank-*"
+            ]
+           ]
+          }
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "logs.us-east-1.amazonaws.com"
+       },
+       "Resource": "*",
+       "Sid": "AllowCloudWatchLogs"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "aws:SourceAccount": "111111111111",
+         "kms:ViaService": "sns.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudwatch.amazonaws.com"
+       },
+       "Resource": "*",
+       "Sid": "AllowCloudWatchAlarmsToEncryptedTopic"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "secretsmanager.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::111111111111:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:CreateGrant",
+        "kms:DescribeKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "secretsmanager.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::111111111111:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "kms:GenerateDataKey*",
+        "kms:Decrypt"
+       ],
+       "Condition": {
+        "ArnEquals": {
+         "aws:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":events:us-east-1:111111111111:rule/owlbank-dev-bedrock-logging-change"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "events.amazonaws.com"
+       },
+       "Resource": "*",
+       "Sid": "AllowBedrockLoggingRuleToEncryptedTopic"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::KMS::Key",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "DataKeyAliasF989EB84": {
+   "Properties": {
+    "AliasName": "alias/owlbank-data",
+    "TargetKeyId": {
+     "Fn::GetAtt": [
+      "DataKey17AFBB84",
+      "Arn"
+     ]
+    }
+   },
+   "Type": "AWS::KMS::Alias"
+  },
+  "PolicyTableE50BDB2B": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "pk",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "DeletionProtectionEnabled": false,
+    "KeySchema": [
+     {
+      "AttributeName": "pk",
+      "KeyType": "HASH"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "SSESpecification": {
+     "KMSMasterKeyId": {
+      "Fn::GetAtt": [
+       "DataKey17AFBB84",
+       "Arn"
+      ]
+     },
+     "SSEEnabled": true,
+     "SSEType": "KMS"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::DynamoDB::Table",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "RiskTableF5BEC2F2": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "risk_key",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "DeletionProtectionEnabled": false,
+    "KeySchema": [
+     {
+      "AttributeName": "risk_key",
+      "KeyType": "HASH"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "SSESpecification": {
+     "KMSMasterKeyId": {
+      "Fn::GetAtt": [
+       "DataKey17AFBB84",
+       "Arn"
+      ]
+     },
+     "SSEEnabled": true,
+     "SSEType": "KMS"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TimeToLiveSpecification": {
+     "AttributeName": "expires_at",
+     "Enabled": true
+    }
+   },
+   "Type": "AWS::DynamoDB::Table",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "SegmentsTable28FC09E7": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "call_sid",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "seq",
+      "AttributeType": "N"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "DeletionProtectionEnabled": false,
+    "KeySchema": [
+     {
+      "AttributeName": "call_sid",
+      "KeyType": "HASH"
+     },
+     {
+      "AttributeName": "seq",
+      "KeyType": "RANGE"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "SSESpecification": {
+     "KMSMasterKeyId": {
+      "Fn::GetAtt": [
+       "DataKey17AFBB84",
+       "Arn"
+      ]
+     },
+     "SSEEnabled": true,
+     "SSEType": "KMS"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TimeToLiveSpecification": {
+     "AttributeName": "expires_at",
+     "Enabled": true
+    }
+   },
+   "Type": "AWS::DynamoDB::Table",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "TokenKeyAlias129AC994": {
+   "Properties": {
+    "AliasName": "alias/owlbank-token-sealing",
+    "TargetKeyId": {
+     "Fn::GetAtt": [
+      "TokenKeyD1D1A236",
+      "Arn"
+     ]
+    }
+   },
+   "Type": "AWS::KMS::Alias"
+  },
+  "TokenKeyD1D1A236": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "Description": "OwlBank call-token sealing; encryption context must include call_sid",
+    "EnableKeyRotation": true,
+    "KeyPolicy": {
+     "Statement": [
+      {
+       "Action": [
+        "kms:CancelKeyDeletion",
+        "kms:CreateAlias",
+        "kms:DeleteAlias",
+        "kms:DescribeKey",
+        "kms:DisableKey",
+        "kms:DisableKeyRotation",
+        "kms:EnableKey",
+        "kms:EnableKeyRotation",
+        "kms:GetKeyPolicy",
+        "kms:GetKeyRotationStatus",
+        "kms:ListAliases",
+        "kms:ListGrants",
+        "kms:ListKeyPolicies",
+        "kms:ListKeyRotations",
+        "kms:ListResourceTags",
+        "kms:PutKeyPolicy",
+        "kms:RetireGrant",
+        "kms:RevokeGrant",
+        "kms:RotateKeyOnDemand",
+        "kms:ScheduleKeyDeletion",
+        "kms:TagResource",
+        "kms:UntagResource",
+        "kms:UpdateAlias",
+        "kms:UpdateKeyDescription"
+       ],
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::111111111111:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*",
+       "Sid": "KeyAdministration"
+      },
+      {
+       "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt"
+       ],
+       "Condition": {
+        "ArnEquals": {
+         "aws:PrincipalArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":iam::111111111111:role/owlbank-dev-frontdoor"
+           ]
+          ]
+         }
+        },
+        "ForAnyValue:StringEquals": {
+         "kms:EncryptionContextKeys": [
+          "call_sid"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::111111111111:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*",
+       "Sid": "FrontdoorSealUnseal"
+      },
+      {
+       "Action": "kms:Encrypt",
+       "Condition": {
+        "ArnEquals": {
+         "aws:PrincipalArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":iam::111111111111:role/owlbank-dev-auth-service"
+           ]
+          ]
+         }
+        },
+        "ForAnyValue:StringEquals": {
+         "kms:EncryptionContextKeys": [
+          "call_sid"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::111111111111:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*",
+       "Sid": "AuthServiceSeal"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "ArnEquals": {
+         "aws:PrincipalArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":iam::111111111111:role/owlbank-dev-bridge-task"
+           ]
+          ]
+         }
+        },
+        "ForAnyValue:StringEquals": {
+         "kms:EncryptionContextKeys": [
+          "call_sid"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::111111111111:root"
+          ]
+         ]
+        }
+       },
+       "Resource": "*",
+       "Sid": "BridgeUnseal"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*"
+       ],
+       "Condition": {
+        "ArnNotEquals": {
+         "aws:PrincipalArn": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":iam::111111111111:role/owlbank-dev-frontdoor"
+            ]
+           ]
+          },
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":iam::111111111111:role/owlbank-dev-auth-service"
+            ]
+           ]
+          },
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:",
+             {
+              "Ref": "AWS::Partition"
+             },
+             ":iam::111111111111:role/owlbank-dev-bridge-task"
+            ]
+           ]
+          }
+         ]
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": "*",
+       "Sid": "DenyCryptoExceptSealingRoles"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::KMS::Key",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "TokensTable6C9B5BC6": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "token_hash",
+      "AttributeType": "S"
+     },
+     {
+      "AttributeName": "call_sid",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "DeletionProtectionEnabled": false,
+    "GlobalSecondaryIndexes": [
+     {
+      "IndexName": "call_sid-index",
+      "KeySchema": [
+       {
+        "AttributeName": "call_sid",
+        "KeyType": "HASH"
+       }
+      ],
+      "Projection": {
+       "ProjectionType": "ALL"
+      }
+     }
+    ],
+    "KeySchema": [
+     {
+      "AttributeName": "token_hash",
+      "KeyType": "HASH"
+     }
+    ],
+    "PointInTimeRecoverySpecification": {
+     "PointInTimeRecoveryEnabled": true
+    },
+    "SSESpecification": {
+     "KMSMasterKeyId": {
+      "Fn::GetAtt": [
+       "DataKey17AFBB84",
+       "Arn"
+      ]
+     },
+     "SSEEnabled": true,
+     "SSEType": "KMS"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TimeToLiveSpecification": {
+     "AttributeName": "expires_at",
+     "Enabled": true
+    }
+   },
+   "Type": "AWS::DynamoDB::Table",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "TwilioApiKeySecretAE35AB9F": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "Description": "Twilio API key for REST and Memory calls: JSON {account_sid, api_key, api_secret}. Set after deploy by the operator (console, CLI or scripts/populate_secrets.py); placeholder until then.",
+    "GenerateSecretString": {
+     "ExcludePunctuation": true,
+     "GenerateStringKey": "unset",
+     "SecretStringTemplate": "{\"placeholder\": true}"
+    },
+    "KmsKeyId": {
+     "Fn::GetAtt": [
+      "DataKey17AFBB84",
+      "Arn"
+     ]
+    },
+    "Name": "owlbank/twilio/api-key",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::SecretsManager::Secret",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "TwilioAuthTokenSecret2DB21499": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "Description": "Twilio Auth Token, used only to validate X-Twilio-Signature: JSON {auth_token}. Set after deploy by the operator (console, CLI or scripts/populate_secrets.py); placeholder until then.",
+    "GenerateSecretString": {
+     "ExcludePunctuation": true,
+     "GenerateStringKey": "unset",
+     "SecretStringTemplate": "{\"placeholder\": true}"
+    },
+    "KmsKeyId": {
+     "Fn::GetAtt": [
+      "DataKey17AFBB84",
+      "Arn"
+     ]
+    },
+    "Name": "owlbank/twilio/auth-token",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::SecretsManager::Secret",
+   "UpdateReplacePolicy": "Retain"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

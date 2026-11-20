@@ -1,0 +1,3979 @@
+{
+ "label": "strands-cache",
+ "agent": "strands",
+ "cold": false,
+ "runs": 8,
+ "backend": {
+  "backend": "strands",
+  "prompt_caching": true,
+  "model_id": "us.anthropic.claude-haiku-5-5",
+  "max_tokens": 2000,
+  "thinking": "adaptive",
+  "model_settings_source": "infra/cdk.out/OwlBankAgent.template.json",
+  "gateway_url": "https://owlbank-level0-63kqmzoncg.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+  "memory_id": "owlbank_voice_stm-K6Sq6Q7BmF",
+  "memory_actor_id": "owlbank-voice-strands",
+  "session_prefix": "bench-",
+  "packages": {
+   "strands-agents": "1.61.0",
+   "bedrock-agentcore": "1.24.1",
+   "mcp-proxy-for-aws": "1.7.0"
+  }
+ },
+ "masking": {
+  "timer_s": 1.5,
+  "masked_tools": [
+   "change_address",
+   "get_balance",
+   "list_recent_transactions"
+  ]
+ },
+ "at": "2026-10-15T15:54:07+00:00",
+ "summary": {
+  "greeting#1": {
+   "n": 8,
+   "response_p50": 1.273,
+   "response_p90": 2.178,
+   "first_audio_p50": 1.273,
+   "first_audio_p90": 1.5,
+   "max_silence_p50": 1.273,
+   "max_silence_p90": 1.5,
+   "hop_end_p50": 1.591,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 1.273,
+   "input_tokens_mean": 4,
+   "output_tokens_mean": 73.5,
+   "cache_read_tokens_mean": 2778.1,
+   "cache_write_tokens_mean": 396.9
+  },
+  "faq_gateway#1": {
+   "n": 8,
+   "response_p50": 2.881,
+   "response_p90": 4.251,
+   "first_audio_p50": 1.5,
+   "first_audio_p90": 1.5,
+   "max_silence_p50": 1.5,
+   "max_silence_p90": 1.705,
+   "hop_end_p50": 3.192,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 2.881,
+   "input_tokens_mean": 6,
+   "output_tokens_mean": 116.2,
+   "cache_read_tokens_mean": 6582.1,
+   "cache_write_tokens_mean": 87.9
+  },
+  "transactions_inline#1": {
+   "n": 8,
+   "response_p50": 3.12,
+   "response_p90": 3.798,
+   "first_audio_p50": 1.179,
+   "first_audio_p90": 1.25,
+   "max_silence_p50": 1.179,
+   "max_silence_p90": 1.25,
+   "hop_end_p50": 1.673,
+   "hops_mean": 2,
+   "hop1_first_event_p50": 1.179,
+   "input_tokens_mean": 6,
+   "output_tokens_mean": 199.8,
+   "cache_read_tokens_mean": 6572.2,
+   "cache_write_tokens_mean": 43.8
+  },
+  "balance_then_bargein#1": {
+   "n": 8,
+   "response_p50": 1.464,
+   "response_p90": 1.672,
+   "first_audio_p50": 1.464,
+   "first_audio_p90": 1.5,
+   "max_silence_p50": 1.464,
+   "max_silence_p90": 1.5,
+   "hop_end_p50": 1.465,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 1.464,
+   "input_tokens_mean": 4,
+   "output_tokens_mean": 49,
+   "cache_read_tokens_mean": 3161,
+   "cache_write_tokens_mean": 10
+  },
+  "balance_then_bargein#2": {
+   "n": 8,
+   "response_p50": 3.526,
+   "response_p90": 4.047,
+   "first_audio_p50": 1.5,
+   "first_audio_p90": 1.5,
+   "max_silence_p50": 1.5,
+   "max_silence_p90": 1.5,
+   "hop_end_p50": 1.937,
+   "hops_mean": 2,
+   "hop1_first_event_p50": 1.58,
+   "input_tokens_mean": 4,
+   "output_tokens_mean": 310.9,
+   "cache_read_tokens_mean": 6775.1,
+   "cache_write_tokens_mean": 410.5
+  },
+  "payment_stepup#1": {
+   "n": 8,
+   "response_p50": 3.029,
+   "response_p90": 3.221,
+   "first_audio_p50": 3.029,
+   "first_audio_p90": 3.221,
+   "max_silence_p50": 3.029,
+   "max_silence_p90": 3.221,
+   "hop_end_p50": 1.496,
+   "hops_mean": 2,
+   "hop1_first_event_p50": 1.292,
+   "input_tokens_mean": 6,
+   "output_tokens_mean": 151,
+   "cache_read_tokens_mean": 6484,
+   "cache_write_tokens_mean": 30
+  },
+  "payment_stepup#2": {
+   "n": 8,
+   "response_p50": 1.265,
+   "response_p90": 1.321,
+   "first_audio_p50": 1.265,
+   "first_audio_p90": 1.321,
+   "max_silence_p50": 1.265,
+   "max_silence_p90": 1.321,
+   "hop_end_p50": 1.596,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 1.265,
+   "input_tokens_mean": 2,
+   "output_tokens_mean": 99,
+   "cache_read_tokens_mean": 3450.9,
+   "cache_write_tokens_mean": 17.1
+  },
+  "payment_stepup#3": {
+   "n": 8,
+   "response_p50": 2.358,
+   "response_p90": 2.779,
+   "first_audio_p50": 1.5,
+   "first_audio_p90": 1.5,
+   "max_silence_p50": 1.5,
+   "max_silence_p90": 1.5,
+   "hop_end_p50": 2.359,
+   "hops_mean": 1,
+   "hop1_first_event_p50": 2.358,
+   "input_tokens_mean": 2,
+   "output_tokens_mean": 252.9,
+   "cache_read_tokens_mean": 3701.6,
+   "cache_write_tokens_mean": 33.4
+  }
+ },
+ "overall": {
+  "hops": 88,
+  "hop_end_p50": 1.711,
+  "hop_end_p90": 2.879,
+  "model_calls": 96,
+  "model_latency_p50": 1.311,
+  "model_latency_p90": 2.03,
+  "model_ttfb_p50": 1.124,
+  "model_ttfb_p90": 1.628,
+  "overhead_per_model_call_p50": 0.306,
+  "overhead_per_model_call_mean": 0.324,
+  "usage": {
+   "input_tokens": 272,
+   "output_tokens": 10018,
+   "cache_read_tokens": 316041,
+   "cache_write_tokens": 8236
+  },
+  "cache_hit_ratio": 0.974,
+  "history_builds": {
+   "agent_history_new:new_session": 40
+  }
+ },
+ "raw": [
+  {
+   "scenario": "greeting",
+   "session": "bench-be33ab42d6f756aaab91924bc54c",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.058,
+       "first_text_s": 2.058,
+       "tool_call_s": null,
+       "end_s": 2.37,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, look at recent transactions, make a payment toward your credit card, move money between checking and savings, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 75,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 3175
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.86,
+         "model_latency_s": 2.057,
+         "input_tokens": 4,
+         "output_tokens": 75,
+         "cache_read_tokens": 0,
+         "cache_write_tokens": 3175,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.058,
+     "first_text_s": 2.058
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 1353.3,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-85d00b04a055226c65428dbb5ff2",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 3.219,
+       "first_text_s": 3.219,
+       "tool_call_s": null,
+       "end_s": 3.502,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Is there anything else I can help you with?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 121,
+        "cache_read_tokens": 6267,
+        "cache_write_tokens": 406
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.513,
+         "model_latency_s": 1.593,
+         "input_tokens": 4,
+         "output_tokens": 57,
+         "cache_read_tokens": 3091,
+         "cache_write_tokens": 85,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 1.183,
+         "model_latency_s": 1.331,
+         "input_tokens": 2,
+         "output_tokens": 64,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 321,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.219,
+     "first_text_s": 3.219
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 252.4,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-d0c7f33b36b0e936aab3705a9d75",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 1.263,
+       "first_text_s": null,
+       "tool_call_s": 1.263,
+       "end_s": 1.551,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3091,
+        "cache_write_tokens": 84
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.161,
+         "model_latency_s": 1.26,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3091,
+         "cache_write_tokens": 84,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.986,
+       "first_text_s": 1.986,
+       "tool_call_s": null,
+       "end_s": 2.314,
+       "tools": [],
+       "text": "Your most recent checking transactions are two pending charges from today, Coffee Example Co for $4.50 and Grocery Sample Mart for $71.00. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 138,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 266
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.544,
+         "model_latency_s": 1.984,
+         "input_tokens": 2,
+         "output_tokens": 138,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 266,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.537,
+     "first_text_s": 1.986
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 280.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-dc7bd5efa1420ddc3e92aa3fb3c0",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.311,
+       "first_text_s": null,
+       "tool_call_s": 1.311,
+       "end_s": 1.311,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3091,
+        "cache_write_tokens": 80
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.936,
+         "model_latency_s": 1.018,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3091,
+         "cache_write_tokens": 80,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.311,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.53,
+       "first_text_s": null,
+       "tool_call_s": 1.53,
+       "end_s": 1.817,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 153,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 231
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.496,
+         "model_latency_s": 1.527,
+         "input_tokens": 2,
+         "output_tokens": 153,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 231,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.453,
+       "first_text_s": 1.453,
+       "tool_call_s": null,
+       "end_s": 1.736,
+       "tools": [],
+       "text": "Your recent checking transactions are: a $4.50 charge from Coffee Example Co and a $71.00 charge from Grocery Sample Mart, both pending, dated October 9. Before those, there was a $2,100.00 payroll deposit from Payroll Example Corp on October 8, and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 119,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 364
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.993,
+         "model_latency_s": 1.453,
+         "input_tokens": 2,
+         "output_tokens": 119,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 364,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.27,
+     "first_text_s": 1.453
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 305.7,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-acd4a9458d24236fa85e8eb4b3e2",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.474,
+       "first_text_s": null,
+       "tool_call_s": 1.474,
+       "end_s": 1.777,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3091,
+        "cache_write_tokens": 92
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.298,
+         "model_latency_s": 1.472,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3091,
+         "cache_write_tokens": 92,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.366,
+       "first_text_s": null,
+       "tool_call_s": 1.366,
+       "end_s": 1.366,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 148
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.953,
+         "model_latency_s": 0.983,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 148,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 3.143,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.286,
+       "first_text_s": null,
+       "tool_call_s": 1.286,
+       "end_s": 1.638,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 137
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.079,
+         "model_latency_s": 1.282,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 137,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.286,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.551,
+       "first_text_s": null,
+       "tool_call_s": 2.551,
+       "end_s": 2.551,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 272,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 267
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.858,
+         "model_latency_s": 2.244,
+         "input_tokens": 2,
+         "output_tokens": 272,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 267,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 2.551,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 426.9,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "bench-7c01024522df65e68c4ed6845c97",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 1.066,
+       "first_text_s": 1.066,
+       "tool_call_s": null,
+       "end_s": 1.36,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, look at recent transactions, make a payment toward your credit card, move money between checking and savings, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 75,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.843,
+         "model_latency_s": 1.067,
+         "input_tokens": 4,
+         "output_tokens": 75,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 1.066,
+     "first_text_s": 1.066
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 258.4,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-9423ecd5d20eedbf8ae94b9a1bb2",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 2.897,
+       "first_text_s": 2.897,
+       "tool_call_s": null,
+       "end_s": 3.195,
+       "tools": [],
+       "text": "Our Downtown branch is open Saturday from 9 a.m. to 1 p.m. The Riverside branch is closed on weekends. Would you like the Downtown address?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 115,
+        "cache_read_tokens": 6673,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.037,
+         "model_latency_s": 1.039,
+         "input_tokens": 4,
+         "output_tokens": 57,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 1.45,
+         "model_latency_s": 1.465,
+         "input_tokens": 2,
+         "output_tokens": 58,
+         "cache_read_tokens": 3497,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.897,
+     "first_text_s": 2.897
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 255.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-0a0d3f3fa245414e9e393690411c",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 1.145,
+       "first_text_s": null,
+       "tool_call_s": 1.145,
+       "end_s": 1.438,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.083,
+         "model_latency_s": 1.142,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 2.969,
+       "first_text_s": 2.969,
+       "tool_call_s": null,
+       "end_s": 3.303,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 charge from Coffee Example Co and a $71.00 charge from Grocery Sample Mart, both pending as of October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 168,
+        "cache_read_tokens": 3441,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 2.725,
+         "model_latency_s": 2.967,
+         "input_tokens": 2,
+         "output_tokens": 168,
+         "cache_read_tokens": 3441,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 4.407,
+     "first_text_s": 2.969
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 302.3,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-d2ddf765ec7bf09fbabb850c359f",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.657,
+       "first_text_s": null,
+       "tool_call_s": 1.657,
+       "end_s": 1.658,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.209,
+         "model_latency_s": 1.306,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.657,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.017,
+       "first_text_s": null,
+       "tool_call_s": 2.017,
+       "end_s": 2.405,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 236,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.994,
+         "model_latency_s": 2.014,
+         "input_tokens": 2,
+         "output_tokens": 236,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.678,
+       "first_text_s": 1.678,
+       "tool_call_s": null,
+       "end_s": 1.974,
+       "tools": [],
+       "text": "Your latest checking transactions are a $4.50 pending charge at Coffee Example Co and a $71.00 pending charge at Grocery Sample Mart, both dated October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted October 8, and an $88.20 payment to Utility Sample Power posted October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 156,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 447
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.431,
+         "model_latency_s": 1.679,
+         "input_tokens": 2,
+         "output_tokens": 156,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 447,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 4.083,
+     "first_text_s": 1.678
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 345.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-62e2beae450dbf8d4ee51a12eaf7",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.339,
+       "first_text_s": null,
+       "tool_call_s": 1.339,
+       "end_s": 1.633,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.117,
+         "model_latency_s": 1.336,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.525,
+       "first_text_s": null,
+       "tool_call_s": 1.525,
+       "end_s": 1.525,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.12,
+         "model_latency_s": 1.202,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 3.158,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.265,
+       "first_text_s": null,
+       "tool_call_s": 1.265,
+       "end_s": 1.615,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.067,
+         "model_latency_s": 1.263,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.265,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.271,
+       "first_text_s": null,
+       "tool_call_s": 2.271,
+       "end_s": 2.271,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 256,
+        "cache_read_tokens": 3735,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.464,
+         "model_latency_s": 1.983,
+         "input_tokens": 2,
+         "output_tokens": 256,
+         "cache_read_tokens": 3735,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 2.271,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 279.8,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "bench-4fc3763d72763b811b1a71c5f583",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 1.398,
+       "first_text_s": 1.398,
+       "tool_call_s": null,
+       "end_s": 1.695,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, look at recent transactions, make a payment to your credit card, move money between checking and savings, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 74,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.099,
+         "model_latency_s": 1.399,
+         "input_tokens": 4,
+         "output_tokens": 74,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 1.398,
+     "first_text_s": 1.398
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 295.0,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-1ce9b2ca8824f94a958ee770d5a4",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 3.943,
+       "first_text_s": 3.943,
+       "tool_call_s": null,
+       "end_s": 4.264,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Is there anything else I can help you with?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 121,
+        "cache_read_tokens": 6673,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.031,
+         "model_latency_s": 2.447,
+         "input_tokens": 4,
+         "output_tokens": 57,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 0.956,
+         "model_latency_s": 1.15,
+         "input_tokens": 2,
+         "output_tokens": 64,
+         "cache_read_tokens": 3497,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.943,
+     "first_text_s": 3.943
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 321.6,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-e837e657a6fcce5db2f98247a145",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 1.244,
+       "first_text_s": null,
+       "tool_call_s": 1.244,
+       "end_s": 1.547,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.094,
+         "model_latency_s": 1.241,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.476,
+       "first_text_s": 1.476,
+       "tool_call_s": null,
+       "end_s": 1.779,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 charge at Coffee Example Co and a $71.00 charge at Grocery Sample Mart, both pending from October 9. Before those, there was a $2,100.00 payroll deposit from Payroll Example Corp on October 8, and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 117,
+        "cache_read_tokens": 3441,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.082,
+         "model_latency_s": 1.477,
+         "input_tokens": 2,
+         "output_tokens": 117,
+         "cache_read_tokens": 3441,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.023,
+     "first_text_s": 1.476
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 307.4,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-baa482e76921c91fb8ae28892b05",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.708,
+       "first_text_s": null,
+       "tool_call_s": 1.708,
+       "end_s": 1.708,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.399,
+         "model_latency_s": 1.401,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.708,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.656,
+       "first_text_s": null,
+       "tool_call_s": 1.656,
+       "end_s": 1.949,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 157,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.632,
+         "model_latency_s": 1.652,
+         "input_tokens": 2,
+         "output_tokens": 157,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.653,
+       "first_text_s": 1.653,
+       "tool_call_s": null,
+       "end_s": 1.919,
+       "tools": [],
+       "text": "Your recent checking transactions are: a $4.50 coffee charge and a $71.00 grocery charge, both pending from October 9. Before those, a $2,100.00 payroll deposit posted October 8, and an $88.20 utility payment posted October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 129,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 368
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.473,
+         "model_latency_s": 1.652,
+         "input_tokens": 2,
+         "output_tokens": 129,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 368,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.602,
+     "first_text_s": 1.653
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 329.1,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-7512814d859ea78cebfc53391f22",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.19,
+       "first_text_s": null,
+       "tool_call_s": 1.19,
+       "end_s": 1.487,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.056,
+         "model_latency_s": 1.187,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.445,
+       "first_text_s": null,
+       "tool_call_s": 1.445,
+       "end_s": 1.446,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.105,
+         "model_latency_s": 1.12,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 2.932,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.312,
+       "first_text_s": null,
+       "tool_call_s": 1.312,
+       "end_s": 1.611,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.194,
+         "model_latency_s": 1.309,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.312,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 3.156,
+       "first_text_s": null,
+       "tool_call_s": 3.156,
+       "end_s": 3.156,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 240,
+        "cache_read_tokens": 3735,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 2.451,
+         "model_latency_s": 2.869,
+         "input_tokens": 2,
+         "output_tokens": 240,
+         "cache_read_tokens": 3735,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 3.156,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 262.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "bench-aaa93ea5244c5c02a61f5ddc0e45",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 1.236,
+       "first_text_s": 1.236,
+       "tool_call_s": null,
+       "end_s": 1.529,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, list recent transactions, move money between checking and savings, make a credit card payment, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 71,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.03,
+         "model_latency_s": 1.238,
+         "input_tokens": 4,
+         "output_tokens": 71,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 1.236,
+     "first_text_s": 1.236
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 486.7,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-df8fa8b067e174586bd758db3e9e",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 2.866,
+       "first_text_s": 2.866,
+       "tool_call_s": null,
+       "end_s": 3.189,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Is there anything else I can help you with?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 121,
+        "cache_read_tokens": 6673,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.168,
+         "model_latency_s": 1.277,
+         "input_tokens": 4,
+         "output_tokens": 57,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 1.007,
+         "model_latency_s": 1.199,
+         "input_tokens": 2,
+         "output_tokens": 64,
+         "cache_read_tokens": 3497,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.866,
+     "first_text_s": 2.866
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 272.8,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-8cb0488e656db0aad636fd6f16a1",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 1.137,
+       "first_text_s": null,
+       "tool_call_s": 1.137,
+       "end_s": 1.451,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.118,
+         "model_latency_s": 1.134,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.563,
+       "first_text_s": 1.563,
+       "tool_call_s": null,
+       "end_s": 1.882,
+       "tools": [],
+       "text": "Your checking account has four recent transactions. The two newest are pending: a $4.50 charge from Coffee Example Co and a $71.00 charge from Grocery Sample Mart, both on October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Utility Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 154,
+        "cache_read_tokens": 3441,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.17,
+         "model_latency_s": 1.563,
+         "input_tokens": 2,
+         "output_tokens": 154,
+         "cache_read_tokens": 3441,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.014,
+     "first_text_s": 1.563
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 306.9,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-7263fb4c11c42733d15c63066e5f",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.348,
+       "first_text_s": null,
+       "tool_call_s": 1.348,
+       "end_s": 1.348,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.993,
+         "model_latency_s": 1.015,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.348,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.541,
+       "first_text_s": null,
+       "tool_call_s": 1.541,
+       "end_s": 1.841,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 151,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.491,
+         "model_latency_s": 1.537,
+         "input_tokens": 2,
+         "output_tokens": 151,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.375,
+       "first_text_s": 1.375,
+       "tool_call_s": null,
+       "end_s": 1.753,
+       "tools": [],
+       "text": "Here are your latest checking transactions. Pending: a $4.50 charge from Coffee Example Co and a $71.00 charge from Grocery Sample Mart, both on October 9. Posted: a $2,100.00 payroll deposit from Payroll Example Corp on October 8, and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 118,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 362
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.137,
+         "model_latency_s": 1.376,
+         "input_tokens": 2,
+         "output_tokens": 118,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 362,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.216,
+     "first_text_s": 1.375
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 257.7,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-11368dc5299e89343a4d85e93c92",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.114,
+       "first_text_s": null,
+       "tool_call_s": 1.114,
+       "end_s": 1.418,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.907,
+         "model_latency_s": 1.111,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.483,
+       "first_text_s": null,
+       "tool_call_s": 1.483,
+       "end_s": 1.483,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.068,
+         "model_latency_s": 1.18,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 2.901,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.265,
+       "first_text_s": null,
+       "tool_call_s": 1.265,
+       "end_s": 1.558,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.037,
+         "model_latency_s": 1.261,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.265,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.218,
+       "first_text_s": null,
+       "tool_call_s": 2.218,
+       "end_s": 2.218,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 224,
+        "cache_read_tokens": 3735,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.517,
+         "model_latency_s": 1.913,
+         "input_tokens": 2,
+         "output_tokens": 224,
+         "cache_read_tokens": 3735,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 2.218,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 255.3,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "bench-757808d7c55d4cfa62d88bce9de0",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 1.22,
+       "first_text_s": 1.22,
+       "tool_call_s": null,
+       "end_s": 1.507,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, look at recent transactions, move money between checking and savings, make a credit card payment, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 72,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.09,
+         "model_latency_s": 1.221,
+         "input_tokens": 4,
+         "output_tokens": 72,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 1.22,
+     "first_text_s": 1.22
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 308.1,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-f672622636678139241ee1444cde",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 2.617,
+       "first_text_s": 2.617,
+       "tool_call_s": null,
+       "end_s": 2.989,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Is there anything else I can help you with?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 121,
+        "cache_read_tokens": 6673,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.021,
+         "model_latency_s": 1.09,
+         "input_tokens": 4,
+         "output_tokens": 57,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 1.085,
+         "model_latency_s": 1.228,
+         "input_tokens": 2,
+         "output_tokens": 64,
+         "cache_read_tokens": 3497,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.617,
+     "first_text_s": 2.617
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 248.9,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-8751eb9367fc36614b03bd0bb686",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 0.997,
+       "first_text_s": null,
+       "tool_call_s": 0.997,
+       "end_s": 1.295,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.991,
+         "model_latency_s": 0.995,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.845,
+       "first_text_s": 1.845,
+       "tool_call_s": null,
+       "end_s": 2.14,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 pending charge at Coffee Example Co and a $71.00 pending charge at Grocery Sample Mart, both on October 9. Before those, you had a $2,100.00 payroll deposit from Payroll Example Corp on October 8, and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 176,
+        "cache_read_tokens": 3441,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.537,
+         "model_latency_s": 1.844,
+         "input_tokens": 2,
+         "output_tokens": 176,
+         "cache_read_tokens": 3441,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.14,
+     "first_text_s": 1.845
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 308.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-e05eed17da82c6936a433a92ac5c",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.427,
+       "first_text_s": null,
+       "tool_call_s": 1.427,
+       "end_s": 1.427,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.054,
+         "model_latency_s": 1.112,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.427,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.619,
+       "first_text_s": null,
+       "tool_call_s": 1.619,
+       "end_s": 1.925,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 176,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.561,
+         "model_latency_s": 1.616,
+         "input_tokens": 2,
+         "output_tokens": 176,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.636,
+       "first_text_s": 1.636,
+       "tool_call_s": null,
+       "end_s": 1.956,
+       "tools": [],
+       "text": "Your recent checking transactions are a $4.50 pending charge at Coffee Example Co and a $71.00 pending charge at Grocery Sample Mart, both on October 9. Before those, there's a $2,100.00 payroll deposit from Example Corp on October 8, and an $88.20 utility payment to Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 149,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 387
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.216,
+         "model_latency_s": 1.636,
+         "input_tokens": 2,
+         "output_tokens": 149,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 387,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.561,
+     "first_text_s": 1.636
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 256.8,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-95388d0b6f67573ead14ce3b69e3",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.316,
+       "first_text_s": null,
+       "tool_call_s": 1.316,
+       "end_s": 1.606,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.298,
+         "model_latency_s": 1.314,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.459,
+       "first_text_s": null,
+       "tool_call_s": 1.459,
+       "end_s": 1.459,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.068,
+         "model_latency_s": 1.143,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 3.065,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.153,
+       "first_text_s": null,
+       "tool_call_s": 1.153,
+       "end_s": 1.473,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.952,
+         "model_latency_s": 1.15,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.153,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.317,
+       "first_text_s": null,
+       "tool_call_s": 2.317,
+       "end_s": 2.317,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 262,
+        "cache_read_tokens": 3735,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.57,
+         "model_latency_s": 2.006,
+         "input_tokens": 2,
+         "output_tokens": 262,
+         "cache_read_tokens": 3735,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 2.317,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 353.7,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "bench-e7b7e3f0ead74b410f5342f4dcca",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 1.311,
+       "first_text_s": 1.311,
+       "tool_call_s": null,
+       "end_s": 1.652,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, look at recent transactions, make a payment to your credit card, move money between checking and savings, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 74,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.091,
+         "model_latency_s": 1.313,
+         "input_tokens": 4,
+         "output_tokens": 74,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 1.311,
+     "first_text_s": 1.311
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 281.8,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-7dcebfbae6df23f4264cc377a3af",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 2.458,
+       "first_text_s": 2.458,
+       "tool_call_s": null,
+       "end_s": 2.832,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Is there anything else I can help you with?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 121,
+        "cache_read_tokens": 6673,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.91,
+         "model_latency_s": 0.973,
+         "input_tokens": 4,
+         "output_tokens": 57,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 0.994,
+         "model_latency_s": 1.176,
+         "input_tokens": 2,
+         "output_tokens": 64,
+         "cache_read_tokens": 3497,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.458,
+     "first_text_s": 2.458
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 442.2,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-000bd0357417e0412d2af214bef6",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 1.047,
+       "first_text_s": null,
+       "tool_call_s": 1.047,
+       "end_s": 1.349,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.968,
+         "model_latency_s": 1.045,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.342,
+       "first_text_s": 1.342,
+       "tool_call_s": null,
+       "end_s": 1.633,
+       "tools": [],
+       "text": "Your most recent checking transactions are a pending $4.50 at Coffee Example Co and a pending $71.00 at Grocery Sample Mart, both dated October 9. Before those, on October 8, a $2,100.00 payroll deposit from Payroll Example Corp posted, and on October 7, an $88.20 payment to Utility Sample Power posted.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 120,
+        "cache_read_tokens": 3441,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.924,
+         "model_latency_s": 1.344,
+         "input_tokens": 2,
+         "output_tokens": 120,
+         "cache_read_tokens": 3441,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.691,
+     "first_text_s": 1.342
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 260.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-52e19c48a0a856a68f0c6a886dc5",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.445,
+       "first_text_s": null,
+       "tool_call_s": 1.445,
+       "end_s": 1.446,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.145,
+         "model_latency_s": 1.148,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.445,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.472,
+       "first_text_s": null,
+       "tool_call_s": 1.472,
+       "end_s": 1.775,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 157,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.43,
+         "model_latency_s": 1.469,
+         "input_tokens": 2,
+         "output_tokens": 157,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.715,
+       "first_text_s": 1.715,
+       "tool_call_s": null,
+       "end_s": 2.007,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 coffee charge and a $71.00 grocery charge, both pending from October 9. Before those, a $2,100.00 payroll deposit posted October 8, and an $88.20 utility payment posted October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 143,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 368
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.309,
+         "model_latency_s": 1.713,
+         "input_tokens": 2,
+         "output_tokens": 143,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 368,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.49,
+     "first_text_s": 1.715
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 281.4,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-94be90add211f1cf221dc5892d9c",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.267,
+       "first_text_s": null,
+       "tool_call_s": 1.267,
+       "end_s": 1.56,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.053,
+         "model_latency_s": 1.264,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.433,
+       "first_text_s": null,
+       "tool_call_s": 1.433,
+       "end_s": 1.434,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.128,
+         "model_latency_s": 1.129,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 2.993,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.17,
+       "first_text_s": null,
+       "tool_call_s": 1.17,
+       "end_s": 1.457,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.026,
+         "model_latency_s": 1.166,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.17,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.37,
+       "first_text_s": null,
+       "tool_call_s": 2.37,
+       "end_s": 2.37,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 250,
+        "cache_read_tokens": 3735,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.574,
+         "model_latency_s": 2.07,
+         "input_tokens": 2,
+         "output_tokens": 250,
+         "cache_read_tokens": 3735,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 2.37,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 259.8,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "bench-c4ec817b9121845913e289ced099",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 2.459,
+       "first_text_s": 2.459,
+       "tool_call_s": null,
+       "end_s": 2.745,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, look at recent transactions, make a payment toward your credit card, move money between checking and savings, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 75,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.898,
+         "model_latency_s": 2.458,
+         "input_tokens": 4,
+         "output_tokens": 75,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.459,
+     "first_text_s": 2.459
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 254.7,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-b64ddda4d72b9bf4771a3c576d46",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 2.699,
+       "first_text_s": 2.699,
+       "tool_call_s": null,
+       "end_s": 3.005,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Would you like anything else?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 117,
+        "cache_read_tokens": 6673,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.988,
+         "model_latency_s": 1.036,
+         "input_tokens": 4,
+         "output_tokens": 57,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 1.099,
+         "model_latency_s": 1.273,
+         "input_tokens": 2,
+         "output_tokens": 60,
+         "cache_read_tokens": 3497,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 2.699,
+     "first_text_s": 2.699
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 313.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-3244dbb8a956a61c6196dd7a04e6",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 1.213,
+       "first_text_s": null,
+       "tool_call_s": 1.213,
+       "end_s": 1.713,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.194,
+         "model_latency_s": 1.21,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.386,
+       "first_text_s": 1.386,
+       "tool_call_s": null,
+       "end_s": 1.872,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 charge at Coffee Example Co and a $71.00 charge at Grocery Sample Mart, both pending from October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 utility payment to Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 145,
+        "cache_read_tokens": 3441,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.222,
+         "model_latency_s": 1.385,
+         "input_tokens": 2,
+         "output_tokens": 145,
+         "cache_read_tokens": 3441,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.099,
+     "first_text_s": 1.386
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 338.5,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-cd5c85e838134f3f251d24fdf5e4",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.497,
+       "first_text_s": null,
+       "tool_call_s": 1.497,
+       "end_s": 1.497,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.104,
+         "model_latency_s": 1.182,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.497,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.866,
+       "first_text_s": null,
+       "tool_call_s": 1.866,
+       "end_s": 2.164,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 200,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.846,
+         "model_latency_s": 1.862,
+         "input_tokens": 2,
+         "output_tokens": 200,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.867,
+       "first_text_s": 1.867,
+       "tool_call_s": null,
+       "end_s": 2.285,
+       "tools": [],
+       "text": "Your most recent checking transactions are a $4.50 pending charge at Coffee Example Co and a $71.00 pending charge at Grocery Sample Mart, both on October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Utility Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 164,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 411
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.494,
+         "model_latency_s": 1.865,
+         "input_tokens": 2,
+         "output_tokens": 164,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 411,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 4.031,
+     "first_text_s": 1.867
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 273.4,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-61b8171bb1eb7cfb343184614059",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.357,
+       "first_text_s": null,
+       "tool_call_s": 1.357,
+       "end_s": 1.633,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.095,
+         "model_latency_s": 1.354,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.734,
+       "first_text_s": null,
+       "tool_call_s": 1.734,
+       "end_s": 1.734,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.269,
+         "model_latency_s": 1.356,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 3.367,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.257,
+       "first_text_s": null,
+       "tool_call_s": 1.257,
+       "end_s": 1.581,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.068,
+         "model_latency_s": 1.255,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.257,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.618,
+       "first_text_s": null,
+       "tool_call_s": 2.618,
+       "end_s": 2.618,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 258,
+        "cache_read_tokens": 3735,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.625,
+         "model_latency_s": 2.147,
+         "input_tokens": 2,
+         "output_tokens": 258,
+         "cache_read_tokens": 3735,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 2.618,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 245.3,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "greeting",
+   "session": "bench-c4025e171bad28640f7d39d5d13b",
+   "steps": [
+    {
+     "say": "Hi, what can you help me with today?",
+     "hops": [
+      {
+       "first_event_s": 1.2,
+       "first_text_s": 1.2,
+       "tool_call_s": null,
+       "end_s": 1.492,
+       "tools": [],
+       "text": "Hi Thomas, I can help with your checking, savings, or credit card. I can check balances, look at recent transactions, move money between checking and savings, make a credit card payment, or update your mailing address. What would you like to do?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 72,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.018,
+         "model_latency_s": 1.199,
+         "input_tokens": 4,
+         "output_tokens": 72,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 1.2,
+     "first_text_s": 1.2
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 276.9,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "faq_gateway",
+   "session": "bench-2de32bf7f6269c34e35c94f3c21e",
+   "steps": [
+    {
+     "say": "What are your branch hours on Saturday?",
+     "hops": [
+      {
+       "first_event_s": 4.969,
+       "first_text_s": 4.969,
+       "tool_call_s": null,
+       "end_s": 5.273,
+       "tools": [],
+       "text": "On Saturday, OwlBank Downtown is open from 9 a.m. to 1 p.m. OwlBank Riverside is closed on weekends. Would you like anything else?",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 6,
+        "output_tokens": 93,
+        "cache_read_tokens": 6352,
+        "cache_write_tokens": 297
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.187,
+         "model_latency_s": 1.189,
+         "input_tokens": 4,
+         "output_tokens": 33,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        },
+        {
+         "call": 2,
+         "model_ttfb_s": 3.233,
+         "model_latency_s": 3.477,
+         "input_tokens": 2,
+         "output_tokens": 60,
+         "cache_read_tokens": 3176,
+         "cache_write_tokens": 297,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 4.969,
+     "first_text_s": 4.969
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 253.3,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "transactions_inline",
+   "session": "bench-7b37e970be371588fca15bfaf6c9",
+   "steps": [
+    {
+     "say": "What are my recent transactions on checking?",
+     "hops": [
+      {
+       "first_event_s": 1.23,
+       "first_text_s": null,
+       "tool_call_s": 1.23,
+       "end_s": 1.578,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 53,
+        "cache_read_tokens": 3175,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.195,
+         "model_latency_s": 1.227,
+         "input_tokens": 4,
+         "output_tokens": 53,
+         "cache_read_tokens": 3175,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.845,
+       "first_text_s": 1.845,
+       "tool_call_s": null,
+       "end_s": 2.282,
+       "tools": [],
+       "text": "Your most recent checking transactions are: a $4.50 charge at Coffee Example Co and a $71.00 charge at Grocery Sample Mart, both pending on October 9. Before those, a $2,100.00 payroll deposit from Example Corp posted on October 8, and an $88.20 payment to Utility Sample Power posted on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 156,
+        "cache_read_tokens": 3441,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.517,
+         "model_latency_s": 1.85,
+         "input_tokens": 2,
+         "output_tokens": 156,
+         "cache_read_tokens": 3441,
+         "cache_write_tokens": 0,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.423,
+     "first_text_s": 1.845
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 521.7,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "balance_then_bargein",
+   "session": "bench-c5f0426505c9b86955e54f950082",
+   "steps": [
+    {
+     "say": "What's my savings balance?",
+     "hops": [
+      {
+       "first_event_s": 1.482,
+       "first_text_s": null,
+       "tool_call_s": 1.482,
+       "end_s": 1.483,
+       "tools": [
+        "get_balance"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 49,
+        "cache_read_tokens": 3171,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.137,
+         "model_latency_s": 1.157,
+         "input_tokens": 4,
+         "output_tokens": 49,
+         "cache_read_tokens": 3171,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "get_balance",
+     "timer_eligible": true,
+     "response_s": 1.482,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.453,
+       "first_text_s": null,
+       "tool_call_s": 1.453,
+       "end_s": 1.76,
+       "tools": [
+        "list_recent_transactions"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 135,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.423,
+         "model_latency_s": 1.45,
+         "input_tokens": 2,
+         "output_tokens": 135,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.548,
+       "first_text_s": 1.548,
+       "tool_call_s": null,
+       "end_s": 2.095,
+       "tools": [],
+       "text": "Your recent checking transactions are: a $4.50 pending charge at Coffee Example Co and a $71.00 pending charge at Grocery Sample Mart, both today. Before those, a $2,100.00 payroll deposit from Payroll Example Corp posted on October 8, and an $88.20 payment to Utility Sample Power on October 7.",
+       "suppressed_chars": 0,
+       "stop": "end_turn",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 144,
+        "cache_read_tokens": 3402,
+        "cache_write_tokens": 346
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.085,
+         "model_latency_s": 1.549,
+         "input_tokens": 2,
+         "output_tokens": 144,
+         "cache_read_tokens": 3402,
+         "cache_write_tokens": 346,
+         "stop_reason": "end_turn"
+        }
+       ]
+      }
+     ],
+     "handoff": null,
+     "timer_eligible": true,
+     "response_s": 3.308,
+     "first_text_s": 1.548
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 262.3,
+     "outcome": "ok"
+    }
+   ]
+  },
+  {
+   "scenario": "payment_stepup",
+   "session": "bench-6d849151103657adf2de04e75800",
+   "steps": [
+    {
+     "say": "I want to pay 25 dollars to my credit card from checking.",
+     "hops": [
+      {
+       "first_event_s": 1.178,
+       "first_text_s": null,
+       "tool_call_s": 1.178,
+       "end_s": 1.504,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 4,
+        "output_tokens": 99,
+        "cache_read_tokens": 3183,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 0.966,
+         "model_latency_s": 1.175,
+         "input_tokens": 4,
+         "output_tokens": 99,
+         "cache_read_tokens": 3183,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      },
+      {
+       "first_event_s": 1.442,
+       "first_text_s": null,
+       "tool_call_s": 1.442,
+       "end_s": 1.442,
+       "tools": [
+        "authenticate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 52,
+        "cache_read_tokens": 3331,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.107,
+         "model_latency_s": 1.134,
+         "input_tokens": 2,
+         "output_tokens": 52,
+         "cache_read_tokens": 3331,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "authenticate",
+     "timer_eligible": true,
+     "response_s": 2.946,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 1.343,
+       "first_text_s": null,
+       "tool_call_s": 1.343,
+       "end_s": 1.637,
+       "tools": [
+        "make_payment"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 99,
+        "cache_read_tokens": 3468,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.062,
+         "model_latency_s": 1.339,
+         "input_tokens": 2,
+         "output_tokens": 99,
+         "cache_read_tokens": 3468,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "make_payment",
+     "timer_eligible": true,
+     "response_s": 1.343,
+     "first_text_s": null
+    },
+    {
+     "say": null,
+     "hops": [
+      {
+       "first_event_s": 2.346,
+       "first_text_s": null,
+       "tool_call_s": 2.346,
+       "end_s": 2.347,
+       "tools": [
+        "escalate"
+       ],
+       "text": "",
+       "suppressed_chars": 0,
+       "stop": "tool_use",
+       "usage": {
+        "input_tokens": 2,
+        "output_tokens": 261,
+        "cache_read_tokens": 3735,
+        "cache_write_tokens": 0
+       },
+       "model_calls": [
+        {
+         "call": 1,
+         "model_ttfb_s": 1.667,
+         "model_latency_s": 2.047,
+         "input_tokens": 2,
+         "output_tokens": 261,
+         "cache_read_tokens": 3735,
+         "cache_write_tokens": 0,
+         "stop_reason": "tool_use"
+        }
+       ]
+      }
+     ],
+     "handoff": "escalate",
+     "timer_eligible": true,
+     "response_s": 2.346,
+     "first_text_s": null
+    }
+   ],
+   "history_builds": [
+    {
+     "event": "agent_history_new",
+     "reason": "new_session",
+     "duration_ms": 308.6,
+     "outcome": "ok"
+    }
+   ]
+  }
+ ],
+ "errors": 0
+}

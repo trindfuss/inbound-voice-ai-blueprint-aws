@@ -1,0 +1,360 @@
+{
+  "_notes": [
+    "The one server-side auth policy table. Seeded into the DynamoDB policy table as pk = tool#<name>, level#<n>, reason#<name>.",
+    "kind: level0 = Gateway Lambda target, no customer data; agentic_inline = inline tool: the agent loop pauses on it and the bridge runs it with the call token; deterministic = handoff to a scripted TwiML flow that speaks a catalog template; handoff = authenticate / escalate.",
+    "min_level 0 on handoff tools means the tool itself needs no level; authenticate looks up the target level from the named tool's row.",
+    "A tool with no row requires max_level (fail closed). An unknown escalation reason maps to escalation.default_reason.",
+    "levels list the cumulative factors for each level. ani_match is established by the ANI lookup, not collected.",
+    "redaction: transcript PII masking (owlbank.pii): the AI turns in the call log, the escalation summary and the screen-pop timeline. enabled true|false (false = no Comprehend call and a transcript_redaction_off WARNING once per component). entity_types must be Comprehend DetectPiiEntities types, and not empty while enabled; min_confidence 0..1; mask may contain only {type}; on_failure withhold|allow. A sensitive slot value is masked whatever this says. Invalid or missing at run time: built-in defaults (enabled, these types) and an ERROR naming the field. See docs/production-guide.md, Configuring redaction.",
+    "confirm: none | deterministic, per tool. deterministic = the bridge doesn't run the tool; the front door reads the action back from catalog confirm.<tool> and asks yes or no, and runs it only on yes (else the model gets CANCELLED_BY_CALLER). Defaults: make_payment and transfer_funds deterministic, others none. Allowed only on agentic_inline tools; not allowed at all on Gateway (level0) tools, which the bridge doesn't intercept. Invalid at run time: that tool's default and an ERROR.",
+    "ani_trust: accepted_verstat = StirVerstat values that make the caller ID trusted (a missing StirVerstat is untrusted); on_untrusted no_ani_match (default: an ANI match isn't a factor, so the caller is asked the next level's factors) | allow. Failed attempts from an untrusted ANI never count toward the per-customer lockout. untrusted_failure_limit (int 1..100, default 3) and untrusted_window_s (int 60..86400, default 3600, counted from the first failure): once a candidate customer has that many failures from untrusted ANIs in the window, every further untrusted attempt for that customer goes to a human with reason verification_risk, before any factor is asked (counts in the risk table, auth_service only; trusted callers never read or write them). An untrusted caller whose required factors include otp before a token exists also goes to verification_risk: no code is sent before login. Invalid or missing at run time: built-in defaults and an ERROR. A test stage may set on_untrusted allow.",
+    "otp_unavailable: a one-time code goes only to the calling number when it is on file for the verified customer. When it can't (ANI withheld, malformed or not on file, or Verify can't deliver) the caller hears escalation.otp_unavailable and goes to the default support queue; the level reached is kept. There is no fallback to the phone on file.",
+    "mask, per tool: {\"phrase_key\": \"mask.<tool>\"} = scripted catalog phrases the bridge may speak while the tool runs (absent = none). The tool's phrase pool is the catalog key phrase_key itself (if present) plus phrase_key.<n>, rotated within a call; a phrase may use {argument} placeholders for the tool's enum arguments, spoken through catalog arg.<argument>.<value> words. A tool row may add after_ms (0..10000, default masking.tool_after_ms: the phrase is spoken only if no answer has started by then) and handoff_wait_ms (0..10000). masking: after_ms (int 0..10000, built-in default 1000, seeded 1000, 0 = off) = speak mask.generic if a turn has said nothing by then; tool_after_ms (int 0..10000, built-in default 0, seeded 0: tool phrases play at once) = a tool's phrase delay when its row sets none; handoff_wait_ms (int 0..5000, default 2500) caps how long a hand-off waits for its phrase to finish; end_mode wait | immediate (default wait); chars_per_s (8..30, default 15) = the speaking-rate estimate; silence_timeout_ms (int, default 4000, 0 = off) = repeat the last message after this much caller silence; silence_max_repeats (int 0..5, default 2: three chances before the action); silence_action escalate | hangup (default escalate: a human with reason no_input; hangup: common.goodbye_no_input, then end the call); greeting_silence_timeout_ms (int 0..30000, default 7000, 0 = no repeat after it) = the silence timeout after the opening greeting of the call's first AI session, instead of silence_timeout_ms. Invalid at run time: a bad mask gives no phrase, a bad masking field its default, each with an ERROR.",
+    "slots: per-slot settings, seeded as pk = slot#<name> with the names in meta.slots. sensitive (bool, default false): the slot's words never reach the AI, the journal or the logs ([<name>] placeholder); allowed on every slot type. keypad_only (bool, default false): the slot's Gather takes keys only and never finishes early on partial speech. barge_in (bool, default true): whether the caller can cut the prompt. A factors entry takes its shape from factors.<name> and carries only these three; any other slot (yes_no) also carries slotType, constraints, promptKey, labelKey, maxRetries and flow (login | stepup | confirm). acceptSpokenFactors=false (deploy time) makes every factors slot keypad-only whatever its keypad_only. Seeding refuses a non-boolean. At run time a non-boolean loads as true and a factors entry with no slot# item loads sensitive: true (fail closed), each with an ERROR naming the item and field. sensitive alone decides what the AI gets: a non-sensitive slot's words reach it unchanged (ZIP in the seed), a sensitive one's answer becomes [<name>]. factors entries carry no sensitive (it moved here; seeding refuses it). The slot classifier still gets [digits] for every factors slot and every sensitive slot.",
+    "slots, model-assisted resolution: every slot item may carry mode (deterministic | assisted | generative; absent = inherit) and confirm (when_inferred, the default: read back a value the model inferred | always | never). A choice slot carries options: [{value ([a-z][a-z0-9_]{0,31}, unique), aliases: {language: [phrases]}, dtmf? (one keypad digit; default: its position among the caller's options)}]; each option's spoken name is catalog option.<slot>.<value>. Seeding refuses an unknown mode, generative on a sensitive or non-choice slot, a bad confirm, and an alias or spoken name that normalizes to the same words for two options in one language. At run time a bad mode loads as deterministic (no model call) with an ERROR and slot_mode_invalid (alarmed); generative where it isn't allowed loads as assisted; a bad confirm loads as always; a bad option or a shared alias is dropped. card (the destination card of make_payment) is seeded with red, purple and rewards.",
+    "slot_resolution: default_mode (seeded assisted) is every slot's mode unless its flow (flows: {login | stepup | confirm: {mode}}) or the slot sets one; the most specific wins. The deploy-time ceiling slotModeCeiling caps it (effective = the more restrictive). generative_enabled (admin only, default false) is needed for generative, which applies only to non-sensitive choice slots. resolver_budget_ms (500..4000, default 2500): the whole resolver call. At run time a missing item, or a missing or invalid default_mode or flow mode, gives deterministic with an ERROR and slot_mode_invalid.",
+    "human_leg: transcription (bool, default false) = on an escalation, start a transcription of the customer's call leg into the call's Orchestrator conversation, so the human leg is transcribed too. Seeded as pk = human_leg and rewritten by every reseed; read with the policy cache TTL, no deploy needed. A missing item or anything but true reads as off. agent_legs (bool, default true) = transcribe each agent's call leg separately so agent speech is credited to the human agent; false uses one both-tracks transcription. A missing or non-boolean value reads as true.",
+    "memory: write (bool, default true) = write one recap per call to the verified customer's Memory profile (or the existing caller-ID profile for unverified callers); false writes nothing. Seeded as pk = memory and rewritten by every reseed; read with the policy cache TTL, no deploy needed. A missing item or a non-boolean value reads as true.",
+    "end_call: enabled (bool, default true) = offer the model the end_call tool, which ends the call with the bank's goodbye once the caller is done; false leaves the tool out (the bridge refuses it with TOOL_DISABLED if called anyway). Seeded as pk = end_call and rewritten by every reseed; read with the policy cache TTL, applies from the next call. A missing item or a non-boolean value reads as true.",
+    "web_offers: offers = [{id ([a-z0-9_]{1,32}, unique), values: [the WebActivity trait values it matches]}], at most 50. A value matches after NFKC, case, surrounding and repeated whitespace are normalised; no two values (in any offers) may normalise alike; each at most 120 characters. Each offer's phrase per language is catalog offer.<id> (seed exits 2 if one is missing). Absent = no offers. Seeded as pk = web_offers. Invalid at run time: no offers and an ERROR.",
+    "escalation reason description: optional, one line of at most 160 characters with none of {}<>[]*#`|~^_. The escalate tool's reason description lists them so the model tells the reasons apart; describe the situation only, never a merchant, amount, card product or channel. Invalid at run time: dropped with an ERROR."
+  ],
+  "version": 1,
+  "max_level": 3,
+  "levels": {
+    "1": [
+      "ani_match",
+      "zip"
+    ],
+    "2": [
+      "ani_match",
+      "zip",
+      "ssn4"
+    ],
+    "3": [
+      "ani_match",
+      "zip",
+      "ssn4",
+      "otp"
+    ]
+  },
+  "factors": {
+    "zip": {
+      "slotType": "digits",
+      "constraints": {
+        "length": 5
+      },
+      "promptKey": "factor.zip",
+      "labelKey": "label.zip",
+      "maxRetries": 2,
+      "channel": "dtmf"
+    },
+    "ssn4": {
+      "slotType": "digits",
+      "constraints": {
+        "length": 4
+      },
+      "promptKey": "factor.ssn4",
+      "labelKey": "label.ssn4",
+      "maxRetries": 2,
+      "channel": "dtmf"
+    },
+    "otp": {
+      "slotType": "digits",
+      "constraints": {
+        "length": 6
+      },
+      "promptKey": "factor.otp",
+      "labelKey": "label.otp",
+      "maxRetries": 2,
+      "channel": "verify_sms"
+    }
+  },
+  "slots": {
+    "zip": {
+      "sensitive": false,
+      "keypad_only": false,
+      "barge_in": true,
+      "confirm": "when_inferred",
+      "declinable": true
+    },
+    "ssn4": {
+      "sensitive": true,
+      "keypad_only": false,
+      "barge_in": true,
+      "confirm": "never",
+      "declinable": true
+    },
+    "otp": {
+      "sensitive": true,
+      "keypad_only": false,
+      "barge_in": true,
+      "confirm": "never",
+      "declinable": true
+    },
+    "phone": {
+      "slotType": "digits",
+      "constraints": {
+        "length": 10
+      },
+      "promptKey": "login.phone_number",
+      "labelKey": "label.phone",
+      "maxRetries": 2,
+      "sensitive": true,
+      "keypad_only": false,
+      "barge_in": true,
+      "confirm": "never",
+      "flow": "login",
+      "declinable": true
+    },
+    "yes_no": {
+      "confirm": "when_inferred",
+      "slotType": "yes_no",
+      "maxRetries": 1,
+      "sensitive": false,
+      "keypad_only": false,
+      "barge_in": true,
+      "flow": "confirm"
+    },
+    "card": {
+      "slotType": "choice",
+      "promptKey": "prompt.card",
+      "labelKey": "label.card",
+      "maxRetries": 2,
+      "sensitive": false,
+      "keypad_only": false,
+      "barge_in": true,
+      "confirm": "when_inferred",
+      "flow": "confirm",
+      "options": [
+        {"value": "red", "aliases": {"en-US": ["red"], "es-US": ["roja"]}},
+        {"value": "purple", "aliases": {"en-US": ["purple"], "es-US": ["morada"]}},
+        {"value": "rewards", "aliases": {"en-US": ["rewards"], "es-US": ["recompensas"]}}
+      ]
+    }
+  },
+  "slot_resolution": {
+    "default_mode": "assisted",
+    "flows": {},
+    "generative_enabled": false,
+    "resolver_budget_ms": 2500
+  },
+  "tools": {
+    "get_branch_hours": {
+      "min_level": 0,
+      "phrase_key": null,
+      "kind": "level0"
+    },
+    "faq_lookup": {
+      "min_level": 0,
+      "phrase_key": null,
+      "kind": "level0"
+    },
+    "get_balance": {
+      "min_level": 1,
+      "phrase_key": "tool.get_balance",
+      "kind": "deterministic",
+      "template_key": "balance.read",
+      "operation": "get_balance",
+      "confirm": "none",
+      "mask": {
+        "phrase_key": "mask.get_balance"
+      }
+    },
+    "list_recent_transactions": {
+      "min_level": 1,
+      "phrase_key": "tool.list_recent_transactions",
+      "kind": "agentic_inline",
+      "confirm": "none",
+      "mask": {
+        "phrase_key": "mask.list_recent_transactions"
+      }
+    },
+    "change_address": {
+      "min_level": 2,
+      "phrase_key": "tool.change_address",
+      "kind": "agentic_inline",
+      "confirm": "none",
+      "mask": {
+        "phrase_key": "mask.change_address"
+      }
+    },
+    "transfer_funds": {
+      "min_level": 3,
+      "phrase_key": "tool.transfer_funds",
+      "kind": "agentic_inline",
+      "confirm": "deterministic",
+      "mask": {
+        "phrase_key": "mask.transfer_funds"
+      }
+    },
+    "make_payment": {
+      "min_level": 3,
+      "phrase_key": "tool.make_payment",
+      "kind": "agentic_inline",
+      "confirm": "deterministic",
+      "mask": {
+        "phrase_key": "mask.make_payment"
+      }
+    },
+    "authenticate": {
+      "min_level": 0,
+      "phrase_key": null,
+      "kind": "handoff",
+      "confirm": "none"
+    },
+    "escalate": {
+      "min_level": 0,
+      "phrase_key": null,
+      "kind": "handoff",
+      "confirm": "none"
+    },
+    "end_call": {
+      "min_level": 0,
+      "phrase_key": null,
+      "kind": "handoff",
+      "confirm": "none"
+    }
+  },
+  "escalation": {
+    "default_reason": "unable_to_resolve",
+    "queues": {
+      "support": {
+        "en-US": "OwlBank Support EN",
+        "es-US": "OwlBank Support ES"
+      },
+      "fraud": {
+        "en-US": "OwlBank Fraud",
+        "es-US": "OwlBank Fraud"
+      },
+      "disputes": {
+        "en-US": "OwlBank Disputes",
+        "es-US": "OwlBank Disputes"
+      }
+    },
+    "reasons": {
+      "caller_requested_human": {
+        "queue": "support",
+        "priority": 0,
+        "phrase_key": "escalate.default"
+      },
+      "unable_to_resolve": {
+        "queue": "support",
+        "priority": 0,
+        "phrase_key": "escalate.default"
+      },
+      "step_up_failed": {
+        "queue": "support",
+        "priority": 0,
+        "phrase_key": "escalate.verify"
+      },
+      "fraud_suspected": {
+        "queue": "fraud",
+        "priority": 100,
+        "phrase_key": "escalate.fraud",
+        "description": "The caller thinks a card or account is compromised or being misused by someone else."
+      },
+      "card_dispute": {
+        "queue": "disputes",
+        "priority": 50,
+        "phrase_key": "escalate.dispute",
+        "description": "The caller disputes a charge or doesn't recognise one, or follows up on a dispute they already raised."
+      },
+      "complaint": {
+        "queue": "support",
+        "priority": 0,
+        "phrase_key": "escalate.default"
+      },
+      "vulnerable_customer": {
+        "queue": "support",
+        "priority": 50,
+        "phrase_key": "escalate.default"
+      },
+      "verification_risk": {
+        "queue": "fraud",
+        "priority": 100,
+        "phrase_key": "escalation.verification_risk"
+      },
+      "otp_unavailable": {
+        "queue": "support",
+        "priority": 0,
+        "phrase_key": "escalation.otp_unavailable"
+      },
+      "no_input": {
+        "queue": "support",
+        "priority": 0,
+        "phrase_key": "escalate.default"
+      }
+    }
+  },
+  "web_offers": {
+    "offers": [
+      {"id": "heloc", "values": ["HELOC", "home-equity"]},
+      {"id": "auto_loan", "values": ["Auto loan", "auto-loans"]}
+    ]
+  },
+  "human_leg": {
+    "transcription": false,
+    "agent_legs": true
+  },
+  "memory": {
+    "write": true
+  },
+  "end_call": {
+    "enabled": true
+  },
+  "model_failover": {
+    "window_calls": 20,
+    "window_age_s": 120,
+    "min_samples": 20,
+    "miss_run": 3,
+    "pings_per_cycle": 3,
+    "recover_min_pings": 10,
+    "recover_period_s": 120,
+    "dwell_s": 180,
+    "idle_reset_s": 600,
+    "unavailable_recheck_s": 900,
+    "entries": {}
+  },
+  "limits": {
+    "verify_attempts_per_call": 3,
+    "stepup_attempts_per_call": 2,
+    "summary_max_chars": 1000
+  },
+  "redaction": {
+    "enabled": true,
+    "entity_types": [
+      "SSN",
+      "CREDIT_DEBIT_NUMBER",
+      "CREDIT_DEBIT_CVV",
+      "CREDIT_DEBIT_EXPIRY",
+      "BANK_ACCOUNT_NUMBER",
+      "BANK_ROUTING",
+      "PIN",
+      "PASSWORD"
+    ],
+    "min_confidence": 0.5,
+    "mask": "[{type}]",
+    "on_failure": "withhold"
+  },
+  "ani_trust": {
+    "accepted_verstat": [
+      "TN-Validation-Passed-A"
+    ],
+    "on_untrusted": "no_ani_match",
+    "untrusted_failure_limit": 3,
+    "untrusted_window_s": 3600,
+    "ask_phone_on_no_match": true
+  },
+  "masking": {
+    "after_ms": 1000,
+    "tool_after_ms": 0,
+    "handoff_wait_ms": 2500,
+    "end_mode": "immediate",
+    "chars_per_s": 15,
+    "silence_timeout_ms": 4000,
+    "silence_max_repeats": 2,
+    "silence_action": "escalate",
+    "greeting_silence_timeout_ms": 7000
+  }
+}

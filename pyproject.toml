@@ -1,0 +1,108 @@
+[project]
+name = "owlbank-blueprint"
+version = "0.1.0"
+description = "OwlBank inbound voice blueprint: Twilio Voice + ConversationRelay + TAC + a Strands agent with AgentCore Memory and Gateway on AWS"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.35",
+    "twilio>=9.3",
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "pydantic>=2.7",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "hypothesis>=6.112",
+    "moto[dynamodb,secretsmanager,lambda]>=5.0",
+    "httpx>=0.27",
+    "ruff>=0.17.0",
+    "mypy>=2.4.0",
+    "bandit>=1.9.4",
+    "pip-audit>=2.10.1",
+    "jsonschema>=4.26.0",
+]
+bridge = [
+    "twilio-agent-connect[server]==2.5.0",
+    "boto3>=1.43.99",
+    "tzdata>=2025.2",
+    "strands-agents==1.61.0",
+    "bedrock-agentcore==1.24.1",
+    "mcp-proxy-for-aws==1.7.0",
+    # The self-signed certificate the bridge serves TLS with on its container port.
+    "cryptography>=50.0.2",
+    # OpenTelemetry, at the version Strands locks.
+    "opentelemetry-exporter-otlp-proto-http==1.45.1",
+    "opentelemetry-exporter-otlp-proto-common==1.45.1",
+    "opentelemetry-sdk-extension-aws==2.1.0",
+    "opentelemetry-propagator-aws-xray==1.0.2",
+    "opentelemetry-instrumentation-botocore==0.66b1",
+]
+# The front door's observability Lambda layer: SDK, OTLP protobuf encoder, X-Ray IDs and propagator.
+lambda-otel = [
+    "opentelemetry-sdk==1.45.1",
+    "opentelemetry-exporter-otlp-proto-common==1.45.1",
+    "opentelemetry-sdk-extension-aws==2.1.0",
+    "opentelemetry-propagator-aws-xray==1.0.2",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/owlbank"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers -m 'not live_eval and not prompt_suite and not human_leg_contract'"
+markers = [
+    "live_eval: live AgentCore Evaluations against a sandbox account (on demand: pytest -m live_eval)",
+    "prompt_suite: the per-model prompt suite against Bedrock (on demand: pytest -m prompt_suite)",
+    "human_leg_contract: contract test of the Orchestrator API used when a call is transferred to a person (on demand: pytest -m human_leg_contract; makes no call, creates and closes one test conversation)",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 110
+extend-exclude = ["infra/cdk.out", "infra/build", ".venv", ".specs"]
+
+[tool.ruff.lint]
+# Errors, pyflakes, import order, bugbear, security (bandit rules), simplify, upgrade, return/raise hygiene.
+select = ["E", "F", "I", "B", "S", "SIM", "UP", "RET", "RSE", "PIE", "C4"]
+ignore = ["E501"]  # line length is advisory; the formatter isn't enforced
+
+[tool.ruff.lint.per-file-ignores]
+# Tests (root and infra): each ignore below is noise for test code only; nothing is ignored wholesale in src/ or scripts/.
+"{tests,infra/tests}/**" = [
+    "S101",  # pytest relies on plain assert statements
+    "S105",  # fake secrets / tokens as fixtures
+    "S106",  # fake secrets passed as keyword arguments to fixtures
+    "S311",  # random is used for test data, never for security
+    "S314",  # parsing the TwiML our own code just generated, not untrusted XML
+    "F811",  # pytest fixtures are imported and then redefined as test arguments by design
+    "B007",  # unused loop variables when unpacking (stack, lid, ...) tuples, kept for readability
+    "B011",  # assert False in tests is intentional
+    "I001",  # import order is not enforced in tests (several files import after importorskip/sys.path setup)
+]
+"scripts/**" = ["S603", "S607"]  # argv-list subprocess calls to the Twilio CLI and npm in deploy_flex_plugin.py (no shell, fixed argv)
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src"]
+mypy_path = "src"
+explicit_package_bases = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["owlbank.*"]
+disallow_untyped_defs = true
+check_untyped_defs = true
+
+[tool.bandit]
+exclude_dirs = ["tests", "infra", ".venv"]

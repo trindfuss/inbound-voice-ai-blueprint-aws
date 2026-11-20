@@ -1,0 +1,265 @@
+{
+ "Outputs": {
+  "ExportsOutputFnGetAttGatewayGatewayArnED6C4A59": {
+   "Export": {
+    "Name": "OwlBankAgent:ExportsOutputFnGetAttGatewayGatewayArnED6C4A59"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "Gateway",
+     "GatewayArn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttGatewayGatewayIdentifier15A68788": {
+   "Export": {
+    "Name": "OwlBankAgent:ExportsOutputFnGetAttGatewayGatewayIdentifier15A68788"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "Gateway",
+     "GatewayIdentifier"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttGatewayGatewayUrl79A4577E": {
+   "Export": {
+    "Name": "OwlBankAgent:ExportsOutputFnGetAttGatewayGatewayUrl79A4577E"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "Gateway",
+     "GatewayUrl"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttMemoryMemoryArn678119FD": {
+   "Export": {
+    "Name": "OwlBankAgent:ExportsOutputFnGetAttMemoryMemoryArn678119FD"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "Memory",
+     "MemoryArn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttMemoryMemoryId5865BD41": {
+   "Export": {
+    "Name": "OwlBankAgent:ExportsOutputFnGetAttMemoryMemoryId5865BD41"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "Memory",
+     "MemoryId"
+    ]
+   }
+  },
+  "GatewayUrl": {
+   "Description": "AgentCore Gateway MCP URL (level-0 tools), for the Strands agent client",
+   "Value": {
+    "Fn::GetAtt": [
+     "Gateway",
+     "GatewayUrl"
+    ]
+   }
+  },
+  "MemoryId": {
+   "Description": "AgentCore Memory ID (short-term history)",
+   "Value": {
+    "Fn::GetAtt": [
+     "Memory",
+     "MemoryId"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+   "Type": "AWS::SSM::Parameter::Value<String>"
+  }
+ },
+ "Resources": {
+  "Gateway": {
+   "DependsOn": [
+    "GatewayRoleDefaultPolicyF4BF688C",
+    "GatewayRole0A0569CA"
+   ],
+   "Properties": {
+    "AuthorizerType": "AWS_IAM",
+    "Description": "Level-0 tools (no customer data) for the OwlBank harness",
+    "KmsKeyArn": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "Name": "owlbank-level0",
+    "ProtocolType": "MCP",
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "GatewayRole0A0569CA",
+      "Arn"
+     ]
+    },
+    "Tags": {
+     "cost-center": "unassigned",
+     "data-classification": "confidential",
+     "owner": "unassigned",
+     "project": "owlbank-blueprint",
+     "stage": "dev"
+    }
+   },
+   "Type": "AWS::BedrockAgentCore::Gateway"
+  },
+  "GatewayRole0A0569CA": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "ArnLike": {
+         "aws:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock-agentcore:us-east-1:111111111111:*"
+           ]
+          ]
+         }
+        },
+        "StringEquals": {
+         "aws:SourceAccount": "111111111111"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "bedrock-agentcore.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank AgentCore Gateway: invoke level0_tools only",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "GatewayRoleDefaultPolicyF4BF688C": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":lambda:us-east-1:111111111111:function:owlbank-dev-level0-tools"
+         ]
+        ]
+       },
+       "Sid": "InvokeLevel0Tools"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:GenerateDataKey",
+        "kms:DescribeKey"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "GatewayCmk"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GatewayRoleDefaultPolicyF4BF688C",
+    "Roles": [
+     {
+      "Ref": "GatewayRole0A0569CA"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "Memory": {
+   "Properties": {
+    "Description": "OwlBank per-call short-term memory only; no strategies",
+    "EncryptionKeyArn": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "EventExpiryDuration": 3,
+    "Name": "owlbank_voice_stm",
+    "Tags": {
+     "cost-center": "unassigned",
+     "data-classification": "confidential",
+     "owner": "unassigned",
+     "project": "owlbank-blueprint",
+     "stage": "dev"
+    }
+   },
+   "Type": "AWS::BedrockAgentCore::Memory"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

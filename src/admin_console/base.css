@@ -1,0 +1,106 @@
+/* OwlBank admin console: base. Reset, type, the font, focus, links, icons, the skip link
+   and .visually-hidden. Tokens only: colours and sizes come from tokens.css. */
+
+/* Inter v4.1, Latin subset (provenance and the range in fonts/README.md). swap: the first
+   view never waits for the font, and the system stack in --font-sans stands in. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/Inter-4.1-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  /* Keeps a focused field clear of the sticky page header (WCAG 2.4.11). */
+  scroll-padding-top: calc(var(--space-12) * 2);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  font-weight: var(--weight-regular);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+h1, h2, h3 { color: var(--color-text); }
+h1 {
+  font-size: var(--text-xl);
+  line-height: var(--leading-xl);
+  font-weight: var(--weight-bold);
+  margin: 0 0 var(--space-3);
+}
+h2 {
+  font-size: var(--text-md);
+  line-height: var(--leading-md);
+  font-weight: var(--weight-semibold);
+  margin: var(--space-6) 0 var(--space-2);
+}
+h3 {
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  font-weight: var(--weight-semibold);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+a { color: var(--color-link); }
+
+code, pre { font-family: var(--font-mono); }
+
+img, svg { max-width: 100%; }
+
+/* Sprite icons: sized to the text beside them, coloured by it. */
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+}
+
+/* Focus: a 2px ring 2px outside the control. The sidebar re-points --color-focus. */
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+/* main takes focus from script after each route change; that is not a user focus. */
+main:focus { outline: none; }
+
+@media (forced-colors: active) {
+  :focus-visible { outline-color: Highlight; }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The skip link: first in <body>, off screen until focused. */
+.skip {
+  position: absolute;
+  z-index: 100;
+  top: var(--space-2);
+  left: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
+  color: var(--color-link);
+  font-weight: var(--weight-semibold);
+  transform: translateY(-300%);
+}
+.skip:focus { transform: none; }

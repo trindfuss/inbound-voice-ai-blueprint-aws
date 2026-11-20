@@ -1,0 +1,2892 @@
+{
+ "Outputs": {
+  "RelayDomain": {
+   "Description": "CloudFront default domain; read by scripts/twilio_setup.py",
+   "Value": {
+    "Fn::GetAtt": [
+     "Distribution830FAC52",
+     "DomainName"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+   "Type": "AWS::SSM::Parameter::Value<String>"
+  }
+ },
+ "Resources": {
+  "Alb16C2F182": {
+   "DependsOn": [
+    "AlbLogsPolicyC8E971E6",
+    "AlbLogs956A5C7D"
+   ],
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     },
+     {
+      "Key": "idle_timeout.timeout_seconds",
+      "Value": "900"
+     },
+     {
+      "Key": "routing.http.drop_invalid_header_fields.enabled",
+      "Value": "true"
+     },
+     {
+      "Key": "access_logs.s3.enabled",
+      "Value": "true"
+     },
+     {
+      "Key": "access_logs.s3.bucket",
+      "Value": {
+       "Ref": "AlbLogs956A5C7D"
+      }
+     },
+     {
+      "Key": "access_logs.s3.prefix",
+      "Value": "alb"
+     }
+    ],
+    "Scheme": "internal",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "AlbSg1155C1BE",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     {
+      "Fn::ImportValue": "OwlBankNetwork:ExportsOutputRefVpcprivateSubnet1SubnetCEAD37168693D373"
+     },
+     {
+      "Fn::ImportValue": "OwlBankNetwork:ExportsOutputRefVpcprivateSubnet2Subnet2DE7549CDF5ACE3D"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Type": "application"
+   },
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer"
+  },
+  "AlbElb5xxAlarmF8758A3B": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "ALB-generated 5XX responses",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "LoadBalancer",
+      "Value": {
+       "Fn::GetAtt": [
+        "Alb16C2F182",
+        "LoadBalancerFullName"
+       ]
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "HTTPCode_ELB_5XX_Count",
+    "Namespace": "AWS/ApplicationELB",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 5,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "AlbHttp7966E42E": {
+   "DependsOn": [
+    "AlbLogsPolicyC8E971E6",
+    "AlbLogs956A5C7D"
+   ],
+   "Properties": {
+    "DefaultActions": [
+     {
+      "FixedResponseConfig": {
+       "ContentType": "text/plain",
+       "MessageBody": "Forbidden",
+       "StatusCode": "403"
+      },
+      "Type": "fixed-response"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "Alb16C2F182"
+    },
+    "Port": 80,
+    "Protocol": "HTTP",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::ElasticLoadBalancingV2::Listener"
+  },
+  "AlbHttpBridgeGroupD23C850D": {
+   "DependsOn": [
+    "AlbLogsPolicyC8E971E6",
+    "AlbLogs956A5C7D"
+   ],
+   "Properties": {
+    "HealthCheckIntervalSeconds": 15,
+    "HealthCheckPath": "/health",
+    "HealthCheckProtocol": "HTTPS",
+    "HealthCheckTimeoutSeconds": 5,
+    "Matcher": {
+     "HttpCode": "200"
+    },
+    "Port": 8080,
+    "Protocol": "HTTPS",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TargetGroupAttributes": [
+     {
+      "Key": "deregistration_delay.timeout_seconds",
+      "Value": "300"
+     },
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "VpcId": {
+     "Fn::ImportValue": "OwlBankNetwork:ExportsOutputRefVpc8378EB38272D6E3A"
+    }
+   },
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup"
+  },
+  "AlbHttpBridgeRule1C5659B2": {
+   "DependsOn": [
+    "AlbLogsPolicyC8E971E6",
+    "AlbLogs956A5C7D"
+   ],
+   "Properties": {
+    "Actions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "AlbHttpBridgeGroupD23C850D"
+      },
+      "Type": "forward"
+     }
+    ],
+    "Conditions": [
+     {
+      "Field": "http-header",
+      "HttpHeaderConfig": {
+       "HttpHeaderName": "X-Origin-Verify",
+       "Values": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "{{resolve:secretsmanager:",
+           {
+            "Ref": "OriginVerifySecret1DED2FB3"
+           },
+           ":SecretString:::}}"
+          ]
+         ]
+        }
+       ]
+      }
+     }
+    ],
+    "ListenerArn": {
+     "Ref": "AlbHttp7966E42E"
+    },
+    "Priority": 1,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::ElasticLoadBalancingV2::ListenerRule"
+  },
+  "AlbLogs956A5C7D": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "BucketEncryption": {
+     "ServerSideEncryptionConfiguration": [
+      {
+       "ServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+       }
+      }
+     ]
+    },
+    "LifecycleConfiguration": {
+     "Rules": [
+      {
+       "ExpirationInDays": 90,
+       "Status": "Enabled"
+      }
+     ]
+    },
+    "OwnershipControls": {
+     "Rules": [
+      {
+       "ObjectOwnership": "BucketOwnerEnforced"
+      }
+     ]
+    },
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::S3::Bucket",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "AlbLogsPolicyC8E971E6": {
+   "Properties": {
+    "Bucket": {
+     "Ref": "AlbLogs956A5C7D"
+    },
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "s3:*",
+       "Condition": {
+        "Bool": {
+         "aws:SecureTransport": "false"
+        }
+       },
+       "Effect": "Deny",
+       "Principal": {
+        "AWS": "*"
+       },
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "AlbLogs956A5C7D",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "AlbLogs956A5C7D",
+             "Arn"
+            ]
+           },
+           "/*"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "Action": "s3:PutObject",
+       "Effect": "Allow",
+       "Principal": {
+        "AWS": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":iam::127311923021:root"
+          ]
+         ]
+        }
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "AlbLogs956A5C7D",
+            "Arn"
+           ]
+          },
+          "/alb/AWSLogs/111111111111/*"
+         ]
+        ]
+       },
+       "Sid": "AlbLogDeliveryElbAccount"
+      },
+      {
+       "Action": "s3:PutObject",
+       "Condition": {
+        "StringEquals": {
+         "aws:SourceAccount": "111111111111",
+         "s3:x-amz-acl": "bucket-owner-full-control"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "delivery.logs.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "AlbLogs956A5C7D",
+            "Arn"
+           ]
+          },
+          "/alb/AWSLogs/111111111111/*"
+         ]
+        ]
+       },
+       "Sid": "LogDeliveryWrite"
+      },
+      {
+       "Action": "s3:GetBucketAcl",
+       "Condition": {
+        "StringEquals": {
+         "aws:SourceAccount": "111111111111"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "delivery.logs.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::GetAtt": [
+         "AlbLogs956A5C7D",
+         "Arn"
+        ]
+       },
+       "Sid": "LogDeliveryAclCheck"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Type": "AWS::S3::BucketPolicy"
+  },
+  "AlbSg1155C1BE": {
+   "Properties": {
+    "GroupDescription": "OwlBank bridge internal ALB: HTTP from the CloudFront VPC origin",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "OwlBankNetwork:ExportsOutputRefVpc8378EB38272D6E3A"
+    }
+   },
+   "Type": "AWS::EC2::SecurityGroup"
+  },
+  "AlbSgfrompl3b927c52803F3B7808": {
+   "Properties": {
+    "Description": "CloudFront VPC origin (managed prefix list com.amazonaws.global.cloudfront.origin-facing)",
+    "FromPort": 80,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "AlbSg1155C1BE",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourcePrefixListId": "pl-3b927c52",
+    "ToPort": 80
+   },
+   "Type": "AWS::EC2::SecurityGroupIngress"
+  },
+  "AlbSgtoOwlBankBridgeTaskSg30F97B868080B22786DD": {
+   "Properties": {
+    "Description": "ALB to bridge",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "TaskSgFD7B04A0",
+      "GroupId"
+     ]
+    },
+    "FromPort": 8080,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "AlbSg1155C1BE",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 8080
+   },
+   "Type": "AWS::EC2::SecurityGroupEgress"
+  },
+  "AlbTarget5xxAlarm7F37B8E2": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Bridge (target) 5XX responses",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "LoadBalancer",
+      "Value": {
+       "Fn::GetAtt": [
+        "Alb16C2F182",
+        "LoadBalancerFullName"
+       ]
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "HTTPCode_Target_5XX_Count",
+    "Namespace": "AWS/ApplicationELB",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 5,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "BridgeAuthRejectedAlarmE7E357D6": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Bridge WebSocket signature failures (TAC log lines)",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 1,
+    "MetricName": "BridgeWsRejected",
+    "Namespace": "OwlBank/dev/Security",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 10,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "BridgeAuthRejectedFilterC6785694": {
+   "Properties": {
+    "FilterPattern": "\"twilio_auth_failed\"",
+    "LogGroupName": {
+     "Ref": "BridgeLogs410D2298"
+    },
+    "MetricTransformations": [
+     {
+      "DefaultValue": 0,
+      "MetricName": "BridgeWsRejected",
+      "MetricNamespace": "OwlBank/dev/Security",
+      "MetricValue": "1"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::MetricFilter"
+  },
+  "BridgeLogs410D2298": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/ecs/tac-bridge",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "CloudFront5xxAlarm3A35E27D": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "CloudFront 5xx error rate (percent of requests) above 5",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "DistributionId",
+      "Value": {
+       "Ref": "Distribution830FAC52"
+      }
+     },
+     {
+      "Name": "Region",
+      "Value": "Global"
+     }
+    ],
+    "EvaluationPeriods": 2,
+    "MetricName": "5xxErrorRate",
+    "Namespace": "AWS/CloudFront",
+    "Period": 300,
+    "Statistic": "Average",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 5,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "CloudFrontWafBlockedAlarm6F6313C6": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Spike in requests blocked by WAF web ACL owlbank-dev-cloudfront",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "Region",
+      "Value": "Global"
+     },
+     {
+      "Name": "Rule",
+      "Value": "ALL"
+     },
+     {
+      "Name": "WebACL",
+      "Value": "owlbank-dev-cloudfront"
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "BlockedRequests",
+    "Namespace": "AWS/WAFV2",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 100,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ClusterEB0386A7": {
+   "Properties": {
+    "ClusterSettings": [
+     {
+      "Name": "containerInsights",
+      "Value": "enabled"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::ECS::Cluster"
+  },
+  "Distribution830FAC52": {
+   "Properties": {
+    "DistributionConfig": {
+     "Comment": "OwlBank bridge (dev): ConversationRelay WebSocket and TAC webhook",
+     "DefaultCacheBehavior": {
+      "AllowedMethods": [
+       "GET",
+       "HEAD",
+       "OPTIONS",
+       "PUT",
+       "PATCH",
+       "POST",
+       "DELETE"
+      ],
+      "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+      "Compress": false,
+      "OriginRequestPolicyId": {
+       "Ref": "OriginRequestPolicy3EFDB4FA"
+      },
+      "TargetOriginId": "OwlBankBridgeDistributionOrigin164D39C32",
+      "ViewerProtocolPolicy": "https-only"
+     },
+     "Enabled": true,
+     "HttpVersion": "http1.1",
+     "IPV6Enabled": false,
+     "Origins": [
+      {
+       "DomainName": {
+        "Fn::GetAtt": [
+         "Alb16C2F182",
+         "DNSName"
+        ]
+       },
+       "Id": "OwlBankBridgeDistributionOrigin164D39C32",
+       "OriginCustomHeaders": [
+        {
+         "HeaderName": "X-Origin-Verify",
+         "HeaderValue": {
+          "Fn::Join": [
+           "",
+           [
+            "{{resolve:secretsmanager:",
+            {
+             "Ref": "OriginVerifySecret1DED2FB3"
+            },
+            ":SecretString:::}}"
+           ]
+          ]
+         }
+        }
+       ],
+       "VpcOriginConfig": {
+        "OriginKeepaliveTimeout": 60,
+        "OriginReadTimeout": 60,
+        "VpcOriginId": {
+         "Fn::GetAtt": [
+          "DistributionOrigin1VpcOrigin1389D846",
+          "Id"
+         ]
+        }
+       }
+      }
+     ],
+     "PriceClass": "PriceClass_100",
+     "WebACLId": {
+      "Fn::GetAtt": [
+       "WebAcl",
+       "Arn"
+      ]
+     }
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::CloudFront::Distribution"
+  },
+  "DistributionOrigin1VpcOrigin1389D846": {
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcOriginEndpointConfig": {
+     "Arn": {
+      "Ref": "Alb16C2F182"
+     },
+     "HTTPPort": 80,
+     "Name": "OwlBankBridgeDistributionOrigin1VpcOrigin526ABE42",
+     "OriginProtocolPolicy": "http-only",
+     "OriginSSLProtocols": [
+      "TLSv1.2"
+     ]
+    }
+   },
+   "Type": "AWS::CloudFront::VpcOrigin"
+  },
+  "ModelActiveRankAlarmE2CD4E00": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "A bridge has run off the preferred model (us.anthropic.claude-haiku-5-5) for 15 minutes (ActiveRank above 0)",
+    "ComparisonOperator": "GreaterThanThreshold",
+    "Dimensions": [
+     {
+      "Name": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Name": "Service",
+      "Value": "owlbank-dev-bridge"
+     }
+    ],
+    "EvaluationPeriods": 3,
+    "MetricName": "ActiveRank",
+    "Namespace": "OwlBank/dev/Model",
+    "Period": 300,
+    "Statistic": "Maximum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 0,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ModelUnavailableAlarmF794DA69": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "A model entry is unavailable (model_unavailable on the bridge): the bridge has moved to the next entry; the log line names the entry and the error code",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 1,
+    "MetricName": "ModelUnavailable",
+    "Namespace": "OwlBank/dev/Model",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ModelUnavailableFilter731E4BCE": {
+   "Properties": {
+    "FilterPattern": "{ $.event = \"model_unavailable\" }",
+    "LogGroupName": {
+     "Ref": "BridgeLogs410D2298"
+    },
+    "MetricTransformations": [
+     {
+      "DefaultValue": 0,
+      "MetricName": "ModelUnavailable",
+      "MetricNamespace": "OwlBank/dev/Model",
+      "MetricValue": "1"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::MetricFilter"
+  },
+  "OriginRequestPolicy3EFDB4FA": {
+   "Properties": {
+    "OriginRequestPolicyConfig": {
+     "Comment": "OwlBank bridge: all viewer headers and query strings, no cookies (WebSocket + Twilio signature)",
+     "CookiesConfig": {
+      "CookieBehavior": "none"
+     },
+     "HeadersConfig": {
+      "HeaderBehavior": "allViewer"
+     },
+     "Name": "OwlBankBridgeOriginRequestPolicy08A8DF5B",
+     "QueryStringsConfig": {
+      "QueryStringBehavior": "all"
+     }
+    }
+   },
+   "Type": "AWS::CloudFront::OriginRequestPolicy"
+  },
+  "OriginVerifySecret1DED2FB3": {
+   "DeletionPolicy": "Retain",
+   "Properties": {
+    "Description": "Value of the X-Origin-Verify header that the CloudFront VPC origin sends and the internal ALB's listener rule requires. Generated; read by CloudFormation through a dynamic reference.",
+    "GenerateSecretString": {
+     "ExcludePunctuation": true,
+     "PasswordLength": 48
+    },
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "Name": "owlbank/dev/bridge/origin-verify",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::SecretsManager::Secret",
+   "UpdateReplacePolicy": "Retain"
+  },
+  "PreferredModelUnavailableAlarmA2B16E55": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "The preferred model entry us.anthropic.claude-haiku-5-5 is unavailable (model_unavailable, 4a.4): calls run on a fallback model",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 1,
+    "MetricName": "PreferredModelUnavailable",
+    "Namespace": "OwlBank/dev/Model",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "PreferredModelUnavailableFilter0F422B82": {
+   "Properties": {
+    "FilterPattern": "{ ($.event = \"model_unavailable\") && ($.model_id = \"us.anthropic.claude-haiku-5-5\") }",
+    "LogGroupName": {
+     "Ref": "BridgeLogs410D2298"
+    },
+    "MetricTransformations": [
+     {
+      "DefaultValue": 0,
+      "MetricName": "PreferredModelUnavailable",
+      "MetricNamespace": "OwlBank/dev/Model",
+      "MetricValue": "1"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::MetricFilter"
+  },
+  "RelayParameter2B25E186": {
+   "Properties": {
+    "Description": "OwlBank relay WebSocket host (fargate); the front door builds wss://<host>/ws",
+    "Name": "/owlbank/dev/bridge/relay",
+    "Tags": {
+     "cost-center": "unassigned",
+     "data-classification": "confidential",
+     "owner": "unassigned",
+     "project": "owlbank-blueprint",
+     "stage": "dev"
+    },
+    "Tier": "Standard",
+    "Type": "String",
+    "Value": {
+     "Fn::GetAtt": [
+      "Distribution830FAC52",
+      "DomainName"
+     ]
+    }
+   },
+   "Type": "AWS::SSM::Parameter"
+  },
+  "RunningTasksAlarmF0C8A8AA": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Fewer than 1 bridge tasks running",
+    "ComparisonOperator": "LessThanThreshold",
+    "Dimensions": [
+     {
+      "Name": "ClusterName",
+      "Value": {
+       "Ref": "ClusterEB0386A7"
+      }
+     },
+     {
+      "Name": "ServiceName",
+      "Value": {
+       "Fn::GetAtt": [
+        "ServiceD69D759B",
+        "Name"
+       ]
+      }
+     }
+    ],
+    "EvaluationPeriods": 5,
+    "MetricName": "RunningTaskCount",
+    "Namespace": "ECS/ContainerInsights",
+    "Period": 60,
+    "Statistic": "Minimum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "breaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "SavedQuery0": {
+   "Properties": {
+    "LogGroupNames": [
+     "/owlbank/lambda/frontdoor",
+     "/owlbank/lambda/auth_service",
+     "/owlbank/lambda/bank_tools",
+     "/owlbank/lambda/level0_tools",
+     "/owlbank/lambda/context_api",
+     "/owlbank/lambda/flex_authorizer",
+     "/owlbank/ecs/tac-bridge"
+    ],
+    "Name": "OwlBank/Trace a call by call SID",
+    "Parameters": [
+     {
+      "DefaultValue": "\"CA00000000000000000000000000000000\"",
+      "Description": "The call SID to trace, in double quotes, e.g. \"CA0123...\" (32 hex after CA)",
+      "Name": "call_sid"
+     }
+    ],
+    "QueryString": "fields @timestamp, @log, component, event, level, op, outcome, duration_ms, @message\n| filter call_sid = {{call_sid}}\n| sort @timestamp asc\n| limit 10000"
+   },
+   "Type": "AWS::Logs::QueryDefinition"
+  },
+  "SavedQuery1": {
+   "Properties": {
+    "LogGroupNames": [
+     "/owlbank/lambda/frontdoor",
+     "/owlbank/lambda/auth_service",
+     "/owlbank/lambda/bank_tools",
+     "/owlbank/lambda/level0_tools",
+     "/owlbank/lambda/context_api",
+     "/owlbank/lambda/flex_authorizer",
+     "/owlbank/ecs/tac-bridge"
+    ],
+    "Name": "OwlBank/Errors by component",
+    "QueryString": "fields @timestamp, component, event, level, outcome\n| filter level in [\"ERROR\", \"WARNING\", \"WARN\", \"CRITICAL\"] or outcome = \"error\"\n| stats count(*) as occurrences by component, event\n| sort occurrences desc"
+   },
+   "Type": "AWS::Logs::QueryDefinition"
+  },
+  "SavedQuery2": {
+   "Properties": {
+    "LogGroupNames": [
+     "/owlbank/lambda/frontdoor",
+     "/owlbank/lambda/auth_service",
+     "/owlbank/lambda/bank_tools",
+     "/owlbank/lambda/level0_tools",
+     "/owlbank/lambda/context_api",
+     "/owlbank/lambda/flex_authorizer",
+     "/owlbank/ecs/tac-bridge"
+    ],
+    "Name": "OwlBank/Slowest invocations and dependency calls",
+    "QueryString": "fields @timestamp, component, event, op, dependency, operation, duration_ms, call_sid\n| filter event in [\"invocation_end\", \"dependency_call\"]\n| filter ispresent(duration_ms)\n| sort duration_ms desc\n| limit 50"
+   },
+   "Type": "AWS::Logs::QueryDefinition"
+  },
+  "SavedQuery3": {
+   "Properties": {
+    "LogGroupNames": [
+     "/owlbank/lambda/frontdoor",
+     "/owlbank/lambda/auth_service",
+     "/owlbank/lambda/bank_tools",
+     "/owlbank/lambda/level0_tools",
+     "/owlbank/lambda/context_api",
+     "/owlbank/lambda/flex_authorizer",
+     "/owlbank/ecs/tac-bridge"
+    ],
+    "Name": "OwlBank/Auth failures",
+    "QueryString": "fields @timestamp, event, component, reason\n| filter event in [\"twilio_auth_failed\", \"verification_failed\", \"rate_limited\", \"verification_risk\", \"otp_sent_untrusted_ani\"]\n| stats count(*) as occurrences by bin(5m), event, component, reason\n| sort occurrences desc"
+   },
+   "Type": "AWS::Logs::QueryDefinition"
+  },
+  "SavedQuery4": {
+   "Properties": {
+    "LogGroupNames": [
+     "/owlbank/lambda/frontdoor",
+     "/owlbank/lambda/auth_service",
+     "/owlbank/lambda/bank_tools",
+     "/owlbank/lambda/level0_tools",
+     "/owlbank/lambda/context_api",
+     "/owlbank/lambda/flex_authorizer",
+     "/owlbank/ecs/tac-bridge"
+    ],
+    "Name": "OwlBank/Escalations by reason",
+    "QueryString": "fields @timestamp, reason, source\n| filter event = \"escalation\"\n| stats count(*) as escalations by reason, source\n| sort escalations desc"
+   },
+   "Type": "AWS::Logs::QueryDefinition"
+  },
+  "ServiceD69D759B": {
+   "DependsOn": [
+    "AlbHttpBridgeRule1C5659B2",
+    "TaskRoleDefaultPolicy07FC53DE",
+    "TaskRole30FC0FBB"
+   ],
+   "Properties": {
+    "Cluster": {
+     "Ref": "ClusterEB0386A7"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "DeploymentCircuitBreaker": {
+      "Enable": true,
+      "Rollback": true
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 100
+    },
+    "DeploymentController": {
+     "Type": "ECS"
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "bridge",
+      "ContainerPort": 8080,
+      "TargetGroupArn": {
+       "Ref": "AlbHttpBridgeGroupD23C850D"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "TaskSgFD7B04A0",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Fn::ImportValue": "OwlBankNetwork:ExportsOutputRefVpcprivateSubnet1SubnetCEAD37168693D373"
+       },
+       {
+        "Fn::ImportValue": "OwlBankNetwork:ExportsOutputRefVpcprivateSubnet2Subnet2DE7549CDF5ACE3D"
+       }
+      ]
+     }
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TaskDefinition": {
+     "Ref": "TaskDef54694570"
+    }
+   },
+   "Type": "AWS::ECS::Service"
+  },
+  "TaskDef54694570": {
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "OWLBANK_TABLE_CUSTOMERS",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+        }
+       },
+       {
+        "Name": "OWLBANK_TABLE_TOKENS",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+        }
+       },
+       {
+        "Name": "OWLBANK_TABLE_CALLS",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+        }
+       },
+       {
+        "Name": "OWLBANK_TABLE_SEGMENTS",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+        }
+       },
+       {
+        "Name": "OWLBANK_TABLE_POLICY",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+        }
+       },
+       {
+        "Name": "OWLBANK_TABLE_CATALOG",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+        }
+       },
+       {
+        "Name": "OWLBANK_TABLE_RISK",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+        }
+       },
+       {
+        "Name": "OWLBANK_TABLE_MODELSTATS",
+        "Value": "owlbank-dev-modelstats"
+       },
+       {
+        "Name": "AWS_REGION",
+        "Value": "us-east-1"
+       },
+       {
+        "Name": "TAC_ANALYTICS_DISABLED",
+        "Value": "true"
+       },
+       {
+        "Name": "TWILIO_VOICE_WEBSOCKET_PATH",
+        "Value": "/ws"
+       },
+       {
+        "Name": "TWILIO_LOG_LEVEL",
+        "Value": "INFO"
+       },
+       {
+        "Name": "OWLBANK_LOG_LEVEL",
+        "Value": "INFO"
+       },
+       {
+        "Name": "OWLBANK_BANK_TOOLS_FUNCTION",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":lambda:us-east-1:111111111111:function:owlbank-dev-bank-tools:live"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "OWLBANK_TOKEN_KMS_KEY",
+        "Value": {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74"
+        }
+       },
+       {
+        "Name": "OWLBANK_MEMORY_ID",
+        "Value": {
+         "Fn::ImportValue": "OwlBankAgent:ExportsOutputFnGetAttMemoryMemoryId5865BD41"
+        }
+       },
+       {
+        "Name": "OWLBANK_DEFAULT_LANGUAGE",
+        "Value": "en-US"
+       },
+       {
+        "Name": "OWLBANK_SUPPORTED_LANGUAGES",
+        "Value": "en-US,es-US"
+       },
+       {
+        "Name": "OWLBANK_REUSE_CONVERSATION",
+        "Value": "true"
+       },
+       {
+        "Name": "OWLBANK_AI_KEYPAD",
+        "Value": "on"
+       },
+       {
+        "Name": "OWLBANK_TIMEZONE",
+        "Value": "America/New_York"
+       },
+       {
+        "Name": "OWLBANK_MEMORY_TRAIT_GROUPS",
+        "Value": "Contact,WebActivity"
+       },
+       {
+        "Name": "OWLBANK_WEB_ACTIVITY_MAX_AGE_HOURS",
+        "Value": "24"
+       },
+       {
+        "Name": "OWLBANK_MODELS",
+        "Value": "[{\"id\":\"us.anthropic.claude-haiku-5-5\",\"thinking\":\"adaptive\",\"max_tokens\":2000,\"text_release\":\"stream\",\"prompt_caching\":true},{\"id\":\"us.anthropic.claude-haiku-4-5-20251001-v1:0\",\"thinking\":\"off\",\"max_tokens\":1000,\"text_release\":\"message\",\"prompt_caching\":true},{\"id\":\"us.anthropic.claude-sonnet-5-5\",\"thinking\":\"adaptive\",\"max_tokens\":2000,\"text_release\":\"stream\",\"prompt_caching\":true}]"
+       },
+       {
+        "Name": "OWLBANK_PROMPT_CACHE_TTL",
+        "Value": "5m"
+       },
+       {
+        "Name": "OWLBANK_GATEWAY_URL",
+        "Value": {
+         "Fn::ImportValue": "OwlBankAgent:ExportsOutputFnGetAttGatewayGatewayUrl79A4577E"
+        }
+       },
+       {
+        "Name": "TWILIO_VOICE_PUBLIC_DOMAIN",
+        "Value": {
+         "Fn::GetAtt": [
+          "Distribution830FAC52",
+          "DomainName"
+         ]
+        }
+       }
+      ],
+      "Essential": true,
+      "Image": {
+       "Fn::Sub": "111111111111.dkr.ecr.us-east-1.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-111111111111-us-east-1:<asset-hash>"
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "BridgeLogs410D2298"
+        },
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "bridge"
+       }
+      },
+      "MountPoints": [
+       {
+        "ContainerPath": "/tmp",
+        "ReadOnly": false,
+        "SourceVolume": "tmp"
+       }
+      ],
+      "Name": "bridge",
+      "PortMappings": [
+       {
+        "ContainerPort": 8080,
+        "Protocol": "tcp"
+       }
+      ],
+      "ReadonlyRootFilesystem": true,
+      "Secrets": [
+       {
+        "Name": "TWILIO_ACCOUNT_SID",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+           },
+           ":account_sid::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "TWILIO_API_KEY",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+           },
+           ":api_key::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "TWILIO_API_SECRET",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+           },
+           ":api_secret::"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "TWILIO_AUTH_TOKEN",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioAuthTokenSecret2DB21499E8F987DB"
+           },
+           ":auth_token::"
+          ]
+         ]
+        }
+       }
+      ]
+     }
+    ],
+    "Cpu": "512",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "TaskDefExecutionRoleB4775C97",
+      "Arn"
+     ]
+    },
+    "Family": "OwlBankBridgeTaskDefE50E8D60",
+    "Memory": "1024",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "RuntimePlatform": {
+     "CpuArchitecture": "ARM64",
+     "OperatingSystemFamily": "LINUX"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "TaskRole30FC0FBB",
+      "Arn"
+     ]
+    },
+    "Volumes": [
+     {
+      "Name": "tmp"
+     }
+    ]
+   },
+   "Type": "AWS::ECS::TaskDefinition"
+  },
+  "TaskDefExecutionRoleB4775C97": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "TaskDefExecutionRoleDefaultPolicy0DBB737A": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":ecr:us-east-1:111111111111:repository/cdk-hnb659fds-container-assets-111111111111-us-east-1"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BridgeLogs410D2298",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioAuthTokenSecret2DB21499E8F987DB"
+       }
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "secretsmanager.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "DecryptSecretsViaSecretsManager"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "TaskDefExecutionRoleDefaultPolicy0DBB737A",
+    "Roles": [
+     {
+      "Ref": "TaskDefExecutionRoleB4775C97"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "TaskRole30FC0FBB": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Condition": {
+        "ArnLike": {
+         "aws:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":ecs:us-east-1:111111111111:*"
+           ]
+          ]
+         }
+        },
+        "StringEquals": {
+         "aws:SourceAccount": "111111111111"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank bridge task role (least privilege)",
+    "RoleName": "owlbank-dev-bridge-task",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "TaskRoleDefaultPolicy07FC53DE": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":lambda:us-east-1:111111111111:function:owlbank-dev-bank-tools:live"
+         ]
+        ]
+       },
+       "Sid": "InvokeBankTools"
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "ForAnyValue:StringEquals": {
+         "kms:EncryptionContextKeys": [
+          "call_sid"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74"
+       },
+       "Sid": "TokenUnseal"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+           },
+           "/index/phone-index"
+          ]
+         ]
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE"
+        }
+       ],
+       "Sid": "TablesRead"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:BatchWriteItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCallsTableD3962D26ArnC9CD00A6"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttSegmentsTable28FC09E7Arn2AA3A7D2"
+        }
+       ],
+       "Sid": "TablesReadWrite"
+      },
+      {
+       "Action": "dynamodb:Scan",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE"
+       },
+       "Sid": "CatalogScan"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "TablesKmsViaDynamoDB"
+      },
+      {
+       "Action": "comprehend:DetectPiiEntities",
+       "Effect": "Allow",
+       "Resource": "*",
+       "Sid": "DetectPiiForRedaction"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-5-5"
+         ]
+        ]
+       },
+       "Sid": "StrandsInvokeModelProfile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "bedrock:InferenceProfileArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-5-5"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:*::foundation-model/anthropic.claude-haiku-5-5"
+         ]
+        ]
+       },
+       "Sid": "StrandsInvokeModelViaProfile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0"
+         ]
+        ]
+       },
+       "Sid": "StrandsInvokeModel2Profile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "bedrock:InferenceProfileArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+         ]
+        ]
+       },
+       "Sid": "StrandsInvokeModel2ViaProfile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-sonnet-5-5"
+         ]
+        ]
+       },
+       "Sid": "StrandsInvokeModel3Profile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "bedrock:InferenceProfileArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-sonnet-5-5"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:*::foundation-model/anthropic.claude-sonnet-5-5"
+         ]
+        ]
+       },
+       "Sid": "StrandsInvokeModel3ViaProfile"
+      },
+      {
+       "Action": "bedrock-agentcore:InvokeGateway",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankAgent:ExportsOutputFnGetAttGatewayGatewayArnED6C4A59"
+       },
+       "Sid": "StrandsGateway"
+      },
+      {
+       "Action": [
+        "bedrock-agentcore:CreateEvent",
+        "bedrock-agentcore:GetEvent",
+        "bedrock-agentcore:ListEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankAgent:ExportsOutputFnGetAttMemoryMemoryArn678119FD"
+       },
+       "Sid": "StrandsMemory"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:GenerateDataKey",
+        "kms:DescribeKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "bedrock-agentcore.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "StrandsMemoryCmk"
+      },
+      {
+       "Action": "dynamodb:UpdateItem",
+       "Condition": {
+        "ForAllValues:StringEquals": {
+         "dynamodb:LeadingKeys": [
+          "samples"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":dynamodb:us-east-1:111111111111:table/owlbank-dev-modelstats"
+         ]
+        ]
+       },
+       "Sid": "ModelstatsReportSamples"
+      },
+      {
+       "Action": "dynamodb:GetItem",
+       "Condition": {
+        "ForAllValues:StringEquals": {
+         "dynamodb:LeadingKeys": [
+          "state"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":dynamodb:us-east-1:111111111111:table/owlbank-dev-modelstats"
+         ]
+        ]
+       },
+       "Sid": "ModelstatsReadState"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "TaskRoleDefaultPolicy07FC53DE",
+    "Roles": [
+     {
+      "Ref": "TaskRole30FC0FBB"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "TaskSgFD7B04A0": {
+   "Properties": {
+    "GroupDescription": "OwlBank bridge tasks: from the ALB only",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "HTTPS to Twilio and AWS APIs",
+      "FromPort": 443,
+      "IpProtocol": "tcp",
+      "ToPort": 443
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VpcId": {
+     "Fn::ImportValue": "OwlBankNetwork:ExportsOutputRefVpc8378EB38272D6E3A"
+    }
+   },
+   "Type": "AWS::EC2::SecurityGroup"
+  },
+  "TaskSgfromOwlBankBridgeAlbSg0074752480807FC1773A": {
+   "Properties": {
+    "Description": "ALB to bridge",
+    "FromPort": 8080,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "TaskSgFD7B04A0",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "AlbSg1155C1BE",
+      "GroupId"
+     ]
+    },
+    "ToPort": 8080
+   },
+   "Type": "AWS::EC2::SecurityGroupIngress"
+  },
+  "UnhealthyHostsAlarmE3387D4B": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Bridge targets failing /health",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "LoadBalancer",
+      "Value": {
+       "Fn::Join": [
+        "",
+        [
+         {
+          "Fn::Select": [
+           1,
+           {
+            "Fn::Split": [
+             "/",
+             {
+              "Ref": "AlbHttp7966E42E"
+             }
+            ]
+           }
+          ]
+         },
+         "/",
+         {
+          "Fn::Select": [
+           2,
+           {
+            "Fn::Split": [
+             "/",
+             {
+              "Ref": "AlbHttp7966E42E"
+             }
+            ]
+           }
+          ]
+         },
+         "/",
+         {
+          "Fn::Select": [
+           3,
+           {
+            "Fn::Split": [
+             "/",
+             {
+              "Ref": "AlbHttp7966E42E"
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       ]
+      }
+     },
+     {
+      "Name": "TargetGroup",
+      "Value": {
+       "Fn::GetAtt": [
+        "AlbHttpBridgeGroupD23C850D",
+        "TargetGroupFullName"
+       ]
+      }
+     }
+    ],
+    "EvaluationPeriods": 3,
+    "MetricName": "UnHealthyHostCount",
+    "Namespace": "AWS/ApplicationELB",
+    "Period": 60,
+    "Statistic": "Maximum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "WafLogging": {
+   "DependsOn": [
+    "WafLoggingLogs98831A26"
+   ],
+   "Properties": {
+    "LogDestinationConfigs": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":logs:us-east-1:111111111111:log-group:aws-waf-logs-owlbank-dev-cloudfront"
+       ]
+      ]
+     }
+    ],
+    "RedactedFields": [
+     {
+      "SingleHeader": {
+       "Name": "authorization"
+      }
+     },
+     {
+      "SingleHeader": {
+       "Name": "cookie"
+      }
+     },
+     {
+      "SingleHeader": {
+       "Name": "x-twilio-signature"
+      }
+     },
+     {
+      "SingleHeader": {
+       "Name": "x-origin-verify"
+      }
+     },
+     {
+      "QueryString": {}
+     }
+    ],
+    "ResourceArn": {
+     "Fn::GetAtt": [
+      "WebAcl",
+      "Arn"
+     ]
+    }
+   },
+   "Type": "AWS::WAFv2::LoggingConfiguration"
+  },
+  "WafLoggingLogs98831A26": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "aws-waf-logs-owlbank-dev-cloudfront",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "WebAcl": {
+   "Properties": {
+    "AssociationConfig": {
+     "RequestBody": {
+      "CLOUDFRONT": {
+       "DefaultSizeInspectionLimit": "KB_64"
+      }
+     }
+    },
+    "DefaultAction": {
+     "Allow": {}
+    },
+    "Name": "owlbank-dev-cloudfront",
+    "Rules": [
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "AllowedPathsAndMethodsOnly",
+      "Priority": 0,
+      "Statement": {
+       "NotStatement": {
+        "Statement": {
+         "OrStatement": {
+          "Statements": [
+           {
+            "AndStatement": {
+             "Statements": [
+              {
+               "RegexMatchStatement": {
+                "FieldToMatch": {
+                 "UriPath": {}
+                },
+                "RegexString": "^/ws$",
+                "TextTransformations": [
+                 {
+                  "Priority": 0,
+                  "Type": "NONE"
+                 }
+                ]
+               }
+              },
+              {
+               "ByteMatchStatement": {
+                "FieldToMatch": {
+                 "Method": {}
+                },
+                "PositionalConstraint": "EXACTLY",
+                "SearchString": "GET",
+                "TextTransformations": [
+                 {
+                  "Priority": 0,
+                  "Type": "NONE"
+                 }
+                ]
+               }
+              }
+             ]
+            }
+           },
+           {
+            "AndStatement": {
+             "Statements": [
+              {
+               "RegexMatchStatement": {
+                "FieldToMatch": {
+                 "UriPath": {}
+                },
+                "RegexString": "^/webhook$",
+                "TextTransformations": [
+                 {
+                  "Priority": 0,
+                  "Type": "NONE"
+                 }
+                ]
+               }
+              },
+              {
+               "ByteMatchStatement": {
+                "FieldToMatch": {
+                 "Method": {}
+                },
+                "PositionalConstraint": "EXACTLY",
+                "SearchString": "POST",
+                "TextTransformations": [
+                 {
+                  "Priority": 0,
+                  "Type": "NONE"
+                 }
+                ]
+               }
+              }
+             ]
+            }
+           }
+          ]
+         }
+        }
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-bridge-cf-paths",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "RateLimitPerIp",
+      "Priority": 1,
+      "Statement": {
+       "RateBasedStatement": {
+        "AggregateKeyType": "IP",
+        "Limit": 10000
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-bridge-cf-rate",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "BodySizeLimit",
+      "Priority": 3,
+      "Statement": {
+       "SizeConstraintStatement": {
+        "ComparisonOperator": "GT",
+        "FieldToMatch": {
+         "Body": {
+          "OversizeHandling": "MATCH"
+         }
+        },
+        "Size": 65536,
+        "TextTransformations": [
+         {
+          "Priority": 0,
+          "Type": "NONE"
+         }
+        ]
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-bridge-cf-size",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWSManagedRulesAmazonIpReputationList",
+      "OverrideAction": {
+       "Count": {}
+      },
+      "Priority": 10,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesAmazonIpReputationList",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesAmazonIpReputationList",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWSManagedRulesCommonRuleSet",
+      "OverrideAction": {
+       "Count": {}
+      },
+      "Priority": 11,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesCommonRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesCommonRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Count": {}
+      },
+      "Name": "OversizeBodyOutsideLargeBodyPaths",
+      "Priority": 12,
+      "Statement": {
+       "AndStatement": {
+        "Statements": [
+         {
+          "LabelMatchStatement": {
+           "Key": "awswaf:managed:aws:core-rule-set:SizeRestrictions_Body",
+           "Scope": "LABEL"
+          }
+         },
+         {
+          "NotStatement": {
+           "Statement": {
+            "RegexMatchStatement": {
+             "FieldToMatch": {
+              "UriPath": {}
+             },
+             "RegexString": "^/webhook$",
+             "TextTransformations": [
+              {
+               "Priority": 0,
+               "Type": "NONE"
+              }
+             ]
+            }
+           }
+          }
+         }
+        ]
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-bridge-cf-oversize",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+      "OverrideAction": {
+       "Count": {}
+      },
+      "Priority": 13,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesKnownBadInputsRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     }
+    ],
+    "Scope": "CLOUDFRONT",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VisibilityConfig": {
+     "CloudWatchMetricsEnabled": true,
+     "MetricName": "owlbank-bridge-cf",
+     "SampledRequestsEnabled": true
+    }
+   },
+   "Type": "AWS::WAFv2::WebACL"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

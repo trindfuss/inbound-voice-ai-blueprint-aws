@@ -1,0 +1,6 @@
+{
+  "name": "owlbank-admin-console",
+  "private": true,
+  "description": "Marks the console's .js files as ES modules for `node --test`. No dependencies; not deployed.",
+  "type": "module"
+}

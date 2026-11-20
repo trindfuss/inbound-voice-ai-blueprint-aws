@@ -1,0 +1,9 @@
+{
+  "app": "uv run python app.py",
+  "context": {
+    "region": "us-east-1",
+    "stage": "dev",
+    "bridgeDesiredCount": 1,
+    "twilioOutputs": "twilio.context.json"
+  }
+}

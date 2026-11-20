@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 712" role="img" aria-label="Scripted steps run in the front door, the AI conversation in the bridge" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13">
+<title>Scripted steps run in the front door, the AI conversation in the bridge</title>
+<style>.bg{fill:#ffffff}.ink{fill:#1f2328}.quiet{fill:#59636e}.edge{stroke:#8c959f}.head{fill:#8c959f}.accent{stroke:#0969da;fill:#0969da;fill-opacity:.12}@media (prefers-color-scheme: dark){.bg{fill:#0d1117}.ink{fill:#e6edf3}.quiet{fill:#9198a1}.edge{stroke:#6e7681}.head{fill:#6e7681}.accent{stroke:#4493f8;fill:#4493f8;fill-opacity:.18}}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="head" d="M0 0L10 5L0 10z"/></marker></defs>
+<rect class="bg" width="760" height="712"/>
+<text class="ink" x="24" y="32" font-size="15" font-weight="600">Scripted steps run in the front door, the AI conversation in the bridge</text>
+<text class="quiet" x="24" y="54" font-size="11.5">Layout without a custom domain: bridge on ECS Fargate</text>
+<rect class="edge" x="24" y="128" width="216" height="408" rx="8" fill="none" stroke-width="1.25"/><text class="ink" x="40" y="150" font-weight="600">Twilio</text>
+<rect class="edge" x="264" y="128" width="472" height="496" rx="8" fill="none" stroke-width="1.25"/><text class="ink" x="280" y="150" font-weight="600">AWS, us-east-1</text>
+<g class="edge" fill="none" stroke-width="1.25"><path d="M132 112V160" marker-end="url(#a)"/><path d="M224 188H280" marker-end="url(#a)"/><path d="M224 268H252V420H280" marker-end="url(#a)"/><path d="M224 492H252V580H280" marker-end="url(#a)"/><path d="M384 216V232" marker-end="url(#a)"/><path d="M384 304V320" marker-end="url(#a)"/><path d="M384 448V464" marker-end="url(#a)"/><path d="M500 188H512" marker-end="url(#a)"/><path d="M500 260H512" marker-end="url(#a)"/><path d="M500 332H512" marker-end="url(#a)"/><path d="M500 404H512" marker-end="url(#a)"/><path d="M500 492H512" marker-end="url(#a)"/><path d="M616 552V536" marker-end="url(#a)"/><path d="M488 268H500"/><path d="M488 500H500"/><path d="M500 188V500"/></g>
+<rect class="edge" fill="none" stroke-width="1.25" x="24" y="72" width="216" height="40" rx="8"/>
+<text class="ink" x="132" y="96" text-anchor="middle" font-weight="600">Caller</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="40" y="160" width="184" height="56" rx="8"/>
+<text class="ink" x="132" y="184" text-anchor="middle" font-weight="600">Programmable Voice</text>
+<text class="quiet" x="132" y="200" text-anchor="middle" font-size="11.5">webhooks and Gather</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="40" y="232" width="184" height="72" rx="8"/>
+<text class="ink" x="132" y="256" text-anchor="middle" font-weight="600">ConversationRelay</text>
+<text class="quiet" x="132" y="272" text-anchor="middle" font-size="11.5">Deepgram speech to text</text>
+<text class="quiet" x="132" y="288" text-anchor="middle" font-size="11.5">ElevenLabs text to speech</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="40" y="320" width="184" height="56" rx="8"/>
+<text class="ink" x="132" y="344" text-anchor="middle" font-weight="600">Orchestrator, Memory</text>
+<text class="quiet" x="132" y="360" text-anchor="middle" font-size="11.5">via Twilio Agent Connect</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="40" y="392" width="184" height="56" rx="8"/>
+<text class="ink" x="132" y="416" text-anchor="middle" font-weight="600">Verify</text>
+<text class="quiet" x="132" y="432" text-anchor="middle" font-size="11.5">one-time code by SMS</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="40" y="464" width="184" height="56" rx="8"/>
+<text class="ink" x="132" y="488" text-anchor="middle" font-weight="600">TaskRouter and Flex</text>
+<text class="quiet" x="132" y="504" text-anchor="middle" font-size="11.5">optional: queues, screen pop</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="280" y="160" width="208" height="56" rx="8"/>
+<text class="ink" x="384" y="184" text-anchor="middle" font-weight="600">API Gateway and WAF</text>
+<text class="quiet" x="384" y="200" text-anchor="middle" font-size="11.5">signature, Basic auth</text>
+<rect class="accent" stroke-width="2" x="280" y="232" width="208" height="72" rx="8"/>
+<text class="ink" x="384" y="256" text-anchor="middle" font-weight="600">Front door Lambda</text>
+<text class="ink" x="384" y="272" text-anchor="middle" font-size="11.5">scripted IVR and step-up</text>
+<text class="ink" x="384" y="288" text-anchor="middle" font-size="11.5">confirmations, escalation</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="280" y="320" width="208" height="56" rx="8"/>
+<text class="ink" x="384" y="344" text-anchor="middle" font-weight="600">Auth service Lambda</text>
+<text class="quiet" x="384" y="360" text-anchor="middle" font-size="11.5">factors, token, Verify code</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="280" y="392" width="208" height="56" rx="8"/>
+<text class="ink" x="384" y="416" text-anchor="middle" font-weight="600">CloudFront, ALB, WAF</text>
+<text class="quiet" x="384" y="432" text-anchor="middle" font-size="11.5">WebSocket edge</text>
+<rect class="accent" stroke-width="2" x="280" y="464" width="208" height="72" rx="8"/>
+<text class="ink" x="384" y="488" text-anchor="middle" font-weight="600">TAC bridge (Fargate)</text>
+<text class="ink" x="384" y="504" text-anchor="middle" font-size="11.5">Strands agent loop</text>
+<text class="ink" x="384" y="520" text-anchor="middle" font-size="11.5">masking, silence watch</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="280" y="552" width="208" height="56" rx="8"/>
+<text class="ink" x="384" y="576" text-anchor="middle" font-weight="600">Context API Lambda</text>
+<text class="quiet" x="384" y="592" text-anchor="middle" font-size="11.5">call timeline for Flex</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="512" y="160" width="208" height="56" rx="8"/>
+<text class="ink" x="616" y="184" text-anchor="middle" font-weight="600">Bedrock: Claude Haiku</text>
+<text class="quiet" x="616" y="200" text-anchor="middle" font-size="11.5">agent model, slot resolver</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="512" y="232" width="208" height="56" rx="8"/>
+<text class="ink" x="616" y="256" text-anchor="middle" font-weight="600">AgentCore Memory</text>
+<text class="quiet" x="616" y="272" text-anchor="middle" font-size="11.5">the call history</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="512" y="304" width="208" height="56" rx="8"/>
+<text class="ink" x="616" y="328" text-anchor="middle" font-weight="600">AgentCore Gateway</text>
+<text class="quiet" x="616" y="344" text-anchor="middle" font-size="11.5">FAQ, branch hours (MCP)</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="512" y="376" width="208" height="56" rx="8"/>
+<text class="ink" x="616" y="400" text-anchor="middle" font-weight="600">Bank tools Lambda</text>
+<text class="quiet" x="616" y="416" text-anchor="middle" font-size="11.5">token checked on every call</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="512" y="448" width="208" height="88" rx="8"/>
+<text class="ink" x="616" y="472" text-anchor="middle" font-weight="600">DynamoDB, KMS, secrets</text>
+<text class="quiet" x="616" y="488" text-anchor="middle" font-size="11.5">call state, policy, catalog</text>
+<text class="quiet" x="616" y="504" text-anchor="middle" font-size="11.5">token sealing, Twilio keys</text>
+<text class="quiet" x="616" y="520" text-anchor="middle" font-size="11.5">Comprehend PII masking</text>
+<rect class="edge" fill="none" stroke-width="1.25" x="512" y="552" width="208" height="56" rx="8"/>
+<text class="ink" x="616" y="576" text-anchor="middle" font-weight="600">Admin console</text>
+<text class="quiet" x="616" y="592" text-anchor="middle" font-size="11.5">Cognito, audited edits</text>
+<text class="quiet" x="24" y="652" font-size="11.5">Webhooks go to the front door and the WebSocket to the bridge; both use the AWS services on the right.</text>
+<text class="quiet" x="24" y="670" font-size="11.5">With the optional Flex add-on, Flex reads the redacted call timeline through the Context API.</text>
+<text class="quiet" x="24" y="688" font-size="11.5">Not drawn: CloudWatch and X-Ray, and the optional AgentCore Runtime hosting of the bridge.</text>
+</svg>

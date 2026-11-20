@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin">
+  <title>OwlBank Console</title>
+  <script src="theme.js"></script>
+  <link rel="preload" href="fonts/Inter-4.1-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="views.css">
+  <link rel="icon" href="owl.svg" type="image/svg+xml">
+  <script type="module" src="app.js"></script>
+</head>
+<body data-shell="loading">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="app">
+    <div class="sidebar" id="sidebar">
+      <div class="brand">
+        <img class="brand-mark" src="owl.svg" alt="" width="32" height="32">
+        <span class="brand-name">OwlBank Console</span>
+        <span id="stage" class="stage"></span>
+      </div>
+      <nav id="nav" aria-label="Sections"></nav>
+      <div id="account" class="account"></div>
+    </div>
+    <div class="content">
+      <header class="topbar">
+        <button type="button" id="menu" class="quiet" aria-expanded="false" aria-controls="sidebar" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="icons.svg#menu"/></svg> Menu</button>
+        <img class="brand-mark" src="owl.svg" alt="" width="28" height="28">
+        <span class="brand-name">OwlBank Console</span>
+        <span id="topbar-stage" class="stage"></span>
+      </header>
+      <main id="main" tabindex="-1" aria-labelledby="page-title">
+        <div class="skeleton skeleton--page" aria-hidden="true"></div>
+        <p class="visually-hidden">Loading…</p>
+      </main>
+    </div>
+  </div>
+  <div id="scrim" class="scrim" hidden></div>
+  <div id="toasts" class="toasts"></div>
+  <dialog id="confirm" class="dialog"></dialog>
+  <div id="live" class="visually-hidden" role="status" aria-live="polite"></div>
+</body>
+</html>

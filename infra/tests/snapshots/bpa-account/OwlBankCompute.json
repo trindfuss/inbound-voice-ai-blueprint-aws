@@ -1,0 +1,3584 @@
+{
+ "Outputs": {
+  "ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34": {
+   "Export": {
+    "Name": "OwlBankCompute:ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "ContextApiFnC9B4B891",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttFlexAuthorizerFnDF8AAFC0Arn140D037E": {
+   "Export": {
+    "Name": "OwlBankCompute:ExportsOutputFnGetAttFlexAuthorizerFnDF8AAFC0Arn140D037E"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "FlexAuthorizerFnDF8AAFC0",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputFnGetAttFrontdoorFn494CBB45Arn694EF4E1": {
+   "Export": {
+    "Name": "OwlBankCompute:ExportsOutputFnGetAttFrontdoorFn494CBB45Arn694EF4E1"
+   },
+   "Value": {
+    "Fn::GetAtt": [
+     "FrontdoorFn494CBB45",
+     "Arn"
+    ]
+   }
+  },
+  "ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6": {
+   "Export": {
+    "Name": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+   },
+   "Value": {
+    "Ref": "FrontdoorFnAliaslive9F33234B"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+   "Type": "AWS::SSM::Parameter::Value<String>"
+  }
+ },
+ "Resources": {
+  "AuthServiceErrorsAlarmDFE8AFA8": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "auth_service Lambda errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "AuthServiceFn25FE9D6B"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "AuthServiceFn25FE9D6B": {
+   "DependsOn": [
+    "AuthServiceRoleDefaultPolicy63582815",
+    "AuthServiceRoleE8736395"
+   ],
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "OWLBANK_DEFAULT_LANGUAGE": "en-US",
+      "OWLBANK_LOG_LEVEL": "INFO",
+      "OWLBANK_MEMORY_TRAIT_GROUPS": "Contact,WebActivity",
+      "OWLBANK_SECRET_TWILIO_API_KEY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+      },
+      "OWLBANK_SUPPORTED_LANGUAGES": "en-US,es-US",
+      "OWLBANK_TABLE_CALLS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+      },
+      "OWLBANK_TABLE_CATALOG": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+      },
+      "OWLBANK_TABLE_CUSTOMERS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+      },
+      "OWLBANK_TABLE_POLICY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+      },
+      "OWLBANK_TABLE_RISK": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+      },
+      "OWLBANK_TABLE_SEGMENTS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+      },
+      "OWLBANK_TABLE_TOKENS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+      },
+      "OWLBANK_TOKEN_KMS_KEY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74"
+      },
+      "OWLBANK_WEB_ACTIVITY_MAX_AGE_HOURS": "24"
+     }
+    },
+    "Handler": "lambdas.auth_service.handler.handler",
+    "Layers": [
+     {
+      "Ref": "DepsLayerA0D7F79A"
+     }
+    ],
+    "LoggingConfig": {
+     "ApplicationLogLevel": "INFO",
+     "LogFormat": "JSON",
+     "LogGroup": {
+      "Ref": "AuthServiceLogs1AF0638D"
+     },
+     "SystemLogLevel": "INFO"
+    },
+    "MemorySize": 1024,
+    "Role": {
+     "Fn::GetAtt": [
+      "AuthServiceRoleE8736395",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Timeout": 5,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "Type": "AWS::Lambda::Function"
+  },
+  "AuthServiceFnAliaslive996E5CC5": {
+   "Properties": {
+    "FunctionName": {
+     "Ref": "AuthServiceFn25FE9D6B"
+    },
+    "FunctionVersion": {
+     "Fn::GetAtt": [
+      "AuthServiceFnCurrentVersionC6ECE8D3<code-hash>",
+      "Version"
+     ]
+    },
+    "Name": "live",
+    "ProvisionedConcurrencyConfig": {
+     "ProvisionedConcurrentExecutions": 1
+    }
+   },
+   "Type": "AWS::Lambda::Alias"
+  },
+  "AuthServiceFnAliasliveEventInvokeConfig7CD86852": {
+   "Properties": {
+    "FunctionName": {
+     "Ref": "AuthServiceFn25FE9D6B"
+    },
+    "MaximumRetryAttempts": 0,
+    "Qualifier": {
+     "Fn::Select": [
+      7,
+      {
+       "Fn::Split": [
+        ":",
+        {
+         "Ref": "AuthServiceFnAliaslive996E5CC5"
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::EventInvokeConfig"
+  },
+  "AuthServiceFnCurrentVersionC6ECE8D3<code-hash>": {
+   "Metadata": {
+    "aws:cdk:do-not-refactor": true
+   },
+   "Properties": {
+    "FunctionName": {
+     "Ref": "AuthServiceFn25FE9D6B"
+    }
+   },
+   "Type": "AWS::Lambda::Version"
+  },
+  "AuthServiceLogs1AF0638D": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/lambda/auth_service",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "AuthServiceRoleDefaultPolicy63582815": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "AuthServiceLogs1AF0638D",
+         "Arn"
+        ]
+       },
+       "Sid": "WriteOwnLogs"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+           },
+           "/index/phone-index"
+          ]
+         ]
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80"
+        }
+       ],
+       "Sid": "TablesRead"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:BatchWriteItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA"
+           },
+           "/index/call_sid-index"
+          ]
+         ]
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCallsTableD3962D26ArnC9CD00A6"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttRiskTableF5BEC2F2ArnA4892EDA"
+        }
+       ],
+       "Sid": "TablesReadWrite"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "TablesKmsViaDynamoDB"
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+       }
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "secretsmanager.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "DecryptSecretsViaSecretsManager"
+      },
+      {
+       "Action": "kms:Encrypt",
+       "Condition": {
+        "ForAnyValue:StringEquals": {
+         "kms:EncryptionContextKeys": [
+          "call_sid"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74"
+       },
+       "Sid": "WelcomeSealing"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "AuthServiceRoleDefaultPolicy63582815",
+    "Roles": [
+     {
+      "Ref": "AuthServiceRoleE8736395"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "AuthServiceRoleE8736395": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank auth_service Lambda (least privilege)",
+    "RoleName": "owlbank-dev-auth-service",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "AuthServiceThrottlesAlarm8635C6A8": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "auth_service Lambda throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "AuthServiceFn25FE9D6B"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "BankToolsErrorsAlarm0309904A": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "bank_tools Lambda errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "BankToolsFnA1296D27"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "BankToolsFnA1296D27": {
+   "DependsOn": [
+    "BankToolsRoleDefaultPolicy263B67C0",
+    "BankToolsRole10846722"
+   ],
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "OWLBANK_DEFAULT_LANGUAGE": "en-US",
+      "OWLBANK_LOG_LEVEL": "INFO",
+      "OWLBANK_SUPPORTED_LANGUAGES": "en-US,es-US",
+      "OWLBANK_TABLE_CALLS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+      },
+      "OWLBANK_TABLE_CATALOG": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+      },
+      "OWLBANK_TABLE_CUSTOMERS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+      },
+      "OWLBANK_TABLE_POLICY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+      },
+      "OWLBANK_TABLE_RISK": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+      },
+      "OWLBANK_TABLE_SEGMENTS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+      },
+      "OWLBANK_TABLE_TOKENS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+      }
+     }
+    },
+    "FunctionName": "owlbank-dev-bank-tools",
+    "Handler": "lambdas.bank_tools.handler.handler",
+    "Layers": [
+     {
+      "Ref": "DepsLayerA0D7F79A"
+     }
+    ],
+    "LoggingConfig": {
+     "ApplicationLogLevel": "INFO",
+     "LogFormat": "JSON",
+     "LogGroup": {
+      "Ref": "BankToolsLogs6ADFE582"
+     },
+     "SystemLogLevel": "INFO"
+    },
+    "MemorySize": 1024,
+    "Role": {
+     "Fn::GetAtt": [
+      "BankToolsRole10846722",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Timeout": 8,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "Type": "AWS::Lambda::Function"
+  },
+  "BankToolsFnAliaslive52A724F6": {
+   "Properties": {
+    "FunctionName": {
+     "Ref": "BankToolsFnA1296D27"
+    },
+    "FunctionVersion": {
+     "Fn::GetAtt": [
+      "BankToolsFnCurrentVersion95270D71<code-hash>",
+      "Version"
+     ]
+    },
+    "Name": "live",
+    "ProvisionedConcurrencyConfig": {
+     "ProvisionedConcurrentExecutions": 1
+    }
+   },
+   "Type": "AWS::Lambda::Alias"
+  },
+  "BankToolsFnCurrentVersion95270D71<code-hash>": {
+   "Metadata": {
+    "aws:cdk:do-not-refactor": true
+   },
+   "Properties": {
+    "FunctionName": {
+     "Ref": "BankToolsFnA1296D27"
+    }
+   },
+   "Type": "AWS::Lambda::Version"
+  },
+  "BankToolsLogs6ADFE582": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/lambda/bank_tools",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "BankToolsRole10846722": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank bank_tools Lambda (least privilege)",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "BankToolsRoleDefaultPolicy263B67C0": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BankToolsLogs6ADFE582",
+         "Arn"
+        ]
+       },
+       "Sid": "WriteOwnLogs"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA"
+           },
+           "/index/call_sid-index"
+          ]
+         ]
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80"
+        }
+       ],
+       "Sid": "TablesRead"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:BatchWriteItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+           },
+           "/index/phone-index"
+          ]
+         ]
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCallsTableD3962D26ArnC9CD00A6"
+        }
+       ],
+       "Sid": "TablesReadWrite"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "TablesKmsViaDynamoDB"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BankToolsRoleDefaultPolicy263B67C0",
+    "Roles": [
+     {
+      "Ref": "BankToolsRole10846722"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "BankToolsThrottlesAlarm353ECED5": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "bank_tools Lambda throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "BankToolsFnA1296D27"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ContextApiErrorsAlarm644600ED": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "context_api Lambda errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "ContextApiFnC9B4B891"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ContextApiFnC9B4B891": {
+   "DependsOn": [
+    "ContextApiRoleDefaultPolicyC6307A21",
+    "ContextApiRole14482520"
+   ],
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "OWLBANK_DEFAULT_LANGUAGE": "en-US",
+      "OWLBANK_LOG_LEVEL": "INFO",
+      "OWLBANK_SECRET_TWILIO_API_KEY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefContextApiKeySecret59ABCA7794D62F79"
+      },
+      "OWLBANK_SUPPORTED_LANGUAGES": "en-US,es-US",
+      "OWLBANK_TABLE_CALLS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+      },
+      "OWLBANK_TABLE_CATALOG": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+      },
+      "OWLBANK_TABLE_CUSTOMERS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+      },
+      "OWLBANK_TABLE_POLICY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+      },
+      "OWLBANK_TABLE_RISK": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+      },
+      "OWLBANK_TABLE_SEGMENTS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+      },
+      "OWLBANK_TABLE_TOKENS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+      }
+     }
+    },
+    "Handler": "lambdas.context_api.handler.handler",
+    "Layers": [
+     {
+      "Ref": "DepsLayerA0D7F79A"
+     }
+    ],
+    "LoggingConfig": {
+     "ApplicationLogLevel": "INFO",
+     "LogFormat": "JSON",
+     "LogGroup": {
+      "Ref": "ContextApiLogsF600A112"
+     },
+     "SystemLogLevel": "INFO"
+    },
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "ContextApiRole14482520",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Timeout": 5,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "Type": "AWS::Lambda::Function"
+  },
+  "ContextApiLogsF600A112": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/lambda/context_api",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "ContextApiRole14482520": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank context_api Lambda (least privilege)",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "ContextApiRoleDefaultPolicyC6307A21": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ContextApiLogsF600A112",
+         "Arn"
+        ]
+       },
+       "Sid": "WriteOwnLogs"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCallsTableD3962D26ArnC9CD00A6"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttSegmentsTable28FC09E7Arn2AA3A7D2"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE"
+        }
+       ],
+       "Sid": "TablesRead"
+      },
+      {
+       "Action": "dynamodb:Scan",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE"
+       },
+       "Sid": "CatalogScan"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "TablesKmsViaDynamoDB"
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefContextApiKeySecret59ABCA7794D62F79"
+       }
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "secretsmanager.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "DecryptSecretsViaSecretsManager"
+      },
+      {
+       "Action": "comprehend:DetectPiiEntities",
+       "Effect": "Allow",
+       "Resource": "*",
+       "Sid": "DetectPiiForRedaction"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ContextApiRoleDefaultPolicyC6307A21",
+    "Roles": [
+     {
+      "Ref": "ContextApiRole14482520"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "ContextApiThrottlesAlarm14C5C279": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "context_api Lambda throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "ContextApiFnC9B4B891"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "DepsLayerA0D7F79A": {
+   "Properties": {
+    "CompatibleArchitectures": [
+     "arm64"
+    ],
+    "CompatibleRuntimes": [
+     "python3.12"
+    ],
+    "Content": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Description": "Third-party packages for the OwlBank Lambdas (built by infra/scripts/build_lambda_deps.py)"
+   },
+   "Type": "AWS::Lambda::LayerVersion"
+  },
+  "FlexAuthorizerErrorsAlarm3BF172F0": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "flex_authorizer Lambda errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "FlexAuthorizerFnDF8AAFC0"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "FlexAuthorizerFnDF8AAFC0": {
+   "DependsOn": [
+    "FlexAuthorizerRoleDefaultPolicy683E15C0",
+    "FlexAuthorizerRole2FD468B3"
+   ],
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "OWLBANK_DEFAULT_LANGUAGE": "en-US",
+      "OWLBANK_LOG_LEVEL": "INFO",
+      "OWLBANK_SECRET_TWILIO_API_KEY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+      },
+      "OWLBANK_SUPPORTED_LANGUAGES": "en-US,es-US",
+      "OWLBANK_TABLE_CALLS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+      },
+      "OWLBANK_TABLE_CATALOG": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+      },
+      "OWLBANK_TABLE_CUSTOMERS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+      },
+      "OWLBANK_TABLE_POLICY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+      },
+      "OWLBANK_TABLE_RISK": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+      },
+      "OWLBANK_TABLE_SEGMENTS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+      },
+      "OWLBANK_TABLE_TOKENS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+      }
+     }
+    },
+    "Handler": "lambdas.flex_authorizer.handler.handler",
+    "Layers": [
+     {
+      "Ref": "DepsLayerA0D7F79A"
+     }
+    ],
+    "LoggingConfig": {
+     "ApplicationLogLevel": "INFO",
+     "LogFormat": "JSON",
+     "LogGroup": {
+      "Ref": "FlexAuthorizerLogs8CA4604E"
+     },
+     "SystemLogLevel": "INFO"
+    },
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "FlexAuthorizerRole2FD468B3",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Timeout": 5,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "Type": "AWS::Lambda::Function"
+  },
+  "FlexAuthorizerLogs8CA4604E": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/lambda/flex_authorizer",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "FlexAuthorizerRole2FD468B3": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank flex_authorizer Lambda (least privilege)",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "FlexAuthorizerRoleDefaultPolicy683E15C0": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "FlexAuthorizerLogs8CA4604E",
+         "Arn"
+        ]
+       },
+       "Sid": "WriteOwnLogs"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+       }
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "secretsmanager.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "DecryptSecretsViaSecretsManager"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "FlexAuthorizerRoleDefaultPolicy683E15C0",
+    "Roles": [
+     {
+      "Ref": "FlexAuthorizerRole2FD468B3"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "FlexAuthorizerThrottlesAlarmC1C23224": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "flex_authorizer Lambda throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "FlexAuthorizerFnDF8AAFC0"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "FrontdoorAuthRejectedAlarmA5530563": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Front door rejected requests (signature, Basic auth, route or unverifiable)",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 1,
+    "MetricName": "FrontdoorRejected",
+    "Namespace": "OwlBank/dev/Security",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 10,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "FrontdoorAuthRejectedFilterC3BB3DAC": {
+   "Properties": {
+    "FilterPattern": "\"twilio_auth_failed\"",
+    "LogGroupName": {
+     "Ref": "FrontdoorLogs6B74810C"
+    },
+    "MetricTransformations": [
+     {
+      "DefaultValue": 0,
+      "MetricName": "FrontdoorRejected",
+      "MetricNamespace": "OwlBank/dev/Security",
+      "MetricValue": "1"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::MetricFilter"
+  },
+  "FrontdoorErrorsAlarm4CD74173": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "frontdoor Lambda errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "FrontdoorFn494CBB45"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "FrontdoorFn494CBB45": {
+   "DependsOn": [
+    "FrontdoorRoleDefaultPolicy21EEF970",
+    "FrontdoorRole1F8F4C02"
+   ],
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "OWLBANK_ACCEPT_SPOKEN_FACTORS": "true",
+      "OWLBANK_AI_KEYPAD": "on",
+      "OWLBANK_AUTH_SERVICE_FUNCTION": {
+       "Ref": "AuthServiceFnAliaslive996E5CC5"
+      },
+      "OWLBANK_BANK_TOOLS_FUNCTION": {
+       "Ref": "BankToolsFnAliaslive52A724F6"
+      },
+      "OWLBANK_BRIEFING_BUDGET_MS": "4000",
+      "OWLBANK_CONFIRM_SPEECH_TIMEOUT": "2",
+      "OWLBANK_DEFAULT_LANGUAGE": "en-US",
+      "OWLBANK_EARLY_DIGITS": "true",
+      "OWLBANK_HUMAN_LEG_CONVERSATION": "off",
+      "OWLBANK_KEYPAD_TIMEOUT": "3",
+      "OWLBANK_LOG_LEVEL": "INFO",
+      "OWLBANK_MEMORY_TRAIT_GROUPS": "Contact,WebActivity",
+      "OWLBANK_RELAY_PARAMETER": "/owlbank/dev/bridge/relay",
+      "OWLBANK_RESOLVER_MODEL_ID": "us.anthropic.claude-haiku-5-5",
+      "OWLBANK_REUSE_CONVERSATION": "true",
+      "OWLBANK_SCRIPTED_BARGE_IN": "any",
+      "OWLBANK_SECRET_BASIC_AUTH": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefBasicAuthSecretD2D5230999814F08"
+      },
+      "OWLBANK_SECRET_TWILIO_API_KEY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+      },
+      "OWLBANK_SECRET_TWILIO_AUTH_TOKEN": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioAuthTokenSecret2DB21499E8F987DB"
+      },
+      "OWLBANK_SLOT_MODE_CEILING": "assisted",
+      "OWLBANK_SPEECH_LOG": "on",
+      "OWLBANK_SPEECH_LOG_REDACTION": "on",
+      "OWLBANK_SPEECH_TIMEOUT": "3",
+      "OWLBANK_SUPPORTED_LANGUAGES": "en-US,es-US",
+      "OWLBANK_TABLE_CALLS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+      },
+      "OWLBANK_TABLE_CATALOG": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+      },
+      "OWLBANK_TABLE_CUSTOMERS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+      },
+      "OWLBANK_TABLE_POLICY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+      },
+      "OWLBANK_TABLE_RISK": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+      },
+      "OWLBANK_TABLE_SEGMENTS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+      },
+      "OWLBANK_TABLE_TOKENS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+      },
+      "OWLBANK_TOKEN_KMS_KEY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74"
+      }
+     }
+    },
+    "Handler": "lambdas.frontdoor.handler.handler",
+    "Layers": [
+     {
+      "Ref": "DepsLayerA0D7F79A"
+     }
+    ],
+    "LoggingConfig": {
+     "ApplicationLogLevel": "INFO",
+     "LogFormat": "JSON",
+     "LogGroup": {
+      "Ref": "FrontdoorLogs6B74810C"
+     },
+     "SystemLogLevel": "INFO"
+    },
+    "MemorySize": 1024,
+    "Role": {
+     "Fn::GetAtt": [
+      "FrontdoorRole1F8F4C02",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Timeout": 10,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "Type": "AWS::Lambda::Function"
+  },
+  "FrontdoorFnAliaslive9F33234B": {
+   "Properties": {
+    "FunctionName": {
+     "Ref": "FrontdoorFn494CBB45"
+    },
+    "FunctionVersion": {
+     "Fn::GetAtt": [
+      "FrontdoorFnCurrentVersion42A8A7E0<code-hash>",
+      "Version"
+     ]
+    },
+    "Name": "live",
+    "ProvisionedConcurrencyConfig": {
+     "ProvisionedConcurrentExecutions": 1
+    }
+   },
+   "Type": "AWS::Lambda::Alias"
+  },
+  "FrontdoorFnCurrentVersion42A8A7E0<code-hash>": {
+   "Metadata": {
+    "aws:cdk:do-not-refactor": true
+   },
+   "Properties": {
+    "FunctionName": {
+     "Ref": "FrontdoorFn494CBB45"
+    }
+   },
+   "Type": "AWS::Lambda::Version"
+  },
+  "FrontdoorLogs6B74810C": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/lambda/frontdoor",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "FrontdoorRole1F8F4C02": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank frontdoor Lambda (least privilege)",
+    "RoleName": "owlbank-dev-frontdoor",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "FrontdoorRoleDefaultPolicy21EEF970": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "FrontdoorLogs6B74810C",
+         "Arn"
+        ]
+       },
+       "Sid": "WriteOwnLogs"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCustomersTableB554B793Arn983124AF"
+           },
+           "/index/phone-index"
+          ]
+         ]
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE"
+        }
+       ],
+       "Sid": "TablesRead"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:BatchWriteItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCallsTableD3962D26ArnC9CD00A6"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttSegmentsTable28FC09E7Arn2AA3A7D2"
+        },
+        {
+         "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokensTable6C9B5BC6ArnE44059BA"
+           },
+           "/index/call_sid-index"
+          ]
+         ]
+        }
+       ],
+       "Sid": "TablesReadWrite"
+      },
+      {
+       "Action": "dynamodb:Scan",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttCatalogTableF8EA09BDArn1D820DEE"
+       },
+       "Sid": "CatalogScan"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "TablesKmsViaDynamoDB"
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioAuthTokenSecret2DB21499E8F987DB"
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefBasicAuthSecretD2D5230999814F08"
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputRefTwilioApiKeySecretAE35AB9F57EAF3C9"
+       }
+      },
+      {
+       "Action": "kms:Decrypt",
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "secretsmanager.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "DecryptSecretsViaSecretsManager"
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "AuthServiceFnAliaslive996E5CC5"
+       },
+       "Sid": "InvokeAuthService"
+      },
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "BankToolsFnAliaslive52A724F6"
+       },
+       "Sid": "InvokeBankTools"
+      },
+      {
+       "Action": "bedrock:InvokeModel",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-5-5"
+         ]
+        ]
+       },
+       "Sid": "SlotResolverProfile"
+      },
+      {
+       "Action": "bedrock:InvokeModel",
+       "Condition": {
+        "StringEquals": {
+         "bedrock:InferenceProfileArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-5-5"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:*::foundation-model/anthropic.claude-haiku-5-5"
+         ]
+        ]
+       },
+       "Sid": "SlotResolverViaProfile"
+      },
+      {
+       "Action": "comprehend:DetectPiiEntities",
+       "Effect": "Allow",
+       "Resource": "*",
+       "Sid": "DetectPiiForRedaction"
+      },
+      {
+       "Action": "ssm:GetParameter",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":ssm:us-east-1:111111111111:parameter/owlbank/dev/bridge/relay"
+         ]
+        ]
+       },
+       "Sid": "ReadRelayParameter"
+      },
+      {
+       "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt"
+       ],
+       "Condition": {
+        "ForAnyValue:StringEquals": {
+         "kms:EncryptionContextKeys": [
+          "call_sid"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttTokenKeyD1D1A236Arn4B72CD74"
+       },
+       "Sid": "TokenSealing"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "FrontdoorRoleDefaultPolicy21EEF970",
+    "Roles": [
+     {
+      "Ref": "FrontdoorRole1F8F4C02"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "FrontdoorThrottlesAlarmB369E104": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "frontdoor Lambda throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "FrontdoorFn494CBB45"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "Level0Target": {
+   "Properties": {
+    "CredentialProviderConfigurations": [
+     {
+      "CredentialProviderType": "GATEWAY_IAM_ROLE"
+     }
+    ],
+    "Description": "level0_tools Lambda: branch hours and FAQ",
+    "GatewayIdentifier": {
+     "Fn::ImportValue": "OwlBankAgent:ExportsOutputFnGetAttGatewayGatewayIdentifier15A68788"
+    },
+    "Name": "level0",
+    "TargetConfiguration": {
+     "Mcp": {
+      "Lambda": {
+       "LambdaArn": {
+        "Fn::GetAtt": [
+         "Level0ToolsFn3C40C610",
+         "Arn"
+        ]
+       },
+       "ToolSchema": {
+        "InlinePayload": [
+         {
+          "Description": "Opening hours and address of an OwlBank branch, or the phone support hours when no branch is given. Contains no customer data.",
+          "InputSchema": {
+           "Properties": {
+            "branch": {
+             "Description": "Branch id: downtown, riverside",
+             "Type": "string"
+            },
+            "lang": {
+             "Description": "Caller language: en-US or es-US.",
+             "Type": "string"
+            }
+           },
+           "Type": "object"
+          },
+          "Name": "get_branch_hours"
+         },
+         {
+          "Description": "Answer a general banking question from OwlBank's published FAQ (lost card, opening hours, fees). Contains no customer data.",
+          "InputSchema": {
+           "Properties": {
+            "lang": {
+             "Description": "Caller language: en-US or es-US.",
+             "Type": "string"
+            },
+            "question": {
+             "Description": "The caller's question in their words.",
+             "Type": "string"
+            }
+           },
+           "Required": [
+            "question"
+           ],
+           "Type": "object"
+          },
+          "Name": "faq_lookup"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "Type": "AWS::BedrockAgentCore::GatewayTarget"
+  },
+  "Level0ToolsErrorsAlarm3C09401F": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "level0_tools Lambda errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "Level0ToolsFn3C40C610"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "Level0ToolsFn3C40C610": {
+   "DependsOn": [
+    "Level0ToolsRoleDefaultPolicy34EF28CF",
+    "Level0ToolsRole617F5DAB"
+   ],
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "OWLBANK_DEFAULT_LANGUAGE": "en-US",
+      "OWLBANK_FAQ_PATH": "/var/task/data/faq.json",
+      "OWLBANK_LOG_LEVEL": "INFO",
+      "OWLBANK_SUPPORTED_LANGUAGES": "en-US,es-US",
+      "OWLBANK_TABLE_CALLS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCallsTableD3962D26AE389FF8"
+      },
+      "OWLBANK_TABLE_CATALOG": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCatalogTableF8EA09BD1FB54FDE"
+      },
+      "OWLBANK_TABLE_CUSTOMERS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefCustomersTableB554B793C1CB863D"
+      },
+      "OWLBANK_TABLE_POLICY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+      },
+      "OWLBANK_TABLE_RISK": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefRiskTableF5BEC2F203DEECCC"
+      },
+      "OWLBANK_TABLE_SEGMENTS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefSegmentsTable28FC09E74E6899DF"
+      },
+      "OWLBANK_TABLE_TOKENS": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefTokensTable6C9B5BC6A7BCFD8F"
+      }
+     }
+    },
+    "FunctionName": "owlbank-dev-level0-tools",
+    "Handler": "lambdas.level0_tools.handler.handler",
+    "Layers": [
+     {
+      "Ref": "DepsLayerA0D7F79A"
+     }
+    ],
+    "LoggingConfig": {
+     "ApplicationLogLevel": "INFO",
+     "LogFormat": "JSON",
+     "LogGroup": {
+      "Ref": "Level0ToolsLogs95C99D75"
+     },
+     "SystemLogLevel": "INFO"
+    },
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "Level0ToolsRole617F5DAB",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Timeout": 5,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "Type": "AWS::Lambda::Function"
+  },
+  "Level0ToolsLogs95C99D75": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/lambda/level0_tools",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "Level0ToolsRole617F5DAB": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank level0_tools Lambda (least privilege)",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "Level0ToolsRoleDefaultPolicy34EF28CF": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "Level0ToolsLogs95C99D75",
+         "Arn"
+        ]
+       },
+       "Sid": "WriteOwnLogs"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "Level0ToolsRoleDefaultPolicy34EF28CF",
+    "Roles": [
+     {
+      "Ref": "Level0ToolsRole617F5DAB"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "Level0ToolsThrottlesAlarm08B60AD8": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "level0_tools Lambda throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "Level0ToolsFn3C40C610"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ModelAllEntriesDownAlarmA16E27C0": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Every model entry is degraded or unavailable",
+    "ComparisonOperator": "LessThanThreshold",
+    "Dimensions": [
+     {
+      "Name": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Name": "Service",
+      "Value": "owlbank-dev-model-poller"
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "UsableEntries",
+    "Namespace": "OwlBank/dev/Model",
+    "Period": 60,
+    "Statistic": "Maximum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ModelPollerErrorsAlarmDDBB15F5": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "model_poller Lambda errors",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "ModelPollerFn72116402"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Errors",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 3,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ModelPollerFn72116402": {
+   "DependsOn": [
+    "ModelPollerRoleDefaultPolicyAE7A1D58",
+    "ModelPollerRole5EAA5347"
+   ],
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-111111111111-us-east-1",
+     "S3Key": "<asset-hash>.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "OWLBANK_LOG_LEVEL": "INFO",
+      "OWLBANK_MODELS": "[{\"id\":\"us.anthropic.claude-haiku-5-5\",\"thinking\":\"adaptive\",\"max_tokens\":2000,\"text_release\":\"stream\",\"prompt_caching\":true},{\"id\":\"us.anthropic.claude-haiku-4-5-20251001-v1:0\",\"thinking\":\"off\",\"max_tokens\":1000,\"text_release\":\"message\",\"prompt_caching\":true},{\"id\":\"us.anthropic.claude-sonnet-5-5\",\"thinking\":\"adaptive\",\"max_tokens\":2000,\"text_release\":\"stream\",\"prompt_caching\":true}]",
+      "OWLBANK_STAGE": "dev",
+      "OWLBANK_TABLE_MODELSTATS": "owlbank-dev-modelstats",
+      "OWLBANK_TABLE_POLICY": {
+       "Fn::ImportValue": "OwlBankData:ExportsOutputRefPolicyTableE50BDB2B25D69561"
+      }
+     }
+    },
+    "Handler": "lambdas.model_poller.handler.handler",
+    "Layers": [
+     {
+      "Ref": "DepsLayerA0D7F79A"
+     }
+    ],
+    "LoggingConfig": {
+     "ApplicationLogLevel": "INFO",
+     "LogFormat": "JSON",
+     "LogGroup": {
+      "Ref": "ModelPollerLogs8BB4A9AD"
+     },
+     "SystemLogLevel": "INFO"
+    },
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "ModelPollerRole5EAA5347",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Timeout": 120,
+    "TracingConfig": {
+     "Mode": "Active"
+    }
+   },
+   "Type": "AWS::Lambda::Function"
+  },
+  "ModelPollerFnEventInvokeConfigB3E1680F": {
+   "Properties": {
+    "FunctionName": {
+     "Ref": "ModelPollerFn72116402"
+    },
+    "MaximumRetryAttempts": 0,
+    "Qualifier": "$LATEST"
+   },
+   "Type": "AWS::Lambda::EventInvokeConfig"
+  },
+  "ModelPollerLogs8BB4A9AD": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/lambda/model_poller",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "ModelPollerRole5EAA5347": {
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "OwlBank model_poller Lambda (least privilege)",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role"
+  },
+  "ModelPollerRoleDefaultPolicyAE7A1D58": {
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ModelPollerLogs8BB4A9AD",
+         "Arn"
+        ]
+       },
+       "Sid": "WriteOwnLogs"
+      },
+      {
+       "Action": [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": "dynamodb:Query",
+       "Condition": {
+        "ForAllValues:StringEquals": {
+         "dynamodb:LeadingKeys": [
+          "samples"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":dynamodb:us-east-1:111111111111:table/owlbank-dev-modelstats"
+         ]
+        ]
+       },
+       "Sid": "ModelstatsQuerySamples"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem"
+       ],
+       "Condition": {
+        "ForAllValues:StringEquals": {
+         "dynamodb:LeadingKeys": [
+          "state"
+         ]
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":dynamodb:us-east-1:111111111111:table/owlbank-dev-modelstats"
+         ]
+        ]
+       },
+       "Sid": "ModelstatsWriteState"
+      },
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttPolicyTableE50BDB2BArnC5C56C80"
+       },
+       "Sid": "PolicyRead"
+      },
+      {
+       "Action": [
+        "kms:Decrypt",
+        "kms:DescribeKey",
+        "kms:Encrypt",
+        "kms:GenerateDataKey"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "kms:ViaService": "dynamodb.us-east-1.amazonaws.com"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+       },
+       "Sid": "ModelstatsKmsViaDynamoDB"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-5-5"
+         ]
+        ]
+       },
+       "Sid": "PollerInvokeModelProfile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "bedrock:InferenceProfileArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-5-5"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:*::foundation-model/anthropic.claude-haiku-5-5"
+         ]
+        ]
+       },
+       "Sid": "PollerInvokeModelViaProfile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0"
+         ]
+        ]
+       },
+       "Sid": "PollerInvokeModel2Profile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "bedrock:InferenceProfileArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0"
+         ]
+        ]
+       },
+       "Sid": "PollerInvokeModel2ViaProfile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-sonnet-5-5"
+         ]
+        ]
+       },
+       "Sid": "PollerInvokeModel3Profile"
+      },
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Condition": {
+        "StringEquals": {
+         "bedrock:InferenceProfileArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:",
+            {
+             "Ref": "AWS::Partition"
+            },
+            ":bedrock:us-east-1:111111111111:inference-profile/us.anthropic.claude-sonnet-5-5"
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:",
+          {
+           "Ref": "AWS::Partition"
+          },
+          ":bedrock:*::foundation-model/anthropic.claude-sonnet-5-5"
+         ]
+        ]
+       },
+       "Sid": "PollerInvokeModel3ViaProfile"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ModelPollerRoleDefaultPolicyAE7A1D58",
+    "Roles": [
+     {
+      "Ref": "ModelPollerRole5EAA5347"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Policy"
+  },
+  "ModelPollerSchedule4829A0D0": {
+   "Properties": {
+    "Description": "Model-failover poller: two decision cycles per minute",
+    "ScheduleExpression": "rate(1 minute)",
+    "State": "ENABLED",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Targets": [
+     {
+      "Arn": {
+       "Fn::GetAtt": [
+        "ModelPollerFn72116402",
+        "Arn"
+       ]
+      },
+      "Id": "Target0",
+      "RetryPolicy": {
+       "MaximumEventAgeInSeconds": 60,
+       "MaximumRetryAttempts": 0
+      }
+     }
+    ]
+   },
+   "Type": "AWS::Events::Rule"
+  },
+  "ModelPollerScheduleAllowEventRuleOwlBankComputeModelPollerFn9B50C7A88A78C785": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ModelPollerFn72116402",
+      "Arn"
+     ]
+    },
+    "Principal": "events.amazonaws.com",
+    "SourceArn": {
+     "Fn::GetAtt": [
+      "ModelPollerSchedule4829A0D0",
+      "Arn"
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ModelPollerThrottlesAlarmC9DDD40B": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "model_poller Lambda throttles",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "FunctionName",
+      "Value": {
+       "Ref": "ModelPollerFn72116402"
+      }
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "Throttles",
+    "Namespace": "AWS/Lambda",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ModelStateStaleAlarmC9D2DBC9": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "The model-failover state record has not been refreshed for 3 minutes (no poller heartbeat): bridges fall back to their own picture and the configured order",
+    "ComparisonOperator": "LessThanThreshold",
+    "Dimensions": [
+     {
+      "Name": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Name": "Service",
+      "Value": "owlbank-dev-model-poller"
+     }
+    ],
+    "EvaluationPeriods": 3,
+    "MetricName": "StateHeartbeat",
+    "Namespace": "OwlBank/dev/Model",
+    "Period": 60,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "breaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "OtpKeyedPhoneFilterF7834E95": {
+   "Properties": {
+    "FilterPattern": "\"otp_sent_keyed_phone\"",
+    "LogGroupName": {
+     "Ref": "AuthServiceLogs1AF0638D"
+    },
+    "MetricTransformations": [
+     {
+      "DefaultValue": 0,
+      "MetricName": "OtpSentKeyedPhone",
+      "MetricNamespace": "OwlBank/dev/Security",
+      "MetricValue": "1"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::MetricFilter"
+  },
+  "OtpUntrustedAniAlarmE5A840EA": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "A one-time code was sent on a call with an untrusted caller ID (possible spoofed caller ID aimed at a real customer)",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 1,
+    "MetricName": "OtpSentUntrustedAni",
+    "Namespace": "OwlBank/dev/Security",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "OtpUntrustedAniFilterAF1486DC": {
+   "Properties": {
+    "FilterPattern": "\"otp_sent_untrusted_ani\"",
+    "LogGroupName": {
+     "Ref": "AuthServiceLogs1AF0638D"
+    },
+    "MetricTransformations": [
+     {
+      "DefaultValue": 0,
+      "MetricName": "OtpSentUntrustedAni",
+      "MetricNamespace": "OwlBank/dev/Security",
+      "MetricValue": "1"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::MetricFilter"
+  },
+  "SlotModeInvalidAlarm6C03BFB9": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "A slot mode value in the policy table is missing, unknown or of the wrong type; the front door uses deterministic for that slot (log event slot_mode_invalid names the item and field)",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "EvaluationPeriods": 1,
+    "MetricName": "SlotModeInvalid",
+    "Namespace": "OwlBank/dev/Security",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 1,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "SlotModeInvalidFilter9CE8A964": {
+   "Properties": {
+    "FilterPattern": "\"slot_mode_invalid\"",
+    "LogGroupName": {
+     "Ref": "FrontdoorLogs6B74810C"
+    },
+    "MetricTransformations": [
+     {
+      "DefaultValue": 0,
+      "MetricName": "SlotModeInvalid",
+      "MetricNamespace": "OwlBank/dev/Security",
+      "MetricValue": "1"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::MetricFilter"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

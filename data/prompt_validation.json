@@ -1,0 +1,435 @@
+{
+  "header": {
+    "last_run": {
+      "haiku-4-5": {
+        "cache_read_tokens": 292594,
+        "cache_write_tokens": 140857,
+        "date": "2026-11-09",
+        "input_tokens": 253710,
+        "output_tokens": 24080,
+        "runs": 140
+      },
+      "haiku-5-5": {
+        "cache_read_tokens": 718311,
+        "cache_write_tokens": 74976,
+        "date": "2026-11-09",
+        "input_tokens": 540,
+        "output_tokens": 15224,
+        "runs": 140
+      },
+      "sonnet-5-5": {
+        "cache_read_tokens": 719993,
+        "cache_write_tokens": 67984,
+        "date": "2026-11-09",
+        "input_tokens": 540,
+        "output_tokens": 12401,
+        "runs": 140
+      }
+    }
+  },
+  "records": [
+    {
+      "cases": {
+        "C1": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C10": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C11": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C12": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C13": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C14": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C15": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C3": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C4": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C5": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C6": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C7": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C8": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C9": {
+          "passes": 5,
+          "runs": 5
+        }
+      },
+      "date": "2026-11-09",
+      "lang": "en-US",
+      "model_id": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+      "model_key": "haiku-4-5",
+      "params_hash": "8b00a17167cbc143a72f0ccb434f82f04a3d1288a582c2dcdc8038034a592fca",
+      "prompt_hash": "20fa4d26b3f52c1c5d41279e291f6a376eac71b5a78b85e9cb636a6d971f511c",
+      "suite_hash": "0f5f001a47e63dcc9a08c41b15430a2e6ffa9826f6e78400a7fecf033e143edc"
+    },
+    {
+      "cases": {
+        "C1": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C10": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C11": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C12": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C13": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C14": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C15": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C3": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C4": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C5": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C6": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C7": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C8": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C9": {
+          "passes": 5,
+          "runs": 5
+        }
+      },
+      "date": "2026-11-09",
+      "lang": "es-US",
+      "model_id": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+      "model_key": "haiku-4-5",
+      "params_hash": "8b00a17167cbc143a72f0ccb434f82f04a3d1288a582c2dcdc8038034a592fca",
+      "prompt_hash": "944954c2d051ec8a7a331716f1c9f6269cccf76ebd65bdbeb827b7afd2d7e76b",
+      "suite_hash": "0f5f001a47e63dcc9a08c41b15430a2e6ffa9826f6e78400a7fecf033e143edc"
+    },
+    {
+      "cases": {
+        "C1": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C10": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C11": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C12": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C13": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C14": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C15": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C3": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C4": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C5": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C6": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C7": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C8": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C9": {
+          "passes": 5,
+          "runs": 5
+        }
+      },
+      "date": "2026-11-09",
+      "lang": "en-US",
+      "model_id": "us.anthropic.claude-haiku-5-5",
+      "model_key": "haiku-5-5",
+      "params_hash": "816817b1a66dbcced565919533a60988f6ae0cbe8c27391105c780080374ef23",
+      "prompt_hash": "f6ccf20054077340c3645f04ad965f9ad8d4f0a5e165d58cbf7334feb3bd46a2",
+      "suite_hash": "0f5f001a47e63dcc9a08c41b15430a2e6ffa9826f6e78400a7fecf033e143edc"
+    },
+    {
+      "cases": {
+        "C1": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C10": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C11": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C12": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C13": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C14": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C15": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C3": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C4": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C5": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C6": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C7": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C8": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C9": {
+          "passes": 5,
+          "runs": 5
+        }
+      },
+      "date": "2026-11-09",
+      "lang": "es-US",
+      "model_id": "us.anthropic.claude-haiku-5-5",
+      "model_key": "haiku-5-5",
+      "params_hash": "816817b1a66dbcced565919533a60988f6ae0cbe8c27391105c780080374ef23",
+      "prompt_hash": "a17fc79a7f5b45526062eab12f1c0780c1358a66c2fea6da12fb8408be9e0db5",
+      "suite_hash": "0f5f001a47e63dcc9a08c41b15430a2e6ffa9826f6e78400a7fecf033e143edc"
+    },
+    {
+      "cases": {
+        "C1": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C10": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C11": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C12": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C13": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C14": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C15": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C3": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C4": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C5": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C6": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C7": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C8": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C9": {
+          "passes": 5,
+          "runs": 5
+        }
+      },
+      "date": "2026-11-09",
+      "lang": "en-US",
+      "model_id": "us.anthropic.claude-sonnet-5-5",
+      "model_key": "sonnet-5-5",
+      "params_hash": "816817b1a66dbcced565919533a60988f6ae0cbe8c27391105c780080374ef23",
+      "prompt_hash": "4727973e519ea56ea353f3818c5ef0d24fa7627e40e12d07df1e6b5007297fe9",
+      "suite_hash": "0f5f001a47e63dcc9a08c41b15430a2e6ffa9826f6e78400a7fecf033e143edc"
+    },
+    {
+      "cases": {
+        "C1": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C10": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C11": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C12": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C13": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C14": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C15": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C3": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C4": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C5": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C6": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C7": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C8": {
+          "passes": 5,
+          "runs": 5
+        },
+        "C9": {
+          "passes": 5,
+          "runs": 5
+        }
+      },
+      "date": "2026-11-09",
+      "lang": "es-US",
+      "model_id": "us.anthropic.claude-sonnet-5-5",
+      "model_key": "sonnet-5-5",
+      "params_hash": "816817b1a66dbcced565919533a60988f6ae0cbe8c27391105c780080374ef23",
+      "prompt_hash": "f4367ccdcb4d6b7117a4dcfb798eb9f2ea546e0e54e3c9478eab1d71dd1b32ad",
+      "suite_hash": "0f5f001a47e63dcc9a08c41b15430a2e6ffa9826f6e78400a7fecf033e143edc"
+    }
+  ],
+  "version": 1
+}

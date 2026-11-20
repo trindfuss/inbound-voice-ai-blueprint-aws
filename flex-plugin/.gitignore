@@ -1,0 +1,4 @@
+# Build-time config written by scripts/deploy_flex_plugin.py (the public API URL only)
+.env
+node_modules/
+build/

@@ -1,0 +1,97 @@
+/* OwlBank admin console: per-view arrangements. Components are in
+   components.css; this file only places them for one view. Tokens only. */
+
+/* ---- Masking: the "Policy-wide values" fields in two columns at 960px and wider ---- */
+
+.field-grid { display: block; }
+@media (min-width: 960px) {
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--space-6);
+  }
+  .field-grid > .field { max-width: none; }
+}
+
+/* ---- Prompts: the language pair. Side by side at desktop width, stacked when narrow;
+   min() keeps a 20rem column from overflowing a 320px screen. ---- */
+
+.lang-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  gap: var(--space-4);
+}
+.lang-pair > .field {
+  margin: 0;
+  max-width: none;
+}
+.lang-pair label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* The preview table: the "Caller hears" column takes the room and keeps line breaks. */
+table.preview td:last-child {
+  width: 60%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Tinted rows: a security change (danger fill, a 3px danger bar and the badge)
+   and an invalid preview row (warning fill and the "invalid" badge), so not colour alone. */
+tr.is-security > td,
+tr.is-security > th { background: var(--table-security-bg); }
+tr.is-security > :first-child { border-inline-start: 3px solid var(--table-security-bar); }
+tr.is-invalid > td,
+tr.is-invalid > th { background: var(--table-invalid-bg); }
+
+/* ---- Audit: the search row (field and button on one row) and the changes list ---- */
+
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+.search-row > .field {
+  flex: 1 1 16rem;
+  margin: 0;
+}
+.search-row > button { margin-inline-start: 0; }
+
+/* dl.changes: per field, dt code(field) and a dd with "Before" (muted, struck through) and
+   "After". The struck value also carries its "Before" label, so it isn't styling alone. */
+dl.changes {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+}
+dl.changes > dt {
+  font-weight: var(--weight-semibold);
+  overflow-wrap: anywhere;
+}
+dl.changes > dd {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  min-width: 0;
+}
+.change-label {
+  margin-inline-end: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+.change-value {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.change-before { color: var(--color-text-muted); }
+.change-before > .change-value { text-decoration: line-through; }
+.change-after { color: var(--color-text); }
+
+/* ---- Users: a row's buttons stay on one line; the table scrolls in its wrap instead ---- */
+td.row-actions { white-space: nowrap; }

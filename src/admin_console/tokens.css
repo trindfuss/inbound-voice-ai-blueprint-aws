@@ -1,0 +1,308 @@
+/* OwlBank admin console: design tokens. The only file with colour literals.
+   Tier 1: primitives (--owl-*), theme-independent, on :root, used only in this file.
+   Tier 2: semantic tokens (--color-*, --shadow-*), redefined per theme on [data-theme].
+           Type, spacing, radius, focus, control, layout and motion are on :root.
+   Tier 3: component tokens (--button-*, --input-*, ...), which reference tier 2 only.
+   tests/tokens.test.js checks every colour pair against its WCAG minimum. */
+
+:root {
+  /* Navy */
+  --owl-navy-50: #E6EDF7;
+  --owl-navy-200: #B7CEF1;
+  --owl-navy-300: #A9BEDC;
+  --owl-navy-600: #1F4E8C;
+  --owl-navy-700: #24457A;
+  --owl-navy-800: #1B365D;
+  --owl-navy-850: #18304F;
+  --owl-navy-900: #10233F;
+  --owl-navy-950: #0A1628;
+  /* Amber (the brand accent is 400; never text on light surfaces) */
+  --owl-amber-50: #FDF0D5;
+  --owl-amber-300: #F5C46B;
+  --owl-amber-400: #F2A93B;
+  --owl-amber-800: #7A4600;
+  --owl-amber-950: #3A2A0C;
+  /* Grey */
+  --owl-grey-0: #FFFFFF;
+  --owl-grey-50: #F5F7FA;
+  --owl-grey-100: #EEF1F5;
+  --owl-grey-200: #DCE1E8;
+  --owl-grey-250: #C9D1DC;
+  --owl-grey-300: #A7B1C0;
+  --owl-grey-400: #7A8494;
+  --owl-grey-600: #4D5768;
+  --owl-grey-700: #3A4352;
+  --owl-grey-750: #2B3442;
+  --owl-grey-800: #262E3B;
+  --owl-grey-850: #1D2430;
+  --owl-grey-900: #161B24;
+  --owl-grey-950: #0D1117;
+  /* Green */
+  --owl-green-50: #E4F4EA;
+  --owl-green-300: #7ED4A0;
+  --owl-green-700: #13693A;
+  --owl-green-950: #123222;
+  /* Red */
+  --owl-red-50: #FDE9E7;
+  --owl-red-200: #F6A8A1;
+  --owl-red-300: #F28B82;
+  --owl-red-700: #B42318;
+  --owl-red-800: #912018;
+  --owl-red-950: #3D1513;
+  --owl-red-975: #2A0A07;
+  /* Blue (info, focus) */
+  --owl-blue-50: #E5EFFC;
+  --owl-blue-300: #8DB6F2;
+  --owl-blue-600: #1F5FBF;
+  --owl-blue-700: #1B5AA6;
+  --owl-blue-950: #13284A;
+
+  /* Type */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --leading-xs: 1rem;
+  --text-sm: 0.8125rem;
+  --leading-sm: 1.25rem;
+  --text-base: 0.875rem;
+  --leading-base: 1.25rem;
+  --text-md: 1rem;
+  --leading-md: 1.5rem;
+  --text-lg: 1.25rem;
+  --leading-lg: 1.75rem;
+  --text-xl: 1.5rem;
+  --leading-xl: 2rem;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Spacing (4 px grid) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  /* Focus: :focus-visible { outline: var(--focus-width) solid var(--color-focus); outline-offset: var(--focus-offset) } */
+  --focus-width: 2px;
+  --focus-offset: 2px;
+
+  /* Controls */
+  --control-height: 2.25rem;
+  --control-height-sm: 1.75rem;
+  --control-padding-x: var(--space-3);
+
+  /* Layout (the 960px breakpoint is a literal in @media) */
+  --sidebar-width: 15.5rem;
+  --content-max: 75rem;
+  --text-max: 42rem;
+  --topbar-height: 3.5rem;
+
+  /* Motion */
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --ease: cubic-bezier(.2, 0, 0, 1);
+
+  /* Tier 3: component tokens (semantic tokens only) */
+  --button-height: var(--control-height);
+  --button-height-sm: var(--control-height-sm);
+  --button-padding-x: var(--space-4);
+  --button-radius: var(--radius-md);
+  --button-weight: var(--weight-medium);
+  --button-gap: var(--space-2);
+  --button-bg: var(--color-surface);
+  --button-text: var(--color-text);
+  --button-border: var(--color-border-control);
+  --button-hover-bg: var(--color-surface-sunken);
+  --button-primary-bg: var(--color-primary);
+  --button-primary-hover-bg: var(--color-primary-hover);
+  --button-primary-text: var(--color-on-primary);
+  --button-danger-bg: var(--color-danger);
+  --button-danger-hover-bg: var(--color-danger-hover);
+  --button-danger-text: var(--color-on-danger);
+  --button-quiet-text: var(--color-link);
+  --button-disabled-bg: var(--color-surface-sunken);
+  --button-disabled-text: var(--color-text-muted);
+
+  --input-height: var(--control-height);
+  --input-padding-x: var(--control-padding-x);
+  --input-radius: var(--radius-md);
+  --input-bg: var(--color-surface);
+  --input-text: var(--color-text);
+  --input-border: var(--color-border-control);
+  --input-border-hover: var(--color-text-muted);
+  --input-border-invalid: var(--color-danger);
+  --input-readonly-bg: var(--color-surface-sunken);
+  --input-textarea-min: 4.5rem;
+
+  --card-bg: var(--color-surface);
+  --card-border: var(--color-border);
+  --card-radius: var(--radius-lg);
+  --card-shadow: var(--shadow-sm);
+  --card-padding: var(--space-6);
+
+  --table-head-bg: var(--color-surface-sunken);
+  --table-row-height: 2.75rem;
+  --table-row-border: var(--color-border);
+  --table-row-hover-bg: var(--color-surface-sunken);
+  --table-security-bg: var(--color-danger-bg);
+  --table-security-bar: var(--color-danger);
+  --table-invalid-bg: var(--color-warning-bg);
+  --table-changed-bg: var(--color-changed-bg);
+
+  --badge-radius: var(--radius-pill);
+  --badge-text-size: var(--text-xs);
+  --badge-weight: var(--weight-semibold);
+  --badge-padding-y: 0.125rem;
+  --badge-padding-x: var(--space-2);
+
+  --sidebar-bg: var(--color-sidebar-bg);
+  --sidebar-hover-bg: var(--color-sidebar-hover);
+  --sidebar-active-bg: var(--color-sidebar-active);
+  --sidebar-text: var(--color-sidebar-text);
+  --sidebar-muted: var(--color-sidebar-muted);
+  --sidebar-indicator: var(--color-sidebar-indicator);
+  --sidebar-focus: var(--color-sidebar-focus);
+  --sidebar-border: var(--color-sidebar-border);
+  --sidebar-indicator-width: 3px;
+
+  --toast-bg: var(--color-surface);
+  --toast-radius: var(--radius-lg);
+  --toast-shadow: var(--shadow-md);
+  --toast-bar-width: 4px;
+  --toast-gap: var(--space-2);
+
+  /* Panel: tone fill, a 1px border in the tone text colour at 30% (Safari 16.2+) */
+  --panel-error-bg: var(--color-danger-bg);
+  --panel-error-border: color-mix(in srgb, var(--color-danger-text) 30%, transparent);
+  --panel-error-bar: var(--color-danger-text);
+  --panel-warning-bg: var(--color-warning-bg);
+  --panel-warning-border: color-mix(in srgb, var(--color-warning-text) 30%, transparent);
+  --panel-warning-bar: var(--color-warning-text);
+  --panel-info-bg: var(--color-info-bg);
+  --panel-info-border: color-mix(in srgb, var(--color-info-text) 30%, transparent);
+  --panel-info-bar: var(--color-info-text);
+  --panel-success-bg: var(--color-success-bg);
+  --panel-success-border: color-mix(in srgb, var(--color-success-text) 30%, transparent);
+  --panel-success-bar: var(--color-success-text);
+  --panel-bar-width: 4px;
+}
+
+/* Light (the default: index.html opens with data-theme="light") */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: var(--owl-grey-50);
+  --color-surface: var(--owl-grey-0);
+  --color-surface-sunken: var(--owl-grey-100);
+  --color-text: var(--owl-grey-900);
+  --color-text-muted: var(--owl-grey-600);
+  --color-border: var(--owl-grey-200);
+  --color-border-control: var(--owl-grey-400);
+  --color-link: var(--owl-navy-600);
+  --color-primary: var(--owl-navy-800);
+  --color-primary-hover: var(--owl-navy-900);
+  --color-on-primary: var(--owl-grey-0);
+  --color-danger: var(--owl-red-700);
+  --color-danger-hover: var(--owl-red-800);
+  --color-on-danger: var(--owl-grey-0);
+  --color-focus: var(--owl-blue-600);
+  --color-success-text: var(--owl-green-700);
+  --color-warning-text: var(--owl-amber-800);
+  --color-danger-text: var(--owl-red-700);
+  --color-info-text: var(--owl-blue-700);
+  --color-neutral-text: var(--owl-grey-700);
+  --color-brand-text: var(--owl-navy-800);
+  --color-success-bg: var(--owl-green-50);
+  --color-warning-bg: var(--owl-amber-50);
+  --color-danger-bg: var(--owl-red-50);
+  --color-info-bg: var(--owl-blue-50);
+  --color-neutral-bg: var(--owl-grey-100);
+  --color-brand-bg: var(--owl-navy-50);
+  --color-changed-bg: var(--owl-amber-50);
+  --color-skeleton: var(--owl-grey-200);
+  --color-overlay: rgb(10 22 40 / 0.5);
+  --color-sidebar-bg: var(--owl-navy-900);
+  --color-sidebar-hover: var(--owl-navy-850);
+  --color-sidebar-active: var(--owl-navy-700);
+  --color-sidebar-text: var(--owl-navy-50);
+  --color-sidebar-muted: var(--owl-navy-300);
+  --color-sidebar-indicator: var(--owl-amber-400);
+  --color-sidebar-focus: var(--owl-amber-400);
+  --color-sidebar-border: transparent; /* the navy sidebar contrasts with the page on its own */
+  --color-env-test-bg: var(--owl-amber-400);
+  --color-env-test-text: var(--owl-navy-900);
+  --color-env-prod-bg: var(--owl-red-700);
+  --color-env-prod-text: var(--owl-grey-0);
+  --shadow-sm: 0 1px 2px rgb(16 24 40 / .06), 0 1px 3px rgb(16 24 40 / .10);
+  --shadow-md: 0 4px 12px rgb(16 24 40 / .12);
+  --shadow-lg: 0 12px 32px rgb(16 24 40 / .20);
+}
+
+/* Dark (same tokens, dark values; chosen only by the theme control, never by the system) */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: var(--owl-grey-950);
+  --color-surface: var(--owl-grey-900);
+  --color-surface-sunken: var(--owl-grey-850);
+  --color-text: var(--owl-grey-100);
+  --color-text-muted: var(--owl-grey-300);
+  --color-border: var(--owl-grey-750);
+  --color-border-control: var(--owl-grey-400);
+  --color-link: var(--owl-blue-300);
+  --color-primary: var(--owl-navy-200);
+  --color-primary-hover: var(--owl-navy-50);
+  --color-on-primary: var(--owl-navy-950);
+  --color-danger: var(--owl-red-300);
+  --color-danger-hover: var(--owl-red-200);
+  --color-on-danger: var(--owl-red-975);
+  --color-focus: var(--owl-blue-300);
+  --color-success-text: var(--owl-green-300);
+  --color-warning-text: var(--owl-amber-300);
+  --color-danger-text: var(--owl-red-300);
+  --color-info-text: var(--owl-blue-300);
+  --color-neutral-text: var(--owl-grey-250);
+  --color-brand-text: var(--owl-navy-200);
+  --color-success-bg: var(--owl-green-950);
+  --color-warning-bg: var(--owl-amber-950);
+  --color-danger-bg: var(--owl-red-950);
+  --color-info-bg: var(--owl-blue-950);
+  --color-neutral-bg: var(--owl-grey-800);
+  --color-brand-bg: var(--owl-navy-800);
+  --color-changed-bg: var(--owl-amber-950);
+  --color-skeleton: var(--owl-grey-800);
+  --color-overlay: rgb(0 0 0 / 0.6);
+  --color-sidebar-bg: var(--owl-navy-950);
+  --color-sidebar-hover: var(--owl-navy-900);
+  --color-sidebar-active: var(--owl-navy-800);
+  --color-sidebar-text: var(--owl-navy-50);
+  --color-sidebar-muted: var(--owl-navy-300);
+  --color-sidebar-indicator: var(--owl-amber-400);
+  --color-sidebar-focus: var(--owl-amber-400);
+  --color-sidebar-border: var(--owl-grey-750); /* navy-950 on grey-950 is 1.04:1, so the edge needs a line */
+  --color-env-test-bg: var(--owl-amber-400);
+  --color-env-test-text: var(--owl-navy-900);
+  --color-env-prod-bg: var(--owl-red-700);
+  --color-env-prod-text: var(--owl-grey-0);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / .4), 0 1px 3px rgb(0 0 0 / .4);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / .5);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / .6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+  }
+  .skeleton { animation: none; }
+}

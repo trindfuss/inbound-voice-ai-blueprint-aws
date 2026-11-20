@@ -1,0 +1,275 @@
+/* OwlBank admin console: layout. The shell grid, the sidebar, the content
+   column, the top bar, the page header and the three body[data-shell] states. Tokens only.
+   The 960px breakpoint is a literal because custom properties don't work in @media.
+   Below 960px the sidebar is an off-canvas drawer behind a scrim, opened from the top bar. */
+
+/* ---- Shell states: CSS alone decides what shows, so no style is ever set. ---- */
+
+/* loading: only the skeleton main, so nothing flashes before the sign-in redirect.
+   bare: a centred card for sign-in errors, no access, session ended and not configured. */
+body[data-shell="loading"] .sidebar,
+body[data-shell="loading"] .topbar,
+body[data-shell="bare"] .sidebar,
+body[data-shell="bare"] .topbar { display: none; }
+
+.app { min-height: 100dvh; }
+
+/* ---- The app grid (sidebar | content) at 960px and wider ---- */
+
+@media (min-width: 960px) {
+  body[data-shell="app"] .app {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+  body[data-shell="app"] .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    overflow-y: auto;
+  }
+}
+
+/* ---- Sidebar ---- */
+
+.sidebar {
+  /* The focus ring on the navy sidebar is amber. */
+  --color-focus: var(--color-sidebar-focus);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-4);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  border-inline-end: 1px solid var(--sidebar-border);
+}
+
+.brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+.brand-mark { display: block; flex: none; }
+.brand-name {
+  font-size: var(--text-md);
+  line-height: var(--leading-md);
+  font-weight: var(--weight-semibold);
+}
+.stage:empty { display: none; }
+
+/* ---- Nav: icon and label; the current link has the active fill, a 3px
+   amber bar and weight 600 as well as aria-current, so it isn't marked by colour alone. */
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--sidebar-text);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+/* The label shrinks and wraps beside its icon rather than widening the sidebar. */
+.nav-label { min-width: 0; overflow-wrap: anywhere; }
+.nav-link:hover { background: var(--sidebar-hover-bg); }
+.nav-link.is-current,
+.nav-link[aria-current="page"] {
+  background: var(--sidebar-active-bg);
+  font-weight: var(--weight-semibold);
+}
+.nav-link.is-current::before,
+.nav-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  inset-block: var(--space-1);
+  inset-inline-start: 0;
+  width: var(--sidebar-indicator-width);
+  border-radius: var(--radius-pill);
+  background: var(--sidebar-indicator);
+}
+
+/* ---- Account block: who is signed in, role badges, the theme toggle and Sign out ---- */
+
+.account {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: auto 0 0;
+  color: var(--sidebar-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  overflow-wrap: anywhere;
+}
+.account-user {
+  margin: 0;
+  color: var(--sidebar-text);
+}
+.account-roles,
+.account-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.account-actions { flex-direction: column; align-items: stretch; }
+
+/* Quiet buttons on the navy sidebar (the theme toggle and Sign out). */
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-sm);
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--sidebar-text);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  text-align: start;
+  cursor: pointer;
+}
+.sidebar-button:hover { background: var(--sidebar-hover-bg); }
+.theme-toggle[aria-pressed="true"] { background: var(--sidebar-active-bg); }
+
+/* ---- Content column, top bar and main ---- */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* The top bar holds the menu button, the mark, the name and the stage badge. It shows only
+   below 960px, where the sidebar is a drawer. */
+.topbar {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--topbar-height);
+  padding: 0 var(--space-4);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+}
+.topbar #menu {
+  --color-focus: var(--sidebar-focus);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--sidebar-text);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+.topbar #menu:hover { background: var(--sidebar-hover-bg); }
+.topbar #menu[hidden] { display: none; }
+
+/* ---- The drawer below 960px: off-canvas behind a scrim. Closed, it is also
+   visibility: hidden, so its links aren't in the tab order; open, `inert` on the top bar and
+   main keeps focus inside it. The slide is turned off under reduced motion. ---- */
+
+.scrim[hidden] { display: none; }
+
+@media (max-width: 959.98px) {
+  body[data-shell="app"] .topbar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  body[data-shell="app"] .sidebar {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 40;
+    width: min(var(--sidebar-width), 85vw);
+    overflow-y: auto;
+    box-shadow: var(--shadow-md);
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: transform var(--motion-base) var(--ease), visibility 0s linear var(--motion-base);
+  }
+  body[data-shell="app"] .sidebar.is-open {
+    visibility: visible;
+    transform: none;
+    transition: transform var(--motion-base) var(--ease), visibility 0s linear 0s;
+  }
+  body[data-shell="app"] .scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: var(--color-overlay);
+  }
+}
+@media (max-width: 959.98px) and (prefers-reduced-motion: reduce) {
+  body[data-shell="app"] .sidebar,
+  body[data-shell="app"] .sidebar.is-open { transition: none; }
+}
+/* At 960px and wider the sidebar is persistent: no scrim and no menu button, even if the
+   drawer was open when the window crossed the breakpoint. */
+@media (min-width: 960px) {
+  .scrim { display: none; }
+}
+/* Only the app state has a drawer. */
+body[data-shell="loading"] .scrim,
+body[data-shell="bare"] .scrim { display: none; }
+
+main {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-6) var(--space-12);
+}
+@media (max-width: 959.98px) {
+  main { padding: var(--space-4) var(--space-4) var(--space-10); }
+}
+
+/* bare: main is centred in the viewport, the width of a form (the card comes from .card). */
+body[data-shell="bare"] .content {
+  min-height: 100dvh;
+  justify-content: center;
+}
+body[data-shell="bare"] main {
+  max-width: var(--text-max);
+  padding: var(--space-10) var(--space-4);
+}
+
+/* ---- Page header: sticky in main, actions wrap below at narrow widths ---- */
+
+.page-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-4);
+  margin: 0 0 var(--space-6);
+  padding: var(--space-4) 0;
+  background: var(--color-bg);
+}
+.page-header h1 { margin: 0; }
+.page-header p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.page-header.is-stuck { box-shadow: var(--shadow-sm); }
+/* Below 960px the sticky top bar is above the page; the page header sticks under it. */
+@media (max-width: 959.98px) {
+  body[data-shell="app"] .page-header { top: var(--topbar-height); }
+}

@@ -1,0 +1,2238 @@
+{
+ "Outputs": {
+  "ApiDomain": {
+   "Description": {
+    "Fn::Join": [
+     "",
+     [
+      "Alias this to ",
+      {
+       "Fn::GetAtt": [
+        "Domain66AC69E0",
+        "RegionalDomainName"
+       ]
+      }
+     ]
+    ]
+   },
+   "Value": "voice.owlbank.example.com"
+  },
+  "ApiDomainTarget": {
+   "Value": {
+    "Fn::GetAtt": [
+     "Domain66AC69E0",
+     "RegionalDomainName"
+    ]
+   }
+  },
+  "ApiEndpoint4F160690": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "ApiF70053CD"
+      },
+      ".execute-api.us-east-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "ApiDeploymentStagev102147F91"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+   "Type": "AWS::SSM::Parameter::Value<String>"
+  }
+ },
+ "Resources": {
+  "AccessLogs8B620ECA": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "/owlbank/apigw/access-logs",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "Api5xxAlarm31F257DC": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "API Gateway 5XX responses",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "ApiName",
+      "Value": "owlbank-voice"
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "5XXError",
+    "Namespace": "AWS/ApiGateway",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 5,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ApiAccountA18C9B29": {
+   "DeletionPolicy": "Delete",
+   "DependsOn": [
+    "ApiF70053CD"
+   ],
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "ApiCloudWatchRole73EC6FC4",
+      "Arn"
+     ]
+    }
+   },
+   "Type": "AWS::ApiGateway::Account",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "ApiCloudWatchRole73EC6FC4": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::IAM::Role",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "ApiDeploymentB17BE62Da95894750bb1b6aa2211c3fc27c3406c": {
+   "DependsOn": [
+    "ApicontextjournalrefGET4CAA7EB8",
+    "ApicontextjournalrefOPTIONS3B19403F",
+    "Apicontextjournalref3120BE3A",
+    "ApicontextF7B12765",
+    "ApivoiceconnectactionPOST8CE18E2C",
+    "ApivoiceconnectactionE4297074",
+    "ApivoiceenqueueactionPOST2E4936DC",
+    "ApivoiceenqueueactionFCE86B68",
+    "ApivoicefactorPOSTC90F214D",
+    "ApivoicefactorD332CED5",
+    "ApivoiceincomingPOST6DB544E6",
+    "Apivoiceincoming1FADF8E9",
+    "ApivoicelanguagePOSTA98E9EFA",
+    "Apivoicelanguage21301810",
+    "ApivoicepartialPOSTD4666216",
+    "Apivoicepartial19711045",
+    "ApivoiceEA5912EF",
+    "ApivoicestatusPOSTB6A26D40",
+    "Apivoicestatus0F5AA7AB",
+    "ApivoicetaskrouterPOST1D0BF2D7",
+    "Apivoicetaskrouter2BFDADA9",
+    "ApivoicetranscriptionPOST2929DA58",
+    "Apivoicetranscription54EB5695",
+    "ApiGwACCESSDENIEDE53D7F9E",
+    "ApiGwUNAUTHORIZEDA0005EE7",
+    "ApiValidator3C8892D8"
+   ],
+   "Metadata": {
+    "aws:cdk:do-not-refactor": true
+   },
+   "Properties": {
+    "Description": "OwlBank Twilio webhooks and Flex Context API",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Deployment"
+  },
+  "ApiDeploymentStagev102147F91": {
+   "DependsOn": [
+    "ApiAccountA18C9B29"
+   ],
+   "Properties": {
+    "AccessLogSetting": {
+     "DestinationArn": {
+      "Fn::GetAtt": [
+       "AccessLogs8B620ECA",
+       "Arn"
+      ]
+     },
+     "Format": "{\"requestId\":\"$context.requestId\",\"ip\":\"$context.identity.sourceIp\",\"requestTime\":\"$context.requestTime\",\"httpMethod\":\"$context.httpMethod\",\"resourcePath\":\"$context.resourcePath\",\"status\":\"$context.status\",\"protocol\":\"$context.protocol\",\"responseLength\":\"$context.responseLength\"}"
+    },
+    "DeploymentId": {
+     "Ref": "ApiDeploymentB17BE62Da95894750bb1b6aa2211c3fc27c3406c"
+    },
+    "MethodSettings": [
+     {
+      "DataTraceEnabled": false,
+      "HttpMethod": "*",
+      "LoggingLevel": "ERROR",
+      "ResourcePath": "/*",
+      "ThrottlingBurstLimit": 100,
+      "ThrottlingRateLimit": 50
+     }
+    ],
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    },
+    "StageName": "v1",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "TracingEnabled": true
+   },
+   "Type": "AWS::ApiGateway::Stage"
+  },
+  "ApiF70053CD": {
+   "Properties": {
+    "Description": "OwlBank Twilio webhooks and Flex Context API",
+    "DisableExecuteApiEndpoint": true,
+    "EndpointConfiguration": {
+     "Types": [
+      "REGIONAL"
+     ]
+    },
+    "Name": "owlbank-voice",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::ApiGateway::RestApi"
+  },
+  "ApiGwACCESSDENIEDE53D7F9E": {
+   "Properties": {
+    "ResponseParameters": {
+     "gatewayresponse.header.Access-Control-Allow-Origin": "'https://flex.twilio.com'",
+     "gatewayresponse.header.Vary": "'Origin'"
+    },
+    "ResponseType": "ACCESS_DENIED",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::GatewayResponse"
+  },
+  "ApiGwUNAUTHORIZEDA0005EE7": {
+   "Properties": {
+    "ResponseParameters": {
+     "gatewayresponse.header.Access-Control-Allow-Origin": "'https://flex.twilio.com'",
+     "gatewayresponse.header.Vary": "'Origin'"
+    },
+    "ResponseType": "UNAUTHORIZED",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::GatewayResponse"
+  },
+  "ApiValidator3C8892D8": {
+   "Properties": {
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    },
+    "ValidateRequestBody": true,
+    "ValidateRequestParameters": true
+   },
+   "Type": "AWS::ApiGateway::RequestValidator"
+  },
+  "ApiWafBlockedAlarm08619884": {
+   "Properties": {
+    "AlarmActions": [
+     {
+      "Fn::ImportValue": "OwlBankData:ExportsOutputRefAlarmTopicD01E77F99DF7FB73"
+     }
+    ],
+    "AlarmDescription": "Spike in requests blocked by WAF web ACL owlbank-dev-api",
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "Dimensions": [
+     {
+      "Name": "Region",
+      "Value": "us-east-1"
+     },
+     {
+      "Name": "Rule",
+      "Value": "ALL"
+     },
+     {
+      "Name": "WebACL",
+      "Value": "owlbank-dev-api"
+     }
+    ],
+    "EvaluationPeriods": 1,
+    "MetricName": "BlockedRequests",
+    "Namespace": "AWS/WAFV2",
+    "Period": 300,
+    "Statistic": "Sum",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "Threshold": 100,
+    "TreatMissingData": "notBreaching"
+   },
+   "Type": "AWS::CloudWatch::Alarm"
+  },
+  "ApicontextF7B12765": {
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "context",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "Apicontextjournalref3120BE3A": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApicontextF7B12765"
+    },
+    "PathPart": "{journal_ref}",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApicontextjournalrefGET4CAA7EB8": {
+   "Properties": {
+    "AuthorizationType": "CUSTOM",
+    "AuthorizerId": {
+     "Ref": "FlexAuthorizerDD4046ED"
+    },
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestParameters": {
+     "method.request.path.journal_ref": true,
+     "method.request.querystring.call_sid": true
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "Apicontextjournalref3120BE3A"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApicontextjournalrefGETApiPermissionOwlBankApiFBED9BCBGETcontextjournalref7F490253": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/GET/context/*"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApicontextjournalrefGETApiPermissionTestOwlBankApiFBED9BCBGETcontextjournalref7902563D": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/GET/context/*"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApicontextjournalrefOPTIONS3B19403F": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "Apicontextjournalref3120BE3A"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApicontextjournalrefOPTIONSApiPermissionOwlBankApiFBED9BCBOPTIONScontextjournalref2D0926DA": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/OPTIONS/context/*"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApicontextjournalrefOPTIONSApiPermissionTestOwlBankApiFBED9BCBOPTIONScontextjournalref5F1EBFF5": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttContextApiFnC9B4B891ArnBD1C0D34"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/OPTIONS/context/*"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoiceEA5912EF": {
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "voice",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoiceconnectactionE4297074": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "connect-action",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoiceconnectactionPOST8CE18E2C": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "ApivoiceconnectactionE4297074"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApivoiceconnectactionPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoiceconnectaction46E113D0": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/connect-action"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoiceconnectactionPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoiceconnectaction3EC41CFB": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/connect-action"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoiceenqueueactionFCE86B68": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "enqueue-action",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoiceenqueueactionPOST2E4936DC": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "ApivoiceenqueueactionFCE86B68"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApivoiceenqueueactionPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoiceenqueueaction761BE74C": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/enqueue-action"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoiceenqueueactionPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoiceenqueueactionD68E7850": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/enqueue-action"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicefactorD332CED5": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "factor",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoicefactorPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoicefactor213544FB": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/factor"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicefactorPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoicefactorB93DCE75": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/factor"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicefactorPOSTC90F214D": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "ApivoicefactorD332CED5"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "Apivoiceincoming1FADF8E9": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "incoming",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoiceincomingPOST6DB544E6": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "Apivoiceincoming1FADF8E9"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApivoiceincomingPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoiceincomingA923914D": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/incoming"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoiceincomingPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoiceincoming7E36341F": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/incoming"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "Apivoicelanguage21301810": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "language",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoicelanguagePOSTA98E9EFA": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "Apivoicelanguage21301810"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApivoicelanguagePOSTApiPermissionOwlBankApiFBED9BCBPOSTvoicelanguage80BFD99E": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/language"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicelanguagePOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoicelanguage802A7419": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/language"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "Apivoicepartial19711045": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "partial",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoicepartialPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoicepartial84798615": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/partial"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicepartialPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoicepartial0B9A6477": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/partial"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicepartialPOSTD4666216": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "Apivoicepartial19711045"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "Apivoicestatus0F5AA7AB": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "status",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoicestatusPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoicestatus6BE9863D": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/status"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicestatusPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoicestatus7933AD14": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/status"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicestatusPOSTB6A26D40": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "Apivoicestatus0F5AA7AB"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "Apivoicetaskrouter2BFDADA9": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "taskrouter",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoicetaskrouterPOST1D0BF2D7": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "Apivoicetaskrouter2BFDADA9"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApivoicetaskrouterPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoicetaskrouter7335710C": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/taskrouter"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicetaskrouterPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoicetaskrouter84EC91D0": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/taskrouter"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "Apivoicetranscription54EB5695": {
+   "Properties": {
+    "ParentId": {
+     "Ref": "ApivoiceEA5912EF"
+    },
+    "PathPart": "transcription",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Resource"
+  },
+  "ApivoicetranscriptionPOST2929DA58": {
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "ApiValidator3C8892D8"
+    },
+    "ResourceId": {
+     "Ref": "Apivoicetranscription54EB5695"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Type": "AWS::ApiGateway::Method"
+  },
+  "ApivoicetranscriptionPOSTApiPermissionOwlBankApiFBED9BCBPOSTvoicetranscriptionCC0031E2": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       },
+       "/POST/voice/transcription"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "ApivoicetranscriptionPOSTApiPermissionTestOwlBankApiFBED9BCBPOSTvoicetranscription60E58EB6": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputRefFrontdoorFnAliaslive9F33234BD71D64D6"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/voice/transcription"
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  },
+  "Domain66AC69E0": {
+   "Properties": {
+    "DomainName": "voice.owlbank.example.com",
+    "EndpointConfiguration": {
+     "Types": [
+      "REGIONAL"
+     ]
+    },
+    "RegionalCertificateArn": "arn:aws:acm:us-east-1:111111111111:certificate/11111111-2222-3333-4444-555555555555",
+    "SecurityPolicy": "TLS_1_2",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::ApiGateway::DomainName"
+  },
+  "DomainMapOwlBankApiFBED9BCBD5DA9D21": {
+   "Properties": {
+    "DomainName": {
+     "Ref": "Domain66AC69E0"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    },
+    "Stage": {
+     "Ref": "ApiDeploymentStagev102147F91"
+    }
+   },
+   "Type": "AWS::ApiGateway::BasePathMapping"
+  },
+  "FlexAuthorizerDD4046ED": {
+   "Properties": {
+    "AuthorizerResultTtlInSeconds": 0,
+    "AuthorizerUri": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           ":",
+           {
+            "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttFlexAuthorizerFnDF8AAFC0Arn140D037E"
+           }
+          ]
+         }
+        ]
+       },
+       ":apigateway:",
+       {
+        "Fn::Select": [
+         3,
+         {
+          "Fn::Split": [
+           ":",
+           {
+            "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttFlexAuthorizerFnDF8AAFC0Arn140D037E"
+           }
+          ]
+         }
+        ]
+       },
+       ":lambda:path/2015-03-31/functions/",
+       {
+        "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttFlexAuthorizerFnDF8AAFC0Arn140D037E"
+       },
+       "/invocations"
+      ]
+     ]
+    },
+    "IdentitySource": "method.request.header.X-Flex-Token",
+    "Name": "OwlBankApiFlexAuthorizerFDD9CBC8",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    },
+    "Type": "REQUEST"
+   },
+   "Type": "AWS::ApiGateway::Authorizer"
+  },
+  "WafLogging": {
+   "DependsOn": [
+    "WafLoggingLogs98831A26"
+   ],
+   "Properties": {
+    "LogDestinationConfigs": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":logs:us-east-1:111111111111:log-group:aws-waf-logs-owlbank-dev-api"
+       ]
+      ]
+     }
+    ],
+    "RedactedFields": [
+     {
+      "SingleHeader": {
+       "Name": "authorization"
+      }
+     },
+     {
+      "SingleHeader": {
+       "Name": "cookie"
+      }
+     },
+     {
+      "SingleHeader": {
+       "Name": "x-twilio-signature"
+      }
+     },
+     {
+      "SingleHeader": {
+       "Name": "x-origin-verify"
+      }
+     }
+    ],
+    "ResourceArn": {
+     "Fn::GetAtt": [
+      "WebAcl",
+      "Arn"
+     ]
+    }
+   },
+   "Type": "AWS::WAFv2::LoggingConfiguration"
+  },
+  "WafLoggingLogs98831A26": {
+   "DeletionPolicy": "Delete",
+   "Properties": {
+    "KmsKeyId": {
+     "Fn::ImportValue": "OwlBankData:ExportsOutputFnGetAttDataKey17AFBB84ArnCE2A1BC6"
+    },
+    "LogGroupName": "aws-waf-logs-owlbank-dev-api",
+    "RetentionInDays": 30,
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ]
+   },
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Delete"
+  },
+  "WebAcl": {
+   "Properties": {
+    "DefaultAction": {
+     "Allow": {}
+    },
+    "Name": "owlbank-dev-api",
+    "Rules": [
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "AllowedPathsAndMethodsOnly",
+      "Priority": 0,
+      "Statement": {
+       "NotStatement": {
+        "Statement": {
+         "OrStatement": {
+          "Statements": [
+           {
+            "AndStatement": {
+             "Statements": [
+              {
+               "RegexMatchStatement": {
+                "FieldToMatch": {
+                 "UriPath": {}
+                },
+                "RegexString": "^(/v1)?/voice/(incoming|language|factor|connect-action|status|partial|enqueue-action|taskrouter|transcription)$",
+                "TextTransformations": [
+                 {
+                  "Priority": 0,
+                  "Type": "NONE"
+                 }
+                ]
+               }
+              },
+              {
+               "ByteMatchStatement": {
+                "FieldToMatch": {
+                 "Method": {}
+                },
+                "PositionalConstraint": "EXACTLY",
+                "SearchString": "POST",
+                "TextTransformations": [
+                 {
+                  "Priority": 0,
+                  "Type": "NONE"
+                 }
+                ]
+               }
+              }
+             ]
+            }
+           },
+           {
+            "AndStatement": {
+             "Statements": [
+              {
+               "RegexMatchStatement": {
+                "FieldToMatch": {
+                 "UriPath": {}
+                },
+                "RegexString": "^(/v1)?/context/[A-Za-z0-9_-]{1,128}$",
+                "TextTransformations": [
+                 {
+                  "Priority": 0,
+                  "Type": "NONE"
+                 }
+                ]
+               }
+              },
+              {
+               "OrStatement": {
+                "Statements": [
+                 {
+                  "ByteMatchStatement": {
+                   "FieldToMatch": {
+                    "Method": {}
+                   },
+                   "PositionalConstraint": "EXACTLY",
+                   "SearchString": "GET",
+                   "TextTransformations": [
+                    {
+                     "Priority": 0,
+                     "Type": "NONE"
+                    }
+                   ]
+                  }
+                 },
+                 {
+                  "ByteMatchStatement": {
+                   "FieldToMatch": {
+                    "Method": {}
+                   },
+                   "PositionalConstraint": "EXACTLY",
+                   "SearchString": "OPTIONS",
+                   "TextTransformations": [
+                    {
+                     "Priority": 0,
+                     "Type": "NONE"
+                    }
+                   ]
+                  }
+                 }
+                ]
+               }
+              }
+             ]
+            }
+           }
+          ]
+         }
+        }
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-api-paths",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "RateLimitPerIp",
+      "Priority": 1,
+      "Statement": {
+       "RateBasedStatement": {
+        "AggregateKeyType": "IP",
+        "Limit": 2000,
+        "ScopeDownStatement": {
+         "NotStatement": {
+          "Statement": {
+           "RegexMatchStatement": {
+            "FieldToMatch": {
+             "UriPath": {}
+            },
+            "RegexString": "^(/v1)?/voice/transcription$",
+            "TextTransformations": [
+             {
+              "Priority": 0,
+              "Type": "NONE"
+             }
+            ]
+           }
+          }
+         }
+        }
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-api-rate",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "RateLimitPerIpOwnPaths",
+      "Priority": 2,
+      "Statement": {
+       "RateBasedStatement": {
+        "AggregateKeyType": "IP",
+        "Limit": 2000,
+        "ScopeDownStatement": {
+         "RegexMatchStatement": {
+          "FieldToMatch": {
+           "UriPath": {}
+          },
+          "RegexString": "^(/v1)?/voice/transcription$",
+          "TextTransformations": [
+           {
+            "Priority": 0,
+            "Type": "NONE"
+           }
+          ]
+         }
+        }
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-api-rate-own",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Block": {}
+      },
+      "Name": "BodySizeLimit",
+      "Priority": 3,
+      "Statement": {
+       "SizeConstraintStatement": {
+        "ComparisonOperator": "GT",
+        "FieldToMatch": {
+         "Body": {
+          "OversizeHandling": "MATCH"
+         }
+        },
+        "Size": 8192,
+        "TextTransformations": [
+         {
+          "Priority": 0,
+          "Type": "NONE"
+         }
+        ]
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-api-size",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Action": {
+       "Block": {
+        "CustomResponse": {
+         "ResponseCode": 401,
+         "ResponseHeaders": [
+          {
+           "Name": "WWW-Authenticate",
+           "Value": "Basic realm=\"owlbank\""
+          }
+         ]
+        }
+       }
+      },
+      "Name": "AuthorizationHeaderRequired",
+      "Priority": 4,
+      "Statement": {
+       "AndStatement": {
+        "Statements": [
+         {
+          "RegexMatchStatement": {
+           "FieldToMatch": {
+            "UriPath": {}
+           },
+           "RegexString": "^(/v1)?/voice/",
+           "TextTransformations": [
+            {
+             "Priority": 0,
+             "Type": "NONE"
+            }
+           ]
+          }
+         },
+         {
+          "NotStatement": {
+           "Statement": {
+            "SizeConstraintStatement": {
+             "ComparisonOperator": "GT",
+             "FieldToMatch": {
+              "SingleHeader": {
+               "Name": "authorization"
+              }
+             },
+             "Size": 0,
+             "TextTransformations": [
+              {
+               "Priority": 0,
+               "Type": "NONE"
+              }
+             ]
+            }
+           }
+          }
+         }
+        ]
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "owlbank-api-noauth",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWSManagedRulesAmazonIpReputationList",
+      "OverrideAction": {
+       "Count": {}
+      },
+      "Priority": 10,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesAmazonIpReputationList",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesAmazonIpReputationList",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWSManagedRulesCommonRuleSet",
+      "OverrideAction": {
+       "Count": {}
+      },
+      "Priority": 11,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesCommonRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesCommonRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+      "OverrideAction": {
+       "Count": {}
+      },
+      "Priority": 13,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesKnownBadInputsRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     }
+    ],
+    "Scope": "REGIONAL",
+    "Tags": [
+     {
+      "Key": "cost-center",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "data-classification",
+      "Value": "confidential"
+     },
+     {
+      "Key": "owner",
+      "Value": "unassigned"
+     },
+     {
+      "Key": "project",
+      "Value": "owlbank-blueprint"
+     },
+     {
+      "Key": "stage",
+      "Value": "dev"
+     }
+    ],
+    "VisibilityConfig": {
+     "CloudWatchMetricsEnabled": true,
+     "MetricName": "owlbank-api",
+     "SampledRequestsEnabled": true
+    }
+   },
+   "Type": "AWS::WAFv2::WebACL"
+  },
+  "WebAclAssociation": {
+   "Properties": {
+    "ResourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":apigateway:us-east-1::/restapis/",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/stages/",
+       {
+        "Ref": "ApiDeploymentStagev102147F91"
+       }
+      ]
+     ]
+    },
+    "WebACLArn": {
+     "Fn::GetAtt": [
+      "WebAcl",
+      "Arn"
+     ]
+    }
+   },
+   "Type": "AWS::WAFv2::WebACLAssociation"
+  },
+  "flexauthorizerRefOwlBankApiFlexAuthorizerFDD9CBC8PermissionsF0A8CC45": {
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::ImportValue": "OwlBankCompute:ExportsOutputFnGetAttFlexAuthorizerFnDF8AAFC0Arn140D037E"
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:111111111111:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/authorizers/",
+       {
+        "Ref": "FlexAuthorizerDD4046ED"
+       }
+      ]
+     ]
+    }
+   },
+   "Type": "AWS::Lambda::Permission"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

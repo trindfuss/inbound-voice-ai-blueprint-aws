@@ -1,0 +1,86 @@
+{
+  "_warning": "FAKE TEST DATA. Plaintext verification factors for the fictional fixtures in data/fixtures.json, for unit tests and the FE-2 simulated-caller personas only. Never put real personal data here.",
+  "customers": {
+    "C-1001": {
+      "zip": "94105",
+      "ssn4": "1111"
+    },
+    "C-1002": {
+      "zip": "98101",
+      "ssn4": "4444"
+    },
+    "C-1003": {
+      "zip": "98102",
+      "ssn4": "5555"
+    },
+    "C-1004": {
+      "zip": "33101",
+      "ssn4": "2222"
+    }
+  },
+  "personas": [
+    {
+      "id": "thomas_verified",
+      "ani": "+12025550101",
+      "language": "en-US",
+      "customer_id": "C-1001",
+      "zip": "94105",
+      "ssn4": "1111",
+      "expect": "verified"
+    },
+    {
+      "id": "thomas_wrong_zip",
+      "ani": "+12025550101",
+      "language": "en-US",
+      "customer_id": "C-1001",
+      "zip": "94106",
+      "ssn4": "1111",
+      "expect": "verification_failed"
+    },
+    {
+      "id": "lee_sam",
+      "ani": "+12025550102",
+      "language": "en-US",
+      "customer_id": "C-1002",
+      "zip": "98101",
+      "ssn4": "4444",
+      "expect": "verified_after_disambiguation"
+    },
+    {
+      "id": "lee_jordan",
+      "ani": "+12025550102",
+      "language": "en-US",
+      "customer_id": "C-1003",
+      "zip": "98102",
+      "ssn4": "5555",
+      "expect": "verified_after_disambiguation"
+    },
+    {
+      "id": "maria_es",
+      "ani": "+12025550103",
+      "language": "es-US",
+      "customer_id": "C-1004",
+      "zip": "33101",
+      "ssn4": "2222",
+      "expect": "verified"
+    },
+    {
+      "id": "no_match",
+      "ani": "+12025550199",
+      "language": "en-US",
+      "customer_id": null,
+      "zip": "10001",
+      "ssn4": "9999",
+      "expect": "no_match"
+    },
+    {
+      "id": "withheld",
+      "ani": "anonymous",
+      "language": "en-US",
+      "customer_id": null,
+      "zip": null,
+      "ssn4": null,
+      "expect": "ani_withheld"
+    }
+  ]
+}
